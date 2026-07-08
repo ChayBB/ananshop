@@ -123,6 +123,43 @@ class OrderDataGrid extends DataGrid
                 return '<p class="'.$badgeClass.'">'.e($status).'</p>';
             },
         ]);
+
+        $this->addColumn([
+            'index' => 'slip_actions',
+            'label' => app()->getLocale() === 'th' ? 'สลิป' : 'Slip',
+            'type' => 'string',
+            'searchable' => false,
+            'filterable' => false,
+            'sortable' => false,
+            'exportable' => false,
+            'closure' => function ($row) {
+                if (! empty($row->slip_path)) {
+                    return '<button
+                        type="button"
+                        class="flex items-center gap-1 rounded-md border border-zinc-200 bg-zinc-50 px-2 py-1 text-xs font-medium text-zinc-600 transition-all hover:bg-zinc-100"
+                        onclick="window.showViewSlipModal(\'/storage/'.e($row->slip_path).'\', \''.e($row->increment_id).'\')"
+                    >
+                        <span class="icon-file text-sm"></span> ดูสลิป
+                    </button>';
+                }
+
+                $status = $row->custom_status ?? 'รอดำเนินการ';
+
+                $isPendingStatus = ! in_array($status, ['เสร็จสมบูรณ์', 'ยืนยันการชำระเงินแล้ว', 'จัดส่ง', 'เรียกเก็บเงินจากพนักงานขนส่ง', 'ยกเลิกออร์เดอร์', 'คืนเงิน']);
+
+                if ($isPendingStatus && $row->method !== 'cashondelivery') {
+                    return '<button
+                        type="button"
+                        class="flex items-center gap-1 rounded-md border border-orange-400 bg-orange-50 px-2 py-1 text-xs font-medium text-orange-600 transition-all hover:bg-orange-100"
+                        onclick="window.showUploadSlipModal('.(int) $row->id.', \''.e($row->increment_id).'\')"
+                    >
+                        <span class="icon-upload text-sm"></span> อัปโหลดสลิป
+                    </button>';
+                }
+
+                return '';
+            },
+        ]);
     }
 
     /**

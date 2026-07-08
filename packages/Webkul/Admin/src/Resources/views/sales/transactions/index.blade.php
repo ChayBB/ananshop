@@ -38,6 +38,52 @@
                 :isMultiRow="true"
                 ref="datagrid"
             >
+                <template #header="{
+                    isLoading,
+                    available,
+                    applied,
+                    selectAll,
+                    sort,
+                    performAction
+                }">
+                    <template v-if="isLoading">
+                        <x-admin::shimmer.datagrid.table.head />
+                    </template>
+
+                    <template v-else>
+                        <div
+                            class="row grid min-h-[47px] items-center gap-2 border-b bg-gray-50 px-4 py-2 font-semibold text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
+                            style="grid-template-columns: 50px 145px 140px 75px 90px 90px 70px 140px 60px;"
+                        >
+                            <template v-for="column in available.columns">
+                                <p
+                                    class="flex items-center gap-1.5"
+                                    :class="{'cursor-pointer select-none hover:text-gray-800 dark:hover:text-white': column.sortable}"
+                                    @click="sort(column)"
+                                    v-if="column.visibility"
+                                >
+                                    @{{ column.label }}
+
+                                    <i
+                                        class="align-text-bottom text-base text-gray-800 dark:text-white"
+                                        :class="[applied.sort.order === 'asc' ? 'icon-down-stat': 'icon-up-stat']"
+                                        v-if="column.index == applied.sort.column"
+                                    ></i>
+                                </p>
+                            </template>
+
+                            @if (bouncer()->hasPermission('sales.shipments.view'))
+                                <p
+                                    class="place-self-end"
+                                    v-if="available.actions.length"
+                                >
+                                    @lang('admin::app.components.datagrid.table.actions')
+                                </p>
+                            @endif
+                        </div>
+                    </template>
+                </template>
+
                 <template #body="{
                     isLoading,
                     available,
@@ -53,8 +99,8 @@
                     <template v-else>
                         <div
                             v-for="record in available.records"
-                            class="row grid items-center gap-2.5 border-b px-4 py-4 text-gray-600 transition-all hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-950"
-                            :style="`grid-template-columns: repeat(${gridsCount}, minmax(0, 1fr))`"
+                            class="row grid items-center gap-2 border-b px-4 py-2.5 text-gray-600 transition-all hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-950"
+                            style="grid-template-columns: 50px 145px 140px 75px 90px 90px 70px 140px 60px;"
                         >
                             <!-- ID -->
                             <p

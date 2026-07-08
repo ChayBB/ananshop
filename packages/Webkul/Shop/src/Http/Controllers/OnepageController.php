@@ -104,11 +104,15 @@ class OnepageController extends Controller
         ) {
             $orderModel = OrderProxy::modelClass();
 
-            $creditRoundsUsed = $orderModel::where('customer_id', $order->customer_id)
+            // เครดิตที่ยืนยันการชำระเงินแล้ว: only orders whose payment has actually
+            // been confirmed (or completed) consume the customer's approved credit.
+            $creditRoundsConfirmed = $orderModel::where('customer_id', $order->customer_id)
+                ->whereIn('custom_status', ['ยืนยันการชำระเงินแล้ว', 'เสร็จสมบูรณ์'])
                 ->whereHas('payment', fn ($query) => $query->where('method', 'credit'))
                 ->count();
 
-            $creditRoundsRemaining = max(($order->customer->group->credit_rounds ?? 0) - $creditRoundsUsed, 0);
+            // เครดิตที่ใช้ได้ = เครดิตที่ได้รับอนุมัติ - เครดิตที่ยืนยันการชำระเงินแล้ว
+            $creditRoundsRemaining = max(($order->customer->group->credit_rounds ?? 0) - $creditRoundsConfirmed, 0);
         }
 
         return view('shop::checkout.success', compact('order', 'creditRoundsRemaining'));

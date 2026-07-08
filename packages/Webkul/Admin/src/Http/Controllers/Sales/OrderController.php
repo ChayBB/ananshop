@@ -90,6 +90,32 @@ class OrderController extends Controller
      */
     public function uploadCreditSlip($orderId)
     {
+        $this->storeUploadedSlip($orderId);
+
+        return redirect()->route('admin.sales.credit.index');
+    }
+
+    /**
+     * Upload payment slip for an order from its view/invoice page.
+     *
+     * @param  int  $orderId
+     * @return RedirectResponse
+     */
+    public function uploadSlip($orderId)
+    {
+        $this->storeUploadedSlip($orderId);
+
+        return redirect()->back();
+    }
+
+    /**
+     * Validate and store the uploaded payment slip against the given order.
+     *
+     * @param  int  $orderId
+     * @return void
+     */
+    protected function storeUploadedSlip($orderId)
+    {
         request()->validate([
             'slip' => ['required', 'file', 'mimes:jpg,jpeg,png,gif,webp,pdf', 'max:10240'],
         ]);
@@ -101,8 +127,6 @@ class OrderController extends Controller
         $order->update(['slip_path' => $path]);
 
         session()->flash('success', 'อัปโหลดสลิปโอนเงินเรียบร้อยแล้ว');
-
-        return redirect()->route('admin.sales.credit.index');
     }
 
     /**

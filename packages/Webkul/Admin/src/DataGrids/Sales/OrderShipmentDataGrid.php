@@ -76,6 +76,15 @@ class OrderShipmentDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
+            'index' => 'shipped_to',
+            'label' => trans('admin::app.sales.shipments.index.datagrid.shipment-to'),
+            'type' => 'string',
+            'searchable' => true,
+            'filterable' => true,
+            'sortable' => true,
+        ]);
+
+        $this->addColumn([
             'index' => 'shipment_total_qty',
             'label' => trans('admin::app.sales.shipments.index.datagrid.total-qty'),
             'type' => 'integer',
@@ -86,15 +95,6 @@ class OrderShipmentDataGrid extends DataGrid
         $this->addColumn([
             'index' => 'inventory_source_name',
             'label' => trans('admin::app.sales.shipments.index.datagrid.inventory-source'),
-            'type' => 'string',
-            'searchable' => true,
-            'filterable' => true,
-            'sortable' => true,
-        ]);
-
-        $this->addColumn([
-            'index' => 'shipped_to',
-            'label' => trans('admin::app.sales.shipments.index.datagrid.shipment-to'),
             'type' => 'string',
             'searchable' => true,
             'filterable' => true,

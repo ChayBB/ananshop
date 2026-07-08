@@ -58,6 +58,8 @@ Route::prefix('sales')->group(function () {
         Route::get('search', 'search')->name('admin.sales.orders.search');
 
         Route::post('update-custom-status/{id}', 'updateCustomStatus')->name('admin.sales.orders.update_custom_status');
+
+        Route::post('slip/{order_id}', 'uploadSlip')->name('admin.sales.orders.slip.upload');
     });
 
     /**

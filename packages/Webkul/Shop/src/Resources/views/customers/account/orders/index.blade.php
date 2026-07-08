@@ -76,98 +76,8 @@
                                     >
                                     </a>
 
-                                    <!-- Upload Slip button (only for pending status) -->
-                                    <template v-if="record.status && record.status.includes('label-pending') && !record.status.includes('pending-payment') && record.method !== 'cashondelivery' && !record.slip_path">
-                                        <button
-                                            type="button"
-                                            class="flex items-center gap-1 rounded-md border border-orange-400 bg-orange-50 px-2 py-1 text-xs font-medium text-orange-600 transition-all hover:bg-orange-100"
-                                            @click="$refs['slip-modal-' + record.id].toggle()"
-                                        >
-                                            <span class="icon-upload text-sm"></span>
-                                            อัปโหลดสลิป
-                                        </button>
-
-                                        <!-- Upload Slip Modal -->
-                                        <x-shop::modal ::ref="'slip-modal-' + record.id">
-                                            <x-slot:toggle></x-slot>
-
-                                            <x-slot:header>
-                                                <p class="text-base font-semibold text-gray-800">
-                                                    อัปโหลดหลักฐานการชำระเงิน
-                                                </p>
-                                                <p class="mt-1 text-sm text-gray-500">
-                                                    คำสั่งซื้อ #@{{ record.increment_id }}
-                                                </p>
-                                            </x-slot>
-
-                                            <x-slot:content>
-                                                <form
-                                                    :action="`{{ url('checkout/slip') }}/` + record.id"
-                                                    method="POST"
-                                                    enctype="multipart/form-data"
-                                                    class="space-y-4"
-                                                    :id="'slip-form-' + record.id"
-                                                >
-                                                    @csrf
-
-                                                    <div>
-                                                        <label class="mb-1 block text-sm font-medium text-gray-700">
-                                                            เลือกไฟล์สลิป (JPG, PNG, PDF)
-                                                        </label>
-                                                        <input
-                                                            type="file"
-                                                            name="slip"
-                                                            accept=".jpg,.jpeg,.png,.gif,.webp,.pdf"
-                                                            required
-                                                            class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-orange-500 focus:outline-none"
-                                                        >
-                                                        <p class="mt-1 text-xs text-gray-500">
-                                                            รองรับไฟล์ JPG, PNG, GIF, WEBP, PDF ขนาดไม่เกิน 10MB
-                                                        </p>
-                                                    </div>
-                                                </form>
-                                            </x-slot>
-
-                                            <x-slot:footer>
-                                                <button
-                                                    type="submit"
-                                                    :form="'slip-form-' + record.id"
-                                                    class="primary-button"
-                                                >
-                                                    อัปโหลด
-                                                </button>
-                                            </x-slot>
-                                        </x-shop::modal>
-                                    </template>
-
-                                    <!-- View Slip button (if uploaded) -->
-                                    <template v-if="record.slip_path">
-                                        <button
-                                            type="button"
-                                            class="flex items-center gap-1 rounded-md border border-zinc-200 bg-zinc-50 px-2 py-1 text-xs font-medium text-zinc-600 transition-all hover:bg-zinc-100"
-                                            @click="$refs['view-slip-modal-' + record.id].toggle()"
-                                        >
-                                            <span class="icon-file text-sm"></span>
-                                            ดูสลิป
-                                        </button>
-
-                                        <!-- View Slip Modal -->
-                                        <x-shop::modal ::ref="'view-slip-modal-' + record.id">
-                                            <x-slot:toggle></x-slot>
-
-                                            <x-slot:header>
-                                                <p class="text-base font-semibold text-gray-800">
-                                                    สลิปโอนเงิน ของคำสั่งซื้อ #@{{ record.increment_id }}
-                                                </p>
-                                            </x-slot>
-
-                                            <x-slot:content>
-                                                <div class="flex justify-center items-center p-2 bg-white rounded-md">
-                                                    <img :src="'/storage/' + record.slip_path" class="max-w-full max-h-[70vh] object-contain rounded border" />
-                                                </div>
-                                            </x-slot>
-                                        </x-shop::modal>
-                                    </template>
+                                    <!-- Upload/View Slip action (rendered server-side) -->
+                                    <span v-html="record.slip_actions"></span>
                                 </div>
                             </div>
                         </template>
@@ -228,92 +138,9 @@
                                     </div>
                                 </a>
 
-                                <!-- Upload Slip button for mobile (pending orders only) -->
-                                <template v-if="record.status && record.status.includes('label-pending') && !record.status.includes('pending-payment') && record.method !== 'cashondelivery' && !record.slip_path">
-                                    <div class="mt-3 border-t pt-3">
-                                        <button
-                                            type="button"
-                                            class="flex w-full items-center justify-center gap-1.5 rounded-md border border-orange-400 bg-orange-50 px-3 py-2 text-sm font-medium text-orange-600 hover:bg-orange-100"
-                                            @click="$refs['slip-modal-mob-' + record.id].toggle()"
-                                        >
-                                            <span class="icon-upload text-base"></span>
-                                            อัปโหลดสลิปชำระเงิน
-                                        </button>
-
-                                        <x-shop::modal ::ref="'slip-modal-mob-' + record.id">
-                                            <x-slot:toggle></x-slot>
-
-                                            <x-slot:header>
-                                                <p class="text-base font-semibold text-gray-800">
-                                                    อัปโหลดหลักฐานการชำระเงิน
-                                                </p>
-                                            </x-slot>
-
-                                            <x-slot:content>
-                                                <form
-                                                    :action="`{{ url('checkout/slip') }}/` + record.id"
-                                                    method="POST"
-                                                    enctype="multipart/form-data"
-                                                    :id="'slip-form-mob-' + record.id"
-                                                >
-                                                    @csrf
-                                                    <div>
-                                                        <label class="mb-1 block text-sm font-medium text-gray-700">
-                                                            เลือกไฟล์สลิป (JPG, PNG, PDF)
-                                                        </label>
-                                                        <input
-                                                            type="file"
-                                                            name="slip"
-                                                            accept=".jpg,.jpeg,.png,.gif,.webp,.pdf"
-                                                            required
-                                                            class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
-                                                        >
-                                                    </div>
-                                                </form>
-                                            </x-slot>
-
-                                            <x-slot:footer>
-                                                <button
-                                                    type="submit"
-                                                    :form="'slip-form-mob-' + record.id"
-                                                    class="primary-button"
-                                                >
-                                                    อัปโหลด
-                                                </button>
-                                            </x-slot>
-                                        </x-shop::modal>
-                                    </div>
-                                </template>
-
-                                <!-- View Slip button for mobile if uploaded -->
-                                <template v-if="record.slip_path">
-                                    <div class="mt-3 border-t pt-3">
-                                        <button
-                                            type="button"
-                                            class="flex w-full items-center justify-center gap-1.5 rounded-md border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-100"
-                                            @click="$refs['view-slip-modal-mob-' + record.id].toggle()"
-                                        >
-                                            <span class="icon-file text-base"></span>
-                                            ดูสลิป
-                                        </button>
-
-                                        <!-- View Slip Modal for Mobile -->
-                                        <x-shop::modal ::ref="'view-slip-modal-mob-' + record.id">
-                                            <x-slot:toggle></x-slot>
-
-                                            <x-slot:header>
-                                                <p class="text-base font-semibold text-gray-800">
-                                                    สลิปโอนเงิน ของคำสั่งซื้อ #@{{ record.increment_id }}
-                                                </p>
-                                            </x-slot>
-
-                                            <x-slot:content>
-                                                <div class="flex justify-center items-center p-2 bg-white rounded-md">
-                                                    <img :src="'/storage/' + record.slip_path" class="max-w-full max-h-[70vh] object-contain rounded border" />
-                                                </div>
-                                            </x-slot>
-                                        </x-shop::modal>
-                                    </div>
+                                <!-- Upload/View Slip action (rendered server-side) -->
+                                <template v-if="record.slip_actions">
+                                    <div class="mt-3 border-t pt-3" v-html="record.slip_actions"></div>
                                 </template>
                             </div>
                         </template>
@@ -325,4 +152,108 @@
         {!! view_render_event('bagisto.shop.customers.account.orders.list.after') !!}
 
     </div>
+
+    <!-- View Slip Modal (shared) -->
+    <div id="viewSlipModal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/50 px-4" onclick="this.classList.add('hidden'); this.classList.remove('flex')">
+        <div class="w-full max-w-lg overflow-hidden rounded-lg bg-white shadow-xl" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between gap-5 border-b border-zinc-200 p-6">
+                <p id="viewSlipModalTitle" class="text-base font-semibold text-gray-800"></p>
+
+                <span
+                    class="icon-cancel cursor-pointer text-3xl"
+                    onclick="const m = document.getElementById('viewSlipModal'); m.classList.add('hidden'); m.classList.remove('flex')"
+                ></span>
+            </div>
+
+            <div class="flex items-center justify-center bg-white p-6">
+                <img id="viewSlipModalImage" src="" class="max-h-[70vh] max-w-full rounded border object-contain" alt="Slip">
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Slip Modal (shared) -->
+    <div id="uploadSlipModal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/50 px-4" onclick="this.classList.add('hidden'); this.classList.remove('flex')">
+        <div class="w-full max-w-md overflow-hidden rounded-lg bg-white shadow-xl" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between gap-5 border-b border-zinc-200 p-6">
+                <div>
+                    <p class="text-base font-semibold text-gray-800">
+                        อัปโหลดหลักฐานการชำระเงิน
+                    </p>
+
+                    <p id="uploadSlipModalOrderId" class="mt-1 text-sm text-gray-500"></p>
+                </div>
+
+                <span
+                    class="icon-cancel cursor-pointer text-3xl"
+                    onclick="const m = document.getElementById('uploadSlipModal'); m.classList.add('hidden'); m.classList.remove('flex')"
+                ></span>
+            </div>
+
+            <div class="bg-white p-6">
+                <form id="uploadSlipForm" method="POST" enctype="multipart/form-data" class="space-y-4">
+                    @csrf
+
+                    <div>
+                        <label class="mb-1 block text-sm font-medium text-gray-700">
+                            เลือกไฟล์สลิป (JPG, PNG, PDF)
+                        </label>
+                        <input
+                            type="file"
+                            name="slip"
+                            accept=".jpg,.jpeg,.png,.gif,.webp,.pdf"
+                            required
+                            class="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-orange-500 focus:outline-none"
+                        >
+                        <p class="mt-1 text-xs text-gray-500">
+                            รองรับไฟล์ JPG, PNG, GIF, WEBP, PDF ขนาดไม่เกิน 10MB
+                        </p>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button type="submit" class="primary-button">
+                            อัปโหลด
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @pushOnce('scripts')
+        <script>
+            window.showViewSlipModal = function(url, incrementId) {
+                const modal = document.getElementById('viewSlipModal');
+                const img = document.getElementById('viewSlipModalImage');
+                const title = document.getElementById('viewSlipModalTitle');
+
+                if (modal && img) {
+                    img.src = url;
+
+                    if (title) {
+                        title.textContent = 'สลิปโอนเงิน ของคำสั่งซื้อ #' + incrementId;
+                    }
+
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                }
+            };
+
+            window.showUploadSlipModal = function(orderId, incrementId) {
+                const modal = document.getElementById('uploadSlipModal');
+                const form = document.getElementById('uploadSlipForm');
+                const orderText = document.getElementById('uploadSlipModalOrderId');
+
+                if (modal && form) {
+                    form.action = '{{ url('checkout/slip') }}/' + orderId;
+
+                    if (orderText) {
+                        orderText.textContent = 'คำสั่งซื้อ #' + incrementId;
+                    }
+
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                }
+            };
+        </script>
+    @endPushOnce
 </x-shop::layouts.account>

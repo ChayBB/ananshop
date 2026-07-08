@@ -79,18 +79,22 @@ class CreditOrderDataGrid extends OrderDataGrid
                     return '-';
                 }
 
-                $creditRounds = $customer->group->credit_rounds ?? 0;
+                $approvedCredit = $customer->group->credit_rounds ?? 0;
 
                 $orderModel = OrderProxy::modelClass();
 
-                $used = $orderModel::where('customer_id', $customer->id)
+                // เครดิตที่ยืนยันการชำระเงินแล้ว: only orders whose payment has actually
+                // been confirmed (or completed) consume the customer's approved credit.
+                $confirmedCredit = $orderModel::where('customer_id', $customer->id)
+                    ->whereIn('custom_status', ['ยืนยันการชำระเงินแล้ว', 'เสร็จสมบูรณ์'])
                     ->whereHas('payment', fn ($query) => $query->where('method', 'credit'))
                     ->count();
 
-                $remaining = max($creditRounds - $used, 0);
+                // เครดิตที่ใช้ได้ = เครดิตที่ได้รับอนุมัติ - เครดิตที่ยืนยันการชำระเงินแล้ว
+                $availableCredit = max($approvedCredit - $confirmedCredit, 0);
 
-                return '<p class="text-gray-600 dark:text-gray-300">ใช้ไปแล้ว: '.$used.' รอบ</p>
-                    <p class="text-gray-600 dark:text-gray-300">เหลือ: '.$remaining.' รอบ</p>';
+                return '<p class="text-gray-600 dark:text-gray-300">ยืนยันการชำระเงินแล้ว: '.$confirmedCredit.' รอบ</p>
+                    <p class="text-gray-600 dark:text-gray-300">เหลือ: '.$availableCredit.' รอบ</p>';
             },
         ]);
     }

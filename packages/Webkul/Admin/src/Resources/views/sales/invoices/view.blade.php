@@ -278,6 +278,14 @@
                             <span class="label-pending text-sm px-2.5 py-1 w-max rounded">
                                 รอชำระ (ยังไม่ได้อัปโหลดสลิป)
                             </span>
+
+                            <button
+                                type="button"
+                                class="w-max cursor-pointer rounded-md border border-gray-300 px-2.5 py-1.5 text-sm font-medium text-gray-600 transition-all hover:bg-gray-100 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-800"
+                                onclick="window.showUploadSlipModal()"
+                            >
+                                อัปโหลดสลิป
+                            </button>
                         </div>
                     @endif
 
@@ -521,6 +529,57 @@
         </div>
     </div>
 
+    <!-- Upload Slip Modal -->
+    <div id="uploadSlipModal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/50 px-4" onclick="this.classList.add('hidden'); this.classList.remove('flex')">
+        <div class="w-full max-w-md rounded-lg bg-white p-6 shadow-2xl dark:bg-gray-900" onclick="event.stopPropagation()">
+            <div class="mb-4 flex items-center justify-between">
+                <h2 class="text-lg font-bold text-gray-800 dark:text-white">อัปโหลดสลิปโอนเงิน</h2>
+                <button
+                    type="button"
+                    onclick="const m = document.getElementById('uploadSlipModal'); m.classList.add('hidden'); m.classList.remove('flex')"
+                    class="text-2xl leading-none text-gray-400 hover:text-gray-600"
+                >
+                    &times;
+                </button>
+            </div>
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+                action="{{ route('admin.sales.orders.slip.upload', $order->id) }}"
+            >
+                @csrf
+
+                <div class="mb-4">
+                    <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        เลือกไฟล์สลิป (JPG, PNG, PDF)
+                    </label>
+                    <input
+                        type="file"
+                        name="slip"
+                        accept="image/*,.pdf"
+                        required
+                        class="block w-full rounded-md border border-gray-300 p-2.5 text-sm text-gray-700 focus:border-gray-400 focus:outline-none dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
+                    >
+                </div>
+
+                <div class="flex justify-end gap-3">
+                    <button
+                        type="button"
+                        onclick="const m = document.getElementById('uploadSlipModal'); m.classList.add('hidden'); m.classList.remove('flex')"
+                        class="rounded-md border border-gray-300 px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300"
+                    >
+                        ยกเลิก
+                    </button>
+
+                    <button type="submit" class="primary-button">
+                        อัปโหลด
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     @pushOnce('scripts')
         <script>
             window.showSlipModal = function(url) {
@@ -528,6 +587,14 @@
                 const img = document.getElementById('slipModalImage');
                 if (modal && img) {
                     img.src = url;
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                }
+            };
+
+            window.showUploadSlipModal = function() {
+                const modal = document.getElementById('uploadSlipModal');
+                if (modal) {
                     modal.classList.remove('hidden');
                     modal.classList.add('flex');
                 }
