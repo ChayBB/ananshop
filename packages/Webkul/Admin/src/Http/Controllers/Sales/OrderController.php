@@ -83,6 +83,29 @@ class OrderController extends Controller
     }
 
     /**
+     * Upload payment slip for a credit customer's order.
+     *
+     * @param  int  $orderId
+     * @return RedirectResponse
+     */
+    public function uploadCreditSlip($orderId)
+    {
+        request()->validate([
+            'slip' => ['required', 'file', 'mimes:jpg,jpeg,png,gif,webp,pdf', 'max:10240'],
+        ]);
+
+        $order = $this->orderRepository->findOrFail($orderId);
+
+        $path = request()->file('slip')->store("order_slips/{$order->id}", 'public');
+
+        $order->update(['slip_path' => $path]);
+
+        session()->flash('success', 'อัปโหลดสลิปโอนเงินเรียบร้อยแล้ว');
+
+        return redirect()->route('admin.sales.credit.index');
+    }
+
+    /**
      * Update order custom status and/or payment method.
      *
      * @return RedirectResponse

@@ -72,6 +72,8 @@ Route::prefix('sales')->group(function () {
      */
     Route::controller(OrderController::class)->prefix('credit')->group(function () {
         Route::get('', 'creditIndex')->name('admin.sales.credit.index');
+
+        Route::post('slip/{order_id}', 'uploadCreditSlip')->name('admin.sales.credit.slip.upload');
     });
 
     /**

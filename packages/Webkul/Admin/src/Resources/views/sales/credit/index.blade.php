@@ -9,10 +9,7 @@
             @media (min-width: 768px) {
                 .admin-orders-grid, .admin-orders-grid-header {
                     display: grid !important;
-                    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
-                }
-                .admin-orders-grid-slip {
-                    grid-column-start: auto !important;
+                    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
                 }
             }
             @media (min-width: 525px) and (max-width: 767px) {
@@ -20,17 +17,11 @@
                     display: grid !important;
                     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
                 }
-                .admin-orders-grid-slip {
-                    grid-column-start: 2 !important;
-                }
             }
             @media (max-width: 524px) {
                 .admin-orders-grid, .admin-orders-grid-header {
                     display: grid !important;
                     grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
-                }
-                .admin-orders-grid-slip {
-                    grid-column-start: auto !important;
                 }
             }
         </style>
@@ -64,8 +55,7 @@
                 <div class="row admin-orders-grid-header items-center border-b px-2 sm:px-4 py-2.5 dark:border-gray-800">
                     <div
                         class="flex select-none items-center gap-2.5"
-                        :class="{ 'admin-orders-grid-slip': index === 4 }"
-                        v-for="(columnGroup, index) in [['increment_id', 'created_at', 'status'], ['base_grand_total', 'method', 'channel_id'], ['full_name', 'customer_email', 'location'], ['items'], ['slip_path']]"
+                        v-for="columnGroup in [['increment_id', 'created_at', 'status'], ['base_grand_total', 'method', 'channel_id'], ['full_name', 'customer_email', 'location'], ['items'], ['credit_status'], ['slip_path']]"
                     >
                         <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
                             <span class="[&>*]:after:content-['_/_']">
@@ -165,8 +155,15 @@
                     >
                     </div>
 
+                    <!-- Credit Used / Remaining Section -->
+                    <div
+                        class="flex flex-col gap-1.5 text-xs sm:text-sm"
+                        v-html="record.credit_status"
+                    >
+                    </div>
+
                     <!-- Slip Section -->
-                    <div class="flex items-center justify-between gap-x-2 admin-orders-grid-slip">
+                    <div class="flex items-center justify-between gap-x-2">
                         <div
                             class="flex flex-col gap-1.5 text-xs sm:text-sm"
                             v-html="record.slip_path"
@@ -192,6 +189,55 @@
         </div>
     </div>
 
+    <!-- Upload Slip Modal -->
+    <div id="uploadSlipModal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/50 px-4" onclick="this.classList.add('hidden'); this.classList.remove('flex')">
+        <div class="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl dark:bg-gray-900" onclick="event.stopPropagation()">
+            <div class="mb-4 flex items-center justify-between">
+                <h2 class="text-lg font-bold text-gray-800 dark:text-white">อัปโหลดสลิปโอนเงิน</h2>
+                <button
+                    type="button"
+                    onclick="const m = document.getElementById('uploadSlipModal'); m.classList.add('hidden'); m.classList.remove('flex')"
+                    class="text-2xl leading-none text-gray-400 hover:text-gray-600"
+                >
+                    &times;
+                </button>
+            </div>
+
+            <form id="uploadSlipForm" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="mb-4">
+                    <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        เลือกไฟล์สลิป (JPG, PNG, PDF)
+                    </label>
+                    <input
+                        type="file"
+                        name="slip"
+                        accept="image/*,.pdf"
+                        required
+                        class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-700 focus:border-gray-400 focus:outline-none dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
+                    >
+                </div>
+
+                <div class="flex justify-end gap-3">
+                    <button
+                        type="button"
+                        onclick="const m = document.getElementById('uploadSlipModal'); m.classList.add('hidden'); m.classList.remove('flex')"
+                        class="rounded-lg border border-gray-300 px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300"
+                    >
+                        ยกเลิก
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        อัปโหลด
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     @pushOnce('scripts')
         <script>
             window.showSlipModal = function(url) {
@@ -199,6 +245,16 @@
                 const img = document.getElementById('slipModalImage');
                 if (modal && img) {
                     img.src = url;
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                }
+            };
+
+            window.showUploadSlipModal = function(orderId) {
+                const modal = document.getElementById('uploadSlipModal');
+                const form = document.getElementById('uploadSlipForm');
+                if (modal && form) {
+                    form.action = '{{ route('admin.sales.credit.slip.upload', ':id') }}'.replace(':id', orderId);
                     modal.classList.remove('hidden');
                     modal.classList.add('flex');
                 }

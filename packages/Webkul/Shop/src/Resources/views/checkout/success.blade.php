@@ -63,6 +63,18 @@
 							</div>
 						</a>
 					@endif
+				@elseif ($order->payment->method === 'credit')
+					<div class="w-max rounded-2xl border-2 border-navyBlue bg-white px-11 py-3 text-center max-md:rounded-lg max-md:px-6 max-md:py-1.5">
+						<p class="text-base font-medium text-navyBlue">
+							ขอบคุณที่ใช้บริการเครดิตของเรา
+						</p>
+
+						@if (! is_null($creditRoundsRemaining))
+							<p class="text-sm text-zinc-500">
+								จำนวนเครดิตที่เหลือ: {{ $creditRoundsRemaining }} รอบ
+							</p>
+						@endif
+					</div>
 				@else
 					<!-- Upload Slip Button -->
 					<button

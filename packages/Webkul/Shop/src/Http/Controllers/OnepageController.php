@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Webkul\Checkout\Facades\Cart;
 use Webkul\MagicAI\Facades\MagicAI;
+use Webkul\Sales\Models\OrderProxy;
 use Webkul\Sales\Repositories\OrderRepository;
 
 class OnepageController extends Controller
@@ -94,6 +95,22 @@ class OnepageController extends Controller
             return redirect()->route('shop.customers.account.orders.view', $order->id);
         }
 
-        return view('shop::checkout.success', compact('order'));
+        $creditRoundsRemaining = null;
+
+        if (
+            $order->payment->method === 'credit'
+            && $order->customer
+            && $order->customer->group
+        ) {
+            $orderModel = OrderProxy::modelClass();
+
+            $creditRoundsUsed = $orderModel::where('customer_id', $order->customer_id)
+                ->whereHas('payment', fn ($query) => $query->where('method', 'credit'))
+                ->count();
+
+            $creditRoundsRemaining = max(($order->customer->group->credit_rounds ?? 0) - $creditRoundsUsed, 0);
+        }
+
+        return view('shop::checkout.success', compact('order', 'creditRoundsRemaining'));
     }
 }
