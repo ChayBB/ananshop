@@ -53,7 +53,7 @@
                     <template v-else>
                         <div
                             class="row grid min-h-[47px] items-center gap-2 border-b bg-gray-50 px-4 py-2 font-semibold text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
-                            style="grid-template-columns: 50px 145px 140px 75px 90px 90px 70px 140px 60px;"
+                            style="grid-template-columns: 50px 145px 130px 75px 90px 90px 70px 130px 100px;"
                         >
                             <template v-for="column in available.columns">
                                 <p
@@ -74,7 +74,7 @@
 
                             @if (bouncer()->hasPermission('sales.shipments.view'))
                                 <p
-                                    class="place-self-end"
+                                    class="place-self-end whitespace-nowrap"
                                     v-if="available.actions.length"
                                 >
                                     @lang('admin::app.components.datagrid.table.actions')
@@ -100,7 +100,7 @@
                         <div
                             v-for="record in available.records"
                             class="row grid items-center gap-2 border-b px-4 py-2.5 text-gray-600 transition-all hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-950"
-                            style="grid-template-columns: 50px 145px 140px 75px 90px 90px 70px 140px 60px;"
+                            style="grid-template-columns: 50px 145px 130px 75px 90px 90px 70px 130px 100px;"
                         >
                             <!-- ID -->
                             <p

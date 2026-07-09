@@ -98,6 +98,10 @@ class OrderDataGrid extends DataGrid
                     'value' => 'จัดส่ง',
                 ],
                 [
+                    'label' => 'จัดส่งโดยเครดิต',
+                    'value' => 'จัดส่งโดยเครดิต',
+                ],
+                [
                     'label' => 'เรียกเก็บเงินจากพนักงานขนส่ง',
                     'value' => 'เรียกเก็บเงินจากพนักงานขนส่ง',
                 ],
@@ -131,6 +135,7 @@ class OrderDataGrid extends DataGrid
                         return '<p class="label-completed">'.$status.'</p>';
 
                     case 'จัดส่ง':
+                    case 'จัดส่งโดยเครดิต':
                     case 'เรียกเก็บเงินจากพนักงานขนส่ง':
                         return '<p class="label-processing">'.$status.'</p>';
 

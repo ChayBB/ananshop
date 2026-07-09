@@ -28,27 +28,27 @@ return [
         'sort' => 1,
         'icon' => '',
     ], [
-        'key' => 'sales.shipments',
-        'name' => 'admin::app.components.layouts.sidebar.shipments',
-        'route' => 'admin.sales.shipments.index',
-        'sort' => 2,
-        'icon' => '',
-    ], [
         'key' => 'sales.cod',
         'name' => 'admin::app.components.layouts.sidebar.cod',
         'route' => 'admin.sales.cod.index',
-        'sort' => 3,
+        'sort' => 2,
         'icon' => '',
     ], [
         'key' => 'sales.credit',
         'name' => 'admin::app.components.layouts.sidebar.credit',
         'route' => 'admin.sales.credit.index',
-        'sort' => 4,
+        'sort' => 3,
         'icon' => '',
     ], [
         'key' => 'sales.transactions',
         'name' => 'admin::app.components.layouts.sidebar.transactions',
         'route' => 'admin.sales.transactions.index',
+        'sort' => 4,
+        'icon' => '',
+    ], [
+        'key' => 'sales.shipments',
+        'name' => 'admin::app.components.layouts.sidebar.shipments',
+        'route' => 'admin.sales.shipments.index',
         'sort' => 5,
         'icon' => '',
     ], [

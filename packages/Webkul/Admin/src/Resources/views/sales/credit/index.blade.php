@@ -9,7 +9,7 @@
             @media (min-width: 768px) {
                 .admin-orders-grid, .admin-orders-grid-header {
                     display: grid !important;
-                    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+                    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
                 }
             }
             @media (min-width: 525px) and (max-width: 767px) {
@@ -55,7 +55,7 @@
                 <div class="row admin-orders-grid-header items-center border-b px-2 sm:px-4 py-2.5 dark:border-gray-800">
                     <div
                         class="flex select-none items-center gap-2.5"
-                        v-for="columnGroup in [['increment_id', 'created_at', 'status'], ['base_grand_total', 'method', 'channel_id'], ['full_name', 'customer_email', 'location'], ['items'], ['credit_status'], ['slip_path']]"
+                        v-for="columnGroup in [['increment_id', 'created_at'], ['base_grand_total', 'method', 'channel_id'], ['full_name', 'customer_email', 'location'], ['items'], ['status'], ['credit_status'], ['slip_path']]"
                     >
                         <p class="text-gray-600 dark:text-gray-300 text-sm sm:text-base">
                             <span class="[&>*]:after:content-['_/_']">
@@ -114,8 +114,6 @@
                         <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-300">
                             @{{ record.created_at }}
                         </p>
-
-                        <p v-html="record.status"></p>
                     </div>
 
                     <!-- Total Amount, Pay Via, Channel -->
@@ -153,6 +151,11 @@
                         class="flex flex-col gap-1.5 text-xs sm:text-sm"
                         v-html="record.items"
                     >
+                    </div>
+
+                    <!-- Status Section -->
+                    <div class="flex flex-col gap-1.5">
+                        <p v-html="record.status"></p>
                     </div>
 
                     <!-- Credit Used / Remaining Section -->

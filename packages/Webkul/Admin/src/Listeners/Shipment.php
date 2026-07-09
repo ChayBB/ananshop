@@ -27,10 +27,16 @@ class Shipment extends Base
             // Update order custom status
             $order = $shipment->order;
             $isCOD = ($order->payment->method === 'cashondelivery' || $order->custom_status === 'เก็บเงินปลายทาง');
+            $isCredit = $order->payment->method === 'credit';
+
             if ($order->custom_status === 'ยืนยันการชำระเงินแล้ว') {
                 $newStatus = 'เสร็จสมบูรณ์';
+            } elseif ($isCOD) {
+                $newStatus = 'เรียกเก็บเงินจากพนักงานขนส่ง';
+            } elseif ($isCredit) {
+                $newStatus = 'จัดส่งโดยเครดิต';
             } else {
-                $newStatus = $isCOD ? 'เรียกเก็บเงินจากพนักงานขนส่ง' : 'จัดส่ง';
+                $newStatus = 'จัดส่ง';
             }
             $order->update(['custom_status' => $newStatus]);
         } catch (\Exception $e) {

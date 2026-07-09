@@ -31,7 +31,7 @@
             <template v-else>
                 <div
                     class="row grid min-h-[47px] items-center gap-2 border-b bg-gray-50 px-4 py-2 font-semibold text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
-                    style="grid-template-columns: 55px 115px 135px 90px 120px 140px 140px 75px;"
+                    style="grid-template-columns: 20px 88px 138px 68px 109px 132px 132px 105px 85px;"
                 >
                     <template v-for="column in available.columns">
                         <p
@@ -51,7 +51,7 @@
                     </template>
 
                     <p
-                        class="place-self-end"
+                        class="place-self-end whitespace-nowrap"
                         v-if="available.actions.length"
                     >
                         @lang('admin::app.components.datagrid.table.actions')
@@ -77,7 +77,7 @@
                     v-for="record in available.records"
                     class="row grid items-center gap-2 border-b px-4 py-2.5 text-gray-600 transition-all hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-950"
                     :class="{ 'cursor-pointer': record.actions.length }"
-                    style="grid-template-columns: 55px 115px 135px 90px 120px 140px 140px 75px;"
+                    style="grid-template-columns: 20px 88px 138px 68px 109px 132px 132px 105px 85px;"
                     @click="record.actions.length ? performAction(record.actions[0]) : null"
                 >
                     <template v-for="column in available.columns">
@@ -90,7 +90,7 @@
                     </template>
 
                     <p
-                        class="place-self-end"
+                        class="place-self-end whitespace-nowrap"
                         v-if="available.actions.length"
                     >
                         <span

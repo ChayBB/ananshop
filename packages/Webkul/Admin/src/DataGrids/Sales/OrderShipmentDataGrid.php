@@ -35,7 +35,8 @@ class OrderShipmentDataGrid extends DataGrid
                 'orders.increment_id as shipment_order_id',
                 'shipments.total_qty as shipment_total_qty',
                 'orders.created_at as order_date',
-                'shipments.created_at as shipment_created_at'
+                'shipments.created_at as shipment_created_at',
+                'orders.custom_status as order_custom_status'
             )
             ->addSelect(DB::raw('CONCAT('.DB::getTablePrefix().'order_address_shipping.first_name, " ", '.DB::getTablePrefix().'order_address_shipping.last_name) as shipped_to'))
             ->selectRaw('IF('.DB::getTablePrefix().'shipments.inventory_source_id IS NOT NULL,'.DB::getTablePrefix().'inventory_sources.name, '.DB::getTablePrefix().'shipments.inventory_source_name) as inventory_source_name');
@@ -117,6 +118,27 @@ class OrderShipmentDataGrid extends DataGrid
             'filterable' => true,
             'filterable_type' => 'date_range',
             'sortable' => true,
+        ]);
+
+        $this->addColumn([
+            'index' => 'shipping_status',
+            'label' => 'สถานะจัดส่ง',
+            'type' => 'string',
+            'searchable' => false,
+            'filterable' => false,
+            'sortable' => false,
+            'exportable' => false,
+            'closure' => function ($row) {
+                if ($row->order_custom_status === 'จัดส่งโดยเครดิต') {
+                    return '<span class="label-active">จัดส่งโดยเครดิต</span>';
+                }
+
+                $isShipped = in_array($row->order_custom_status, ['จัดส่ง', 'เรียกเก็บเงินจากพนักงานขนส่ง', 'เสร็จสมบูรณ์']);
+
+                return $isShipped
+                    ? '<span class="label-active">จัดส่งแล้ว</span>'
+                    : '<span class="label-pending">รอจัดส่ง</span>';
+            },
         ]);
     }
 

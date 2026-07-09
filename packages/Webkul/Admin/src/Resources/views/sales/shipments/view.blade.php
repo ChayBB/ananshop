@@ -14,7 +14,9 @@
             <div class="flex items-center gap-x-2.5">
                 <!-- Mark as Delivered Button -->
                 @php
-                    $isShipDisabled = in_array($order->custom_status, ['จัดส่ง', 'เรียกเก็บเงินจากพนักงานขนส่ง', 'เสร็จสมบูรณ์', 'ยกเลิกออร์เดอร์', 'คืนเงิน']);
+                    $isShipped = in_array($order->custom_status, ['จัดส่ง', 'จัดส่งโดยเครดิต', 'เรียกเก็บเงินจากพนักงานขนส่ง', 'เสร็จสมบูรณ์']);
+                    $isShipDisabled = $isShipped || in_array($order->custom_status, ['ยกเลิกออร์เดอร์', 'คืนเงิน']);
+                    $shipButtonLabel = $order->custom_status === 'จัดส่งโดยเครดิต' ? 'จัดส่งโดยเครดิต' : ($isShipped ? 'จัดส่งแล้ว' : 'รอจัดส่ง');
                 @endphp
 
                 <form action="{{ route('admin.sales.orders.update_custom_status', $order->id) }}" method="POST">
@@ -24,11 +26,11 @@
                         type="submit"
                         name="action"
                         value="ship"
-                        class="primary-button disabled:cursor-not-allowed disabled:opacity-50"
+                        class="flex cursor-pointer place-content-center items-center gap-x-1 whitespace-nowrap rounded-md border px-3 py-1.5 font-semibold text-white transition-all hover:opacity-90 focus:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 {{ $isShipped ? 'bg-green-600 border-green-700' : 'bg-yellow-500 border-yellow-600' }}"
                         @disabled($isShipDisabled)
                         @if ($isShipDisabled) title="ออร์เดอร์นี้จัดส่งเรียบร้อยแล้วหรืออยู่ในสถานะที่ไม่สามารถจัดส่งได้" @endif
                     >
-                        ส่งสำเร็จ
+                        {{ $shipButtonLabel }}
                     </button>
                 </form>
 

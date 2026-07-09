@@ -163,7 +163,7 @@ class OrderController extends Controller
 
             session()->flash('success', 'ย้ายรายชื่อออร์เดอร์นี้ไปแสดงในเมนู เก็บเงินปลายทาง เรียบร้อยแล้ว');
         } elseif ($action === 'confirm_payment') {
-            if (empty($order->slip_path) && $order->payment->method !== 'cashondelivery') {
+            if (empty($order->slip_path)) {
                 session()->flash('error', 'ไม่สามารถยืนยันการชำระเงินได้ เนื่องจากลูกค้ายังไม่ได้อัปโหลดสลิปหลักฐานการชำระเงิน');
 
                 return redirect()->back();
@@ -175,21 +175,27 @@ class OrderController extends Controller
                 return redirect()->back();
             }
 
-            $newStatus = in_array($order->custom_status, ['จัดส่ง', 'เรียกเก็บเงินจากพนักงานขนส่ง']) ? 'เสร็จสมบูรณ์' : 'ยืนยันการชำระเงินแล้ว';
+            $newStatus = in_array($order->custom_status, ['จัดส่ง', 'จัดส่งโดยเครดิต', 'เรียกเก็บเงินจากพนักงานขนส่ง']) ? 'เสร็จสมบูรณ์' : 'ยืนยันการชำระเงินแล้ว';
             $order->update(['custom_status' => $newStatus]);
             session()->flash('success', "อัปเดตสถานะเป็น: {$newStatus} เรียบร้อยแล้ว");
         } elseif ($action === 'ship') {
-            if (in_array($order->custom_status, ['จัดส่ง', 'เรียกเก็บเงินจากพนักงานขนส่ง', 'เสร็จสมบูรณ์', 'ยกเลิกออร์เดอร์', 'คืนเงิน'])) {
+            if (in_array($order->custom_status, ['จัดส่ง', 'จัดส่งโดยเครดิต', 'เรียกเก็บเงินจากพนักงานขนส่ง', 'เสร็จสมบูรณ์', 'ยกเลิกออร์เดอร์', 'คืนเงิน'])) {
                 session()->flash('error', 'ไม่สามารถจัดส่งออร์เดอร์นี้ได้เนื่องจากอยู่ในสถานะที่ไม่ถูกต้อง');
 
                 return redirect()->back();
             }
 
             $isCOD = ($order->payment->method === 'cashondelivery' || $order->custom_status === 'เก็บเงินปลายทาง');
+            $isCredit = $order->payment->method === 'credit';
+
             if ($order->custom_status === 'ยืนยันการชำระเงินแล้ว') {
                 $newStatus = 'เสร็จสมบูรณ์';
+            } elseif ($isCOD) {
+                $newStatus = 'เรียกเก็บเงินจากพนักงานขนส่ง';
+            } elseif ($isCredit) {
+                $newStatus = 'จัดส่งโดยเครดิต';
             } else {
-                $newStatus = $isCOD ? 'เรียกเก็บเงินจากพนักงานขนส่ง' : 'จัดส่ง';
+                $newStatus = 'จัดส่ง';
             }
             $order->update(['custom_status' => $newStatus]);
             session()->flash('success', "อัปเดตสถานะเป็น: {$newStatus} เรียบร้อยแล้ว");

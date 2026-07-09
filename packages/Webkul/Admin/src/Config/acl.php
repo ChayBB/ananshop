@@ -62,25 +62,10 @@ return [
         'route' => 'admin.sales.orders.cancel',
         'sort' => 3,
     ], [
-        'key' => 'sales.invoices',
-        'name' => 'admin::app.acl.invoices',
-        'route' => 'admin.sales.invoices.index',
-        'sort' => 2,
-    ], [
-        'key' => 'sales.invoices.view',
-        'name' => 'admin::app.acl.view',
-        'route' => 'admin.sales.invoices.view',
-        'sort' => 1,
-    ], [
-        'key' => 'sales.invoices.create',
-        'name' => 'admin::app.acl.create',
-        'route' => 'admin.sales.invoices.store',
-        'sort' => 2,
-    ], [
         'key' => 'sales.shipments',
         'name' => 'admin::app.acl.shipments',
         'route' => 'admin.sales.shipments.index',
-        'sort' => 3,
+        'sort' => 2,
     ], [
         'key' => 'sales.shipments.view',
         'name' => 'admin::app.acl.view',
@@ -90,6 +75,21 @@ return [
         'key' => 'sales.shipments.create',
         'name' => 'admin::app.acl.create',
         'route' => 'admin.sales.shipments.store',
+        'sort' => 2,
+    ], [
+        'key' => 'sales.invoices',
+        'name' => 'admin::app.acl.invoices',
+        'route' => 'admin.sales.invoices.index',
+        'sort' => 3,
+    ], [
+        'key' => 'sales.invoices.view',
+        'name' => 'admin::app.acl.view',
+        'route' => 'admin.sales.invoices.view',
+        'sort' => 1,
+    ], [
+        'key' => 'sales.invoices.create',
+        'name' => 'admin::app.acl.create',
+        'route' => 'admin.sales.invoices.store',
         'sort' => 2,
     ], [
         'key' => 'sales.cod',

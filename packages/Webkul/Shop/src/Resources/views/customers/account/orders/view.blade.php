@@ -134,7 +134,7 @@
                                     $badgeClass = 'label-pending';
                                     if (in_array($status, ['เสร็จสมบูรณ์', 'ยืนยันการชำระเงินแล้ว'])) {
                                         $badgeClass = 'label-completed';
-                                    } elseif (in_array($status, ['จัดส่ง', 'เรียกเก็บเงินจากพนักงานขนส่ง'])) {
+                                    } elseif (in_array($status, ['จัดส่ง', 'จัดส่งโดยเครดิต', 'เรียกเก็บเงินจากพนักงานขนส่ง'])) {
                                         $badgeClass = 'label-processing';
                                     } elseif (in_array($status, ['ยกเลิกออร์เดอร์', 'คืนเงิน'])) {
                                         $badgeClass = 'label-canceled';
@@ -491,7 +491,7 @@
                                         $badgeClass = 'label-pending';
                                         if (in_array($status, ['เสร็จสมบูรณ์', 'ยืนยันการชำระเงินแล้ว'])) {
                                             $badgeClass = 'label-completed';
-                                        } elseif (in_array($status, ['จัดส่ง', 'เรียกเก็บเงินจากพนักงานขนส่ง'])) {
+                                        } elseif (in_array($status, ['จัดส่ง', 'จัดส่งโดยเครดิต', 'เรียกเก็บเงินจากพนักงานขนส่ง'])) {
                                             $badgeClass = 'label-processing';
                                         } elseif (in_array($status, ['ยกเลิกออร์เดอร์', 'คืนเงิน'])) {
                                             $badgeClass = 'label-canceled';

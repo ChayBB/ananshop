@@ -108,9 +108,9 @@
                     name="action" 
                     value="confirm_payment" 
                     class="transparent-button px-3 py-1.5 hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed"
-                    @disabled((empty($order->slip_path) && $order->payment->method !== 'cashondelivery') || in_array($order->custom_status, ['ยืนยันการชำระเงินแล้ว', 'เสร็จสมบูรณ์', 'ยกเลิกออร์เดอร์', 'คืนเงิน']))
-                    @if (empty($order->slip_path) && $order->payment->method !== 'cashondelivery') 
-                        title="ไม่สามารถยืนยันการชำระเงินได้เนื่องจากยังไม่มีการอัปโหลดสลิป" 
+                    @disabled(empty($order->slip_path) || in_array($order->custom_status, ['ยืนยันการชำระเงินแล้ว', 'เสร็จสมบูรณ์', 'ยกเลิกออร์เดอร์', 'คืนเงิน']))
+                    @if (empty($order->slip_path))
+                        title="ไม่สามารถยืนยันการชำระเงินได้เนื่องจากยังไม่มีการอัปโหลดสลิป"
                     @elseif (in_array($order->custom_status, ['ยืนยันการชำระเงินแล้ว', 'เสร็จสมบูรณ์']))
                         title="ยืนยันการชำระเงินเรียบร้อยแล้ว" 
                     @elseif (in_array($order->custom_status, ['ยกเลิกออร์เดอร์', 'คืนเงิน']))
@@ -123,9 +123,9 @@
 
                 @if (bouncer()->hasPermission('sales.shipments.create'))
                     @php
-                        $isShipDisabled = in_array($order->custom_status, ['จัดส่ง', 'เรียกเก็บเงินจากพนักงานขนส่ง', 'เสร็จสมบูรณ์', 'ยกเลิกออร์เดอร์', 'คืนเงิน']);
+                        $isShipDisabled = in_array($order->custom_status, ['จัดส่ง', 'จัดส่งโดยเครดิต', 'เรียกเก็บเงินจากพนักงานขนส่ง', 'เสร็จสมบูรณ์', 'ยกเลิกออร์เดอร์', 'คืนเงิน']);
                         $shipTitle = '';
-                        if (in_array($order->custom_status, ['จัดส่ง', 'เรียกเก็บเงินจากพนักงานขนส่ง', 'เสร็จสมบูรณ์'])) {
+                        if (in_array($order->custom_status, ['จัดส่ง', 'จัดส่งโดยเครดิต', 'เรียกเก็บเงินจากพนักงานขนส่ง', 'เสร็จสมบูรณ์'])) {
                             $shipTitle = 'จัดส่งสินค้าเรียบร้อยแล้ว';
                         } elseif (in_array($order->custom_status, ['ยกเลิกออร์เดอร์', 'คืนเงิน'])) {
                             $shipTitle = 'ไม่สามารถจัดส่งได้เนื่องจากออร์เดอร์ถูกยกเลิกหรือคืนเงินแล้ว';
@@ -384,6 +384,14 @@
                                     <span class="label-pending text-sm px-2.5 py-1 w-max rounded">
                                         รอชำระเงินปลายทาง
                                     </span>
+
+                                    <button
+                                        type="button"
+                                        class="w-max cursor-pointer rounded-md border border-gray-300 px-2.5 py-1.5 text-sm font-medium text-gray-600 transition-all hover:bg-gray-100 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-800"
+                                        onclick="window.showUploadSlipModal()"
+                                    >
+                                        อัปโหลดสลิป
+                                    </button>
                                 @endif
                             </div>
                         @else
@@ -916,6 +924,46 @@
                     </x-slot>
                 </x-admin::accordion>
 
+                <!-- Shipment Information-->
+                <x-admin::accordion>
+                    <x-slot:header>
+                        <p class="p-2.5 text-base font-semibold text-gray-600 dark:text-gray-300">
+                            @lang('admin::app.sales.orders.view.shipments') ({{ count($order->shipments) }})
+                        </p>
+                    </x-slot>
+
+                    <x-slot:content>
+                        @forelse ($order->shipments as $shipment)
+                            <div class="grid gap-y-2.5">
+                                <div>
+                                    <!-- Shipment Id -->
+                                    <p class="font-semibold text-gray-800 dark:text-white">
+                                        @lang('admin::app.sales.orders.view.shipment', ['shipment' => $shipment->id])
+                                    </p>
+
+                                    <!-- Shipment Created -->
+                                    <p class="text-gray-600 dark:text-gray-300">
+                                        {{ core()->formatDate($shipment->created_at, 'd M, Y H:i:s a') }}
+                                    </p>
+                                </div>
+
+                                <div class="flex gap-2.5">
+                                    <a
+                                        href="{{ route('admin.sales.shipments.view', $shipment->id) }}"
+                                        class="text-sm text-blue-600 transition-all hover:underline"
+                                    >
+                                        @lang('admin::app.sales.orders.view.view')
+                                    </a>
+                                </div>
+                            </div>
+                        @empty
+                            <p class="text-gray-600 dark:text-gray-300">
+                                @lang('admin::app.sales.orders.view.no-shipment-found')
+                            </p>
+                        @endforelse
+                    </x-slot>
+                </x-admin::accordion>
+
                 <!-- Invoice Information-->
                 <x-admin::accordion>
                     <x-slot:header>
@@ -960,46 +1008,6 @@
                         @empty
                             <p class="text-gray-600 dark:text-gray-300">
                                 @lang('admin::app.sales.orders.view.no-invoice-found')
-                            </p>
-                        @endforelse
-                    </x-slot>
-                </x-admin::accordion>
-
-                <!-- Shipment Information-->
-                <x-admin::accordion>
-                    <x-slot:header>
-                        <p class="p-2.5 text-base font-semibold text-gray-600 dark:text-gray-300">
-                            @lang('admin::app.sales.orders.view.shipments') ({{ count($order->shipments) }})
-                        </p>
-                    </x-slot>
-
-                    <x-slot:content>
-                        @forelse ($order->shipments as $shipment)
-                            <div class="grid gap-y-2.5">
-                                <div>
-                                    <!-- Shipment Id -->
-                                    <p class="font-semibold text-gray-800 dark:text-white">
-                                        @lang('admin::app.sales.orders.view.shipment', ['shipment' => $shipment->id])
-                                    </p>
-
-                                    <!-- Shipment Created -->
-                                    <p class="text-gray-600 dark:text-gray-300">
-                                        {{ core()->formatDate($shipment->created_at, 'd M, Y H:i:s a') }}
-                                    </p>
-                                </div>
-
-                                <div class="flex gap-2.5">
-                                    <a
-                                        href="{{ route('admin.sales.shipments.view', $shipment->id) }}"
-                                        class="text-sm text-blue-600 transition-all hover:underline"
-                                    >
-                                        @lang('admin::app.sales.orders.view.view')
-                                    </a>
-                                </div>
-                            </div>
-                        @empty
-                            <p class="text-gray-600 dark:text-gray-300">
-                                @lang('admin::app.sales.orders.view.no-shipment-found')
                             </p>
                         @endforelse
                     </x-slot>
