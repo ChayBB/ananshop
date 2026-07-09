@@ -39,10 +39,10 @@ WORKDIR /app
 COPY . .
 
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress \
-    && npm ci && npm run build \
-    && (cd packages/Webkul/Admin && npm ci && npm run build) \
-    && (cd packages/Webkul/Shop && npm ci && npm run build) \
-    && (cd packages/Webkul/Installer && npm ci && npm run build) \
+    && npm install && npm run build \
+    && (cd packages/Webkul/Admin && npm install && npm run build) \
+    && (cd packages/Webkul/Shop && npm install && npm run build) \
+    && (cd packages/Webkul/Installer && npm install && npm run build) \
     && rm -rf node_modules \
         packages/Webkul/Admin/node_modules \
         packages/Webkul/Shop/node_modules \
