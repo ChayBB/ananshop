@@ -104,7 +104,7 @@
 
                     <!-- Email -->
                     <x-shop::form.control-group>
-                        <x-shop::form.control-group.label class="required">
+                        <x-shop::form.control-group.label>
                             @lang('shop::app.customers.signup-form.email')
                         </x-shop::form.control-group.label>
 
@@ -112,12 +112,11 @@
                             type="email"
                             class="px-6 py-4 max-md:py-3 max-sm:py-2"
                             name="email"
-                            rules="required|email"
+                            rules="email"
                             :value="old('email')"
                             :label="trans('shop::app.customers.signup-form.email')"
                             placeholder="email@example.com"
                             :aria-label="trans('shop::app.customers.signup-form.email')"
-                            aria-required="true"
                         />
 
                         <x-shop::form.control-group.error control-name="email" />

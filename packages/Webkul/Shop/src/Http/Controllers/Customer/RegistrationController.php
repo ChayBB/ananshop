@@ -48,7 +48,11 @@ class RegistrationController extends Controller
     {
         $customerGroup = core()->getConfigData('customer.settings.create_new_account_options.default_group');
 
-        $subscription = $this->subscriptionRepository->findOneWhere(['email' => request()->input('email')]);
+        $hasEmail = ! empty(request()->input('email'));
+
+        $subscription = $hasEmail
+            ? $this->subscriptionRepository->findOneWhere(['email' => request()->input('email')])
+            : null;
 
         $data = array_merge($registrationRequest->only([
             'first_name',
@@ -57,9 +61,10 @@ class RegistrationController extends Controller
             'password_confirmation',
             'is_subscribed',
         ]), [
+            'email' => request()->input('email') ?: null,
             'password' => bcrypt(request()->input('password')),
             'api_token' => Str::random(80),
-            'is_verified' => ! core()->getConfigData('customer.settings.email.verification'),
+            'is_verified' => ! $hasEmail || ! core()->getConfigData('customer.settings.email.verification'),
             'customer_group_id' => $this->customerGroupRepository->findOneWhere(['code' => $customerGroup])->id,
             'channel_id' => core()->getCurrentChannel()->id,
             'token' => md5(uniqid(rand(), true)),
@@ -77,7 +82,8 @@ class RegistrationController extends Controller
         }
 
         if (
-            ! empty($data['is_subscribed'])
+            $hasEmail
+            && ! empty($data['is_subscribed'])
             && ! $subscription
         ) {
             Event::dispatch('customer.subscription.before');
@@ -97,7 +103,7 @@ class RegistrationController extends Controller
 
         Event::dispatch('customer.registration.after', $customer);
 
-        if (core()->getConfigData('customer.settings.email.verification')) {
+        if ($hasEmail && core()->getConfigData('customer.settings.email.verification')) {
             session()->flash('success', trans('shop::app.customers.signup-form.success-verify'));
         } else {
             session()->flash('success', trans('shop::app.customers.signup-form.success'));

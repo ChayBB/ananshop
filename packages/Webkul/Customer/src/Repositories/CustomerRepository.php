@@ -87,6 +87,10 @@ class CustomerRepository extends Repository
      */
     public function syncNewRegisteredCustomerInformation($customer)
     {
+        if (empty($customer->email)) {
+            return;
+        }
+
         /**
          * Setting registered customer to orders.
          */
