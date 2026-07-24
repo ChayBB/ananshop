@@ -34,6 +34,14 @@
 				@endif
 			</p>
 
+			<p class="text-xl max-md:text-sm">
+				<span class="font-bold">
+					@lang('shop::app.checkout.onepage.summary.grand-total')
+				</span>
+
+				{{ core()->formatPrice($order->grand_total, $order->order_currency_code) }}
+			</p>
+
 			<p class="font-medium md:text-2xl">
 				@lang('shop::app.checkout.success.thanks')
 			</p>
