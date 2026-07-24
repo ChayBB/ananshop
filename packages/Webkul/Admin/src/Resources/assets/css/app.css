@@ -455,7 +455,8 @@
     .label-fraud,
     .label-pending_payment,
     .label-completed,
-    .label-active {
+    .label-active,
+    .label-credit-pending {
         @apply text-[12px] text-white font-semibold py-px px-1.5 max-w-max rounded-[35px];
     }
 
@@ -484,6 +485,10 @@
 
     .label-info {
         @apply bg-slate-400;
+    }
+
+    .label-credit-pending {
+        @apply bg-blue-800;
     }
 
     /* status */

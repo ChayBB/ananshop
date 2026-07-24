@@ -122,11 +122,17 @@ class OrderDataGrid extends DataGrid
             'closure' => function ($row) {
                 $status = $row->custom_status ?? 'รอดำเนินการ';
                 $isCredit = ! empty($row->method) && str_contains($row->method, 'credit');
+                $isCreditPending = false;
 
                 if (empty($row->slip_path) && $isCredit) {
                     if (in_array($status, ['รอดำเนินการ', 'เสร็จสมบูรณ์', 'ยืนยันการชำระเงินแล้ว'])) {
                         $status = 'รอยืนยันการชำระเงิน';
+                        $isCreditPending = true;
                     }
+                }
+
+                if ($isCreditPending) {
+                    return '<p class="label-credit-pending">ลูกค้าเครดิต รอยืนยันการชำระเงิน</p>';
                 }
 
                 switch ($status) {

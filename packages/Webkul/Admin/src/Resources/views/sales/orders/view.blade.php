@@ -13,19 +13,23 @@
                     @lang('admin::app.sales.orders.view.title', ['order_id' => $order->increment_id])
                 </p>
 
-                <!-- Custom Status Badge (Red bar / Green completed) -->
+                <!-- Custom Status Badge (Red bar / Green completed / Blue credit-pending) -->
                 @php
                     $customStatus = $order->custom_status ?? 'รอดำเนินการ';
+                    $isCreditPending = false;
 
                     if (empty($order->slip_path) && $order->payment->method === 'credit') {
                         if (in_array($customStatus, ['รอดำเนินการ', 'เสร็จสมบูรณ์', 'ยืนยันการชำระเงินแล้ว'])) {
-                            $customStatus = 'รอยืนยันการชำระเงิน';
+                            $customStatus = 'ลูกค้าเครดิต รอยืนยันการชำระเงิน';
+                            $isCreditPending = true;
                         }
                     }
 
-                    $badgeStyle = ($customStatus === 'เสร็จสมบูรณ์') 
-                        ? 'background-color: #16a34a;' // Green for 'เสร็จสมบูรณ์'
-                        : 'background-color: #dc2626;'; // Red for everything else
+                    $badgeStyle = match (true) {
+                        $isCreditPending => 'background-color: #1e40af;', // Dark blue for credit customers awaiting confirmation
+                        $customStatus === 'เสร็จสมบูรณ์' => 'background-color: #16a34a;', // Green for 'เสร็จสมบูรณ์'
+                        default => 'background-color: #dc2626;', // Red for everything else
+                    };
                 @endphp
 
                 <span 
