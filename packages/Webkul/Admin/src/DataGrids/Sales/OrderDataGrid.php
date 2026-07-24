@@ -121,9 +121,9 @@ class OrderDataGrid extends DataGrid
             'sortable' => true,
             'closure' => function ($row) {
                 $status = $row->custom_status ?? 'รอดำเนินการ';
-                $isCOD = ! empty($row->method) && str_contains($row->method, 'cashondelivery');
+                $isCredit = ! empty($row->method) && str_contains($row->method, 'credit');
 
-                if (empty($row->slip_path) && ! $isCOD) {
+                if (empty($row->slip_path) && $isCredit) {
                     if (in_array($status, ['รอดำเนินการ', 'เสร็จสมบูรณ์', 'ยืนยันการชำระเงินแล้ว'])) {
                         $status = 'รอยืนยันการชำระเงิน';
                     }

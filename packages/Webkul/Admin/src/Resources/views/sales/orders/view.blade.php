@@ -16,8 +16,8 @@
                 <!-- Custom Status Badge (Red bar / Green completed) -->
                 @php
                     $customStatus = $order->custom_status ?? 'รอดำเนินการ';
-                    
-                    if (empty($order->slip_path) && $order->payment->method !== 'cashondelivery') {
+
+                    if (empty($order->slip_path) && $order->payment->method === 'credit') {
                         if (in_array($customStatus, ['รอดำเนินการ', 'เสร็จสมบูรณ์', 'ยืนยันการชำระเงินแล้ว'])) {
                             $customStatus = 'รอยืนยันการชำระเงิน';
                         }
