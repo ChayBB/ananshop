@@ -77,6 +77,45 @@
                             <x-admin::form.control-group.error control-name="email" />
                         </x-admin::form.control-group>
 
+                        <div class="flex gap-4 max-sm:flex-wrap">
+                            <!-- Password -->
+                            <x-admin::form.control-group class="w-full">
+                                <x-admin::form.control-group.label>
+                                    @lang('admin::app.customers.customers.index.create.password')
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::form.control-group.control
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    rules="min:6"
+                                    :label="trans('admin::app.customers.customers.index.create.password')"
+                                    :placeholder="trans('admin::app.customers.customers.index.create.password')"
+                                    ref="password"
+                                />
+
+                                <x-admin::form.control-group.error control-name="password" />
+                            </x-admin::form.control-group>
+
+                            <!-- Confirm Password -->
+                            <x-admin::form.control-group class="w-full">
+                                <x-admin::form.control-group.label>
+                                    @lang('admin::app.customers.customers.index.create.confirm-password')
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::form.control-group.control
+                                    type="password"
+                                    id="password_confirmation"
+                                    name="password_confirmation"
+                                    rules="confirmed:@password"
+                                    :label="trans('admin::app.customers.customers.index.create.confirm-password')"
+                                    :placeholder="trans('admin::app.customers.customers.index.create.confirm-password')"
+                                />
+
+                                <x-admin::form.control-group.error control-name="password_confirmation" />
+                            </x-admin::form.control-group>
+                        </div>
+
                         <!-- Contact Number -->
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label>

@@ -2132,6 +2132,8 @@ return [
 
                 'create' => [
                     'channel' => 'ערוץ',
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
                     'contact-number' => 'מספר טלפון',
                     'create-btn' => 'צור לקוח',
                     'create-success' => 'יצירת הלקוח בוצעה בהצלחה',
@@ -2274,6 +2276,9 @@ return [
                 ],
 
                 'edit' => [
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
+                    'password-hint' => 'Leave blank to keep the current password',
                     'contact-number' => 'מספר טלפון',
                     'customer-group' => 'קבוצת לקוח',
                     'date-of-birth' => 'תאריך לידה',

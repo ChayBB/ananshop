@@ -2132,6 +2132,8 @@ return [
 
                 'create' => [
                     'channel' => 'Saluran',
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
                     'contact-number' => 'Nomor Kontak',
                     'create-btn' => 'Tambah Pelanggan',
                     'create-success' => 'Pelanggan berhasil ditambahkan',
@@ -2274,6 +2276,9 @@ return [
                 ],
 
                 'edit' => [
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
+                    'password-hint' => 'Leave blank to keep the current password',
                     'contact-number' => 'Nomor Kontak',
                     'customer-group' => 'Grup Pelanggan',
                     'date-of-birth' => 'Tanggal Lahir',

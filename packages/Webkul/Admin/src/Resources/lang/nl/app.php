@@ -2132,6 +2132,8 @@ return [
 
                 'create' => [
                     'channel' => 'Kanaal',
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
                     'contact-number' => 'Contactnummer',
                     'create-btn' => 'Klant aanmaken',
                     'create-success' => 'Klant succesvol aangemaakt',
@@ -2274,6 +2276,9 @@ return [
                 ],
 
                 'edit' => [
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
+                    'password-hint' => 'Leave blank to keep the current password',
                     'contact-number' => 'Contactnummer',
                     'customer-group' => 'Klantengroep',
                     'date-of-birth' => 'Geboortedatum',

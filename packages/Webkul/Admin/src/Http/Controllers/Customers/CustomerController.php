@@ -86,9 +86,11 @@ class CustomerController extends Controller
             'email' => 'nullable|email|unique:customers,email,NULL,id,channel_id,'.request('channel_id'),
             'date_of_birth' => 'date|before:today',
             'phone' => ['unique:customers,phone', new PhoneNumber],
+            'password' => 'nullable|min:6|confirmed',
+            'password_confirmation' => 'nullable|required_with:password',
         ]);
 
-        $password = rand(100000, 10000000);
+        $password = request('password') ?: rand(100000, 10000000);
 
         Event::dispatch('customer.registration.before');
 
@@ -153,6 +155,8 @@ class CustomerController extends Controller
             'email' => 'nullable|email|unique:customers,email,'.$id,
             'date_of_birth' => 'date|before:today',
             'phone' => ['unique:customers,phone,'.$id, new PhoneNumber],
+            'password' => 'nullable|min:6|confirmed',
+            'password_confirmation' => 'nullable|required_with:password',
         ]);
 
         $data = request()->only([
@@ -165,6 +169,7 @@ class CustomerController extends Controller
             'customer_group_id',
             'status',
             'is_suspended',
+            'password',
         ]);
 
         if (empty($data['phone'])) {
@@ -173,6 +178,12 @@ class CustomerController extends Controller
 
         if (empty($data['email'])) {
             $data['email'] = null;
+        }
+
+        if (! empty($data['password'])) {
+            $data['password'] = bcrypt($data['password']);
+        } else {
+            unset($data['password']);
         }
 
         Event::dispatch('customer.update.before', $id);

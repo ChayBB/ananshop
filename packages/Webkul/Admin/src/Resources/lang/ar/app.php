@@ -2132,6 +2132,8 @@ return [
 
                 'create' => [
                     'channel' => 'القناة',
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
                     'contact-number' => 'رقم الاتصال',
                     'create-btn' => 'إنشاء عميل',
                     'create-success' => 'تم إنشاء العميل بنجاح',
@@ -2274,6 +2276,9 @@ return [
                 ],
 
                 'edit' => [
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
+                    'password-hint' => 'Leave blank to keep the current password',
                     'contact-number' => 'رقم الاتصال',
                     'customer-group' => 'مجموعة العملاء',
                     'date-of-birth' => 'تاريخ الميلاد',

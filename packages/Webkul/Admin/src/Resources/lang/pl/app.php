@@ -2132,6 +2132,8 @@ return [
 
                 'create' => [
                     'channel' => 'Kanał',
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
                     'contact-number' => 'Numer kontaktowy',
                     'create-btn' => 'Utwórz klienta',
                     'create-success' => 'Klient został pomyślnie utworzony',
@@ -2274,6 +2276,9 @@ return [
                 ],
 
                 'edit' => [
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
+                    'password-hint' => 'Leave blank to keep the current password',
                     'contact-number' => 'Numer kontaktowy',
                     'customer-group' => 'Grupa klienta',
                     'date-of-birth' => 'Data urodzenia',

@@ -1951,6 +1951,7 @@ return [
                 ],
                 'create' => [
                     'channel' => 'ช่องทางการขาย',
+                    'confirm-password' => 'ยืนยันรหัสผ่าน',
                     'contact-number' => 'เบอร์โทรศัพท์',
                     'create-btn' => 'สร้างลูกค้าใหม่',
                     'create-success' => 'ลูกค้าถูกสร้างเรียบร้อยแล้ว',
@@ -1963,6 +1964,7 @@ return [
                     'last-name' => 'นามสกุล',
                     'male' => 'ชาย',
                     'other' => 'อื่นๆ',
+                    'password' => 'รหัสผ่าน',
                     'save-btn' => 'บันทึกข้อมูลลูกค้า',
                     'select-customer-group' => 'เลือกลูกค้ากลุ่ม',
                     'select-gender' => 'เลือกเพศ',
@@ -2084,6 +2086,7 @@ return [
                     ],
                 ],
                 'edit' => [
+                    'confirm-password' => 'ยืนยันรหัสผ่าน',
                     'contact-number' => 'หมายเลขโทรศัพท์ติดต่อ',
                     'customer-group' => 'กลุ่มลูกค้า',
                     'date-of-birth' => 'วันเกิด',
@@ -2095,6 +2098,8 @@ return [
                     'last-name' => 'นามสกุล',
                     'male' => 'ชาย',
                     'other' => 'อื่นๆ',
+                    'password' => 'รหัสผ่าน',
+                    'password-hint' => 'เว้นว่างไว้หากไม่ต้องการเปลี่ยนรหัสผ่าน',
                     'save-btn' => 'บันทึกลูกค้า',
                     'select-customer-group' => 'เลือกกลุ่มลูกค้า',
                     'select-gender' => 'เลือกเพศ',

@@ -2132,6 +2132,7 @@ return [
 
                 'create' => [
                     'channel' => 'Channel',
+                    'confirm-password' => 'Confirm Password',
                     'contact-number' => 'Contact Number',
                     'create-btn' => 'Create Customer',
                     'create-success' => 'Customer created successfully',
@@ -2144,6 +2145,7 @@ return [
                     'last-name' => 'Last Name',
                     'male' => 'Male',
                     'other' => 'Other',
+                    'password' => 'Password',
                     'save-btn' => 'Save customer',
                     'select-customer-group' => 'Select Customer Group',
                     'select-gender' => 'Select Gender',
@@ -2274,6 +2276,7 @@ return [
                 ],
 
                 'edit' => [
+                    'confirm-password' => 'Confirm Password',
                     'contact-number' => 'Contact Number',
                     'customer-group' => 'Customer Group',
                     'date-of-birth' => 'Date of Birth',
@@ -2285,6 +2288,8 @@ return [
                     'last-name' => 'Last Name',
                     'male' => 'Male',
                     'other' => 'Other',
+                    'password' => 'Password',
+                    'password-hint' => 'Leave blank to keep the current password',
                     'save-btn' => 'Save customer',
                     'select-customer-group' => 'Select Customer Group',
                     'select-gender' => 'Select Gender',

@@ -2132,6 +2132,8 @@ return [
 
                 'create' => [
                     'channel' => 'चैनल',
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
                     'contact-number' => 'संपर्क नंबर',
                     'create-btn' => 'ग्राहक बनाएं',
                     'create-success' => 'ग्राहक सफलतापूर्वक बनाया गया',
@@ -2274,6 +2276,9 @@ return [
                 ],
 
                 'edit' => [
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
+                    'password-hint' => 'Leave blank to keep the current password',
                     'contact-number' => 'संपर्क नंबर',
                     'customer-group' => 'ग्राहक समूह',
                     'date-of-birth' => 'जन्मतिथि',

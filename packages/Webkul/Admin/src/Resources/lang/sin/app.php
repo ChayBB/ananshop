@@ -2132,6 +2132,8 @@ return [
 
                 'create' => [
                     'channel' => 'නාලිකාව',
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
                     'contact-number' => 'සම්බන්ධ අංකය',
                     'create-btn' => 'පාරිභෝගිකයාගේ සාදය',
                     'create-success' => 'පාරිභෝගිකයා සාර්ථකව හරියට එකඟයි',
@@ -2274,6 +2276,9 @@ return [
                 ],
 
                 'edit' => [
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
+                    'password-hint' => 'Leave blank to keep the current password',
                     'contact-number' => 'සම්බන්ධ අංකය',
                     'customer-group' => 'පාරිභෝගික සමූහ',
                     'date-of-birth' => 'උපන් දිනය',

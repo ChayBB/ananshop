@@ -2132,6 +2132,8 @@ return [
 
                 'create' => [
                     'channel' => 'Kanal',
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
                     'contact-number' => 'İletişim Numarası',
                     'create-btn' => 'Müşteri Oluştur',
                     'create-success' => 'Müşteri başarıyla oluşturuldu',
@@ -2274,6 +2276,9 @@ return [
                 ],
 
                 'edit' => [
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
+                    'password-hint' => 'Leave blank to keep the current password',
                     'contact-number' => 'İletişim Numarası',
                     'customer-group' => 'Müşteri Grubu',
                     'date-of-birth' => 'Doğum Tarihi',

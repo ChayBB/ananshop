@@ -101,7 +101,50 @@
             
                             <x-admin::form.control-group.error control-name="email" />
                         </x-admin::form.control-group>
-            
+
+                        <div class="flex gap-4 max-sm:flex-wrap">
+                            <!-- Password -->
+                            <x-admin::form.control-group class="mb-2.5 w-full">
+                                <x-admin::form.control-group.label>
+                                    @lang('admin::app.customers.customers.view.edit.password')
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::form.control-group.control
+                                    type="password"
+                                    name="password"
+                                    id="password"
+                                    rules="min:6"
+                                    :label="trans('admin::app.customers.customers.view.edit.password')"
+                                    :placeholder="trans('admin::app.customers.customers.view.edit.password')"
+                                    ref="password"
+                                />
+
+                                <x-admin::form.control-group.error control-name="password" />
+                            </x-admin::form.control-group>
+
+                            <!-- Confirm Password -->
+                            <x-admin::form.control-group class="mb-2.5 w-full">
+                                <x-admin::form.control-group.label>
+                                    @lang('admin::app.customers.customers.view.edit.confirm-password')
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::form.control-group.control
+                                    type="password"
+                                    name="password_confirmation"
+                                    id="password_confirmation"
+                                    rules="confirmed:@password"
+                                    :label="trans('admin::app.customers.customers.view.edit.confirm-password')"
+                                    :placeholder="trans('admin::app.customers.customers.view.edit.confirm-password')"
+                                />
+
+                                <x-admin::form.control-group.error control-name="password_confirmation" />
+                            </x-admin::form.control-group>
+                        </div>
+
+                        <p class="-mt-1.5 mb-2.5 text-xs text-gray-500 dark:text-gray-400">
+                            @lang('admin::app.customers.customers.view.edit.password-hint')
+                        </p>
+
                         <div class="flex gap-4 max-sm:flex-wrap">
                             <!-- Phone -->
                             <x-admin::form.control-group class="mb-2.5 w-full">

@@ -2132,6 +2132,8 @@ return [
 
                 'create' => [
                     'channel' => '渠道',
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
                     'contact-number' => '联系号码',
                     'create-btn' => '创建客户',
                     'create-success' => '成功创建客户',
@@ -2274,6 +2276,9 @@ return [
                 ],
 
                 'edit' => [
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
+                    'password-hint' => 'Leave blank to keep the current password',
                     'contact-number' => '联系号码',
                     'customer-group' => '客户组',
                     'date-of-birth' => '出生日期',

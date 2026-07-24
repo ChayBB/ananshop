@@ -2132,6 +2132,8 @@ return [
 
                 'create' => [
                     'channel' => 'کانال',
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
                     'contact-number' => 'شماره تماس',
                     'create-btn' => 'ایجاد مشتری',
                     'create-success' => 'مشتری با موفقیت ایجاد شد',
@@ -2274,6 +2276,9 @@ return [
                 ],
 
                 'edit' => [
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
+                    'password-hint' => 'Leave blank to keep the current password',
                     'contact-number' => 'شماره تماس',
                     'customer-group' => 'گروه مشتری',
                     'date-of-birth' => 'تاریخ تولد',

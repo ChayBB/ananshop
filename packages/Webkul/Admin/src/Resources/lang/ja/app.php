@@ -2132,6 +2132,8 @@ return [
 
                 'create' => [
                     'channel' => 'チャンネル',
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
                     'contact-number' => '連絡先番号',
                     'create-btn' => '顧客を作成',
                     'create-success' => '顧客が正常に作成されました',
@@ -2274,6 +2276,9 @@ return [
                 ],
 
                 'edit' => [
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
+                    'password-hint' => 'Leave blank to keep the current password',
                     'contact-number' => '連絡先番号',
                     'customer-group' => '顧客グループ',
                     'date-of-birth' => '生年月日',

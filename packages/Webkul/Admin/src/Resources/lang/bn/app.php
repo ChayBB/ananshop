@@ -2132,6 +2132,8 @@ return [
 
                 'create' => [
                     'channel' => 'চ্যানেল',
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
                     'contact-number' => 'যোগাযোগ নম্বর',
                     'create-btn' => 'গ্রাহক তৈরি করুন',
                     'create-success' => 'গ্রাহক সফলভাবে তৈরি হয়েছে',
@@ -2274,6 +2276,9 @@ return [
                 ],
 
                 'edit' => [
+                    'confirm-password' => 'Confirm Password',
+                    'password' => 'Password',
+                    'password-hint' => 'Leave blank to keep the current password',
                     'contact-number' => 'যোগাযোগ নম্বর',
                     'customer-group' => 'গ্রাহক গ্রুপ',
                     'date-of-birth' => 'জন্ম তারিখ',
