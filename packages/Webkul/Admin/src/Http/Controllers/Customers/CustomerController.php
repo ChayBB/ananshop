@@ -83,7 +83,7 @@ class CustomerController extends Controller
             'last_name' => 'string|required',
             'gender' => 'required',
             'channel_id' => 'required|integer',
-            'email' => 'required|unique:customers,email,NULL,id,channel_id,'.request('channel_id'),
+            'email' => 'nullable|email|unique:customers,email,NULL,id,channel_id,'.request('channel_id'),
             'date_of_birth' => 'date|before:today',
             'phone' => ['unique:customers,phone', new PhoneNumber],
         ]);
@@ -110,11 +110,18 @@ class CustomerController extends Controller
             $data['phone'] = null;
         }
 
+        if (empty($data['email'])) {
+            $data['email'] = null;
+        }
+
         Event::dispatch('customer.create.before');
 
         $customer = $this->customerRepository->create($data);
 
-        if (core()->getConfigData('emails.general.notifications.emails.general.notifications.customer_account_credentials')) {
+        if (
+            $customer->email
+            && core()->getConfigData('emails.general.notifications.emails.general.notifications.customer_account_credentials')
+        ) {
             try {
                 Mail::queue(new NewCustomerNotification($customer, $password));
             } catch (\Exception $e) {
@@ -143,7 +150,7 @@ class CustomerController extends Controller
             'first_name' => 'string|required',
             'last_name' => 'string|required',
             'gender' => 'required',
-            'email' => 'required|unique:customers,email,'.$id,
+            'email' => 'nullable|email|unique:customers,email,'.$id,
             'date_of_birth' => 'date|before:today',
             'phone' => ['unique:customers,phone,'.$id, new PhoneNumber],
         ]);
@@ -162,6 +169,10 @@ class CustomerController extends Controller
 
         if (empty($data['phone'])) {
             $data['phone'] = null;
+        }
+
+        if (empty($data['email'])) {
+            $data['email'] = null;
         }
 
         Event::dispatch('customer.update.before', $id);

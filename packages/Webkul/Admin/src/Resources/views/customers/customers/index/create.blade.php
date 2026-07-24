@@ -61,7 +61,7 @@
 
                         <!-- Email -->
                         <x-admin::form.control-group>
-                            <x-admin::form.control-group.label class="required">
+                            <x-admin::form.control-group.label>
                                 @lang('admin::app.customers.customers.index.create.email')
                             </x-admin::form.control-group.label>
 
@@ -69,7 +69,7 @@
                                 type="email"
                                 id="email"
                                 name="email"
-                                rules="required|email"
+                                rules="email"
                                 :label="trans('admin::app.customers.customers.index.create.email')"
                                 placeholder="email@example.com"
                             />

@@ -85,16 +85,16 @@
             
                         <!-- Email -->
                         <x-admin::form.control-group>
-                            <x-admin::form.control-group.label class="required">
+                            <x-admin::form.control-group.label>
                                 @lang('admin::app.customers.customers.view.edit.email')
                             </x-admin::form.control-group.label>
-            
+
                             <x-admin::form.control-group.control
                                 type="email"
                                 name="email"
                                 ::value="customer.email"
                                 id="email"
-                                rules="required|email"
+                                rules="email"
                                 :label="trans('admin::app.customers.customers.view.edit.email')"
                                 placeholder="email@example.com"
                             />
