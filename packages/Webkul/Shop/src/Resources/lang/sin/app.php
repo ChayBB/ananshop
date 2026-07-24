@@ -1167,6 +1167,7 @@ return [
             ],
 
             'payment' => [
+                'manage-orders' => 'Manage orders to continue',
                 'payment-method' => 'ගෙවීම් ක්රමය',
             ],
 

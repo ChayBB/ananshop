@@ -4,7 +4,14 @@
     class="mb-4 rounded-md bg-red-100 p-4 text-sm font-medium text-red-700"
     v-if="creditLimitExceeded"
 >
-    @{{ creditLimitMessage }}
+    <p>@{{ creditLimitMessage }}</p>
+
+    <a
+        href="{{ route('shop.customers.account.orders.index') }}"
+        class="mt-1.5 block underline"
+    >
+        @lang('shop::app.checkout.onepage.payment.manage-orders')
+    </a>
 </div>
 
 <v-payment-methods
