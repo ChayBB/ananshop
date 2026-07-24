@@ -4,6 +4,7 @@ namespace Webkul\Payment\Payment;
 
 use Illuminate\Support\Facades\Storage;
 use Webkul\Customer\Repositories\CustomerRepository;
+use Webkul\Sales\Models\OrderProxy;
 
 class Credit extends Payment
 {
@@ -32,8 +33,30 @@ class Credit extends Payment
             $this->setCart();
         }
 
-        return $this->getConfigData('active')
-            && (bool) app(CustomerRepository::class)->getCurrentGroup()->credit;
+        if (
+            ! $this->getConfigData('active')
+            || ! (bool) app(CustomerRepository::class)->getCurrentGroup()->credit
+        ) {
+            return false;
+        }
+
+        $customer = auth()->guard()->user();
+
+        if (! $customer) {
+            return false;
+        }
+
+        $creditRounds = $customer->group->credit_rounds ?? 0;
+
+        // Every credit order still counts against the approved rounds until
+        // it's cancelled or refunded, not just once it's confirmed/paid off.
+        // Otherwise a customer could stack unlimited unpaid credit orders.
+        $usedRounds = OrderProxy::modelClass()::where('customer_id', $customer->id)
+            ->whereNotIn('custom_status', ['ยกเลิกออร์เดอร์', 'คืนเงิน'])
+            ->whereHas('payment', fn ($query) => $query->where('method', 'credit'))
+            ->count();
+
+        return $usedRounds < $creditRounds;
     }
 
     /**
