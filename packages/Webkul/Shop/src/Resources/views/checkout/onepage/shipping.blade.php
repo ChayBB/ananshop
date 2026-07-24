@@ -111,7 +111,7 @@
                             if (response.data.redirect_url) {
                                 window.location.href = response.data.redirect_url;
                             } else {
-                                this.$emit('processed', response.data.payment_methods);
+                                this.$emit('processed', response.data);
                             }
                         })
                         .catch(error => {

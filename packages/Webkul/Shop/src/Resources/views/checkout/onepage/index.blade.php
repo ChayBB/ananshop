@@ -158,6 +158,10 @@
 
                         paymentMethods: null,
 
+                        creditLimitExceeded: false,
+
+                        creditLimitMessage: '',
+
                         selectedPaymentMethod: null,
 
                         canPlaceOrder: false,
@@ -194,6 +198,8 @@
                             this.shippingMethods = null;
                         } else if (this.currentStep == 'payment') {
                             this.paymentMethods = null;
+                            this.creditLimitExceeded = false;
+                            this.creditLimitMessage = '';
                         }
                     },
 
@@ -201,7 +207,9 @@
                         if (this.currentStep == 'shipping') {
                             this.shippingMethods = data;
                         } else if (this.currentStep == 'payment') {
-                            this.paymentMethods = data;
+                            this.paymentMethods = data.payment_methods;
+                            this.creditLimitExceeded = !! data.credit_limit_exceeded;
+                            this.creditLimitMessage = data.credit_limit_message ?? '';
                         }
 
                         this.getCart();

@@ -36,27 +36,43 @@ class Credit extends Payment
         if (
             ! $this->getConfigData('active')
             || ! (bool) app(CustomerRepository::class)->getCurrentGroup()->credit
+            || ! auth()->guard()->user()
         ) {
             return false;
         }
 
+        return ! $this->isCreditLimitExceeded();
+    }
+
+    /**
+     * Whether the logged-in customer has used up all of their group's
+     * approved credit rounds. Every credit order still counts against the
+     * approved rounds until it's cancelled or refunded, not just once it's
+     * confirmed/paid off - otherwise a customer could stack unlimited
+     * unpaid credit orders.
+     *
+     * @return bool
+     */
+    public function isCreditLimitExceeded()
+    {
         $customer = auth()->guard()->user();
 
-        if (! $customer) {
+        if (
+            ! $customer
+            || ! $customer->group
+            || ! $customer->group->credit
+        ) {
             return false;
         }
 
         $creditRounds = $customer->group->credit_rounds ?? 0;
 
-        // Every credit order still counts against the approved rounds until
-        // it's cancelled or refunded, not just once it's confirmed/paid off.
-        // Otherwise a customer could stack unlimited unpaid credit orders.
         $usedRounds = OrderProxy::modelClass()::where('customer_id', $customer->id)
             ->whereNotIn('custom_status', ['ยกเลิกออร์เดอร์', 'คืนเงิน'])
             ->whereHas('payment', fn ($query) => $query->where('method', 'credit'))
             ->count();
 
-        return $usedRounds < $creditRounds;
+        return $usedRounds >= $creditRounds;
     }
 
     /**

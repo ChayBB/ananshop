@@ -8,6 +8,7 @@ use Webkul\CartRule\Exceptions\CouponUsageLimitExceededException;
 use Webkul\Checkout\Facades\Cart;
 use Webkul\Customer\Repositories\CustomerRepository;
 use Webkul\Payment\Facades\Payment;
+use Webkul\Payment\Payment\Credit as CreditPayment;
 use Webkul\Sales\Repositories\OrderRepository;
 use Webkul\Sales\Transformers\OrderResource;
 use Webkul\Shipping\Facades\Shipping;
@@ -109,7 +110,14 @@ class OnepageController extends APIController
 
         Cart::collectTotals();
 
-        return response()->json(Payment::getSupportedPaymentMethods());
+        $response = Payment::getSupportedPaymentMethods();
+
+        if (app(CreditPayment::class)->isCreditLimitExceeded()) {
+            $response['credit_limit_exceeded'] = true;
+            $response['credit_limit_message'] = 'เครดิตเกินกำหนด โปรดชำระยอด ค้างเพื่อทำรายการต่อ';
+        }
+
+        return response()->json($response);
     }
 
     /**

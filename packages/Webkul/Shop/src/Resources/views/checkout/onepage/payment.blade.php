@@ -1,5 +1,12 @@
 {!! view_render_event('bagisto.shop.checkout.onepage.payment_methods.before') !!}
 
+<div
+    class="mb-4 rounded-md bg-red-100 p-4 text-sm font-medium text-red-700"
+    v-if="creditLimitExceeded"
+>
+    @{{ creditLimitMessage }}
+</div>
+
 <v-payment-methods
     :methods="paymentMethods"
     @payment-method-selected="setSelectedPaymentMethod"
