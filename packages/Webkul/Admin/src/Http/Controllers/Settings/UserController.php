@@ -58,6 +58,10 @@ class UserController extends Controller
             'status',
         ]);
 
+        if (empty($data['email'])) {
+            $data['email'] = null;
+        }
+
         if ($data['password'] ?? null) {
             $data['password'] = bcrypt($data['password']);
 
@@ -242,6 +246,10 @@ class UserController extends Controller
     private function prepareUserData(UserForm $request, $id)
     {
         $data = $request->validated();
+
+        if (empty($data['email'])) {
+            $data['email'] = null;
+        }
 
         $user = $this->adminRepository->find($id);
 

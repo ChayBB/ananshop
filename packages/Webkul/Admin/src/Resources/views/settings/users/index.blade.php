@@ -247,7 +247,7 @@
 
                             <!-- Email -->
                             <x-admin::form.control-group>
-                                <x-admin::form.control-group.label class="required">
+                                <x-admin::form.control-group.label>
                                     @lang('admin::app.settings.users.index.create.email')
                                 </x-admin::form.control-group.label>
 
@@ -255,7 +255,7 @@
                                     type="email"
                                     id="email"
                                     name="email"
-                                    rules="required|email"
+                                    rules="email"
                                     v-model="data.user.email"
                                     :label="trans('admin::app.settings.users.index.create.email')"
                                     placeholder="email@example.com"
