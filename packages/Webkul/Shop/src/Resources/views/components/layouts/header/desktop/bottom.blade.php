@@ -443,37 +443,31 @@
                                         :key="category.id"
                                         :class="{'mb-2': category.children && category.children.length}"
                                     >
-                                        <div class="flex items-center justify-between px-6 py-2 transition-colors duration-200 cursor-pointer hover:bg-gray-100">
-                                            <a
-                                                :href="category.url"
-                                                class="text-base font-medium text-black"
-                                            >
-                                                @{{ category.name }}
-                                            </a>
-                                        </div>
+                                        <a
+                                            :href="category.url"
+                                            class="flex items-center justify-between px-6 py-2 text-base font-medium text-black transition-colors duration-200 cursor-pointer hover:bg-gray-100"
+                                        >
+                                            @{{ category.name }}
+                                        </a>
 
                                         <!-- Second Level Categories -->
-                                        <div v-if="category.children && category.children.length" >
+                                        <div v-if="category.children && category.children.length">
                                             <div
                                                 v-for="secondLevelCategory in category.children"
                                                 :key="secondLevelCategory.id"
                                             >
-                                                <div
-                                                    class="flex items-center justify-between px-6 py-2 transition-colors duration-200 cursor-pointer hover:bg-gray-100"
+                                                <a
+                                                    :href="secondLevelCategory.url"
+                                                    class="flex items-center justify-between px-6 py-2 text-sm font-normal text-black transition-colors duration-200 cursor-pointer hover:bg-gray-100"
                                                     @click="showThirdLevel(secondLevelCategory, category, $event)"
                                                 >
-                                                    <a
-                                                        :href="secondLevelCategory.url"
-                                                        class="text-sm font-normal"
-                                                    >
-                                                        @{{ secondLevelCategory.name }}
-                                                    </a>
+                                                    <span>@{{ secondLevelCategory.name }}</span>
 
                                                     <span
                                                         v-if="secondLevelCategory.children && secondLevelCategory.children.length"
                                                         class="icon-arrow-right rtl:icon-arrow-left"
                                                     ></span>
-                                                </div>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -549,10 +543,7 @@
                         if (stored) {
                             this.categories = JSON.parse(stored);
                             this.isLoading = false;
-
-                            return;
                         }
-
                     } catch (e) {}
 
                     this.getCategories();
