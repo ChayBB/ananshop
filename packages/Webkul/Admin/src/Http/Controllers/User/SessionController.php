@@ -5,8 +5,10 @@ namespace Webkul\Admin\Http\Controllers\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\User\Models\Admin;
 
 class SessionController extends Controller
 {
@@ -40,25 +42,33 @@ class SessionController extends Controller
     public function store()
     {
         $this->validate(request(), [
-            'email' => 'required|email',
+            'email' => 'required|string',
             'password' => 'required',
         ]);
 
+        $login = trim(request('email'));
+        $password = request('password');
         $remember = request('remember');
 
-        if (! auth()->guard('admin')->attempt(request(['email', 'password']), $remember)) {
+        $admin = Admin::where(function ($query) use ($login) {
+            $query->where('email', $login)
+                ->orWhere('username', $login)
+                ->orWhere('name', $login);
+        })->first();
+
+        if (! $admin || ! Hash::check($password, $admin->password)) {
             session()->flash('error', trans('admin::app.settings.users.login-error'));
 
             return redirect()->back();
         }
 
-        if (! auth()->guard('admin')->user()->status) {
+        if (! $admin->status) {
             session()->flash('warning', trans('admin::app.settings.users.activate-warning'));
-
-            auth()->guard('admin')->logout();
 
             return redirect()->route('admin.session.create');
         }
+
+        auth()->guard('admin')->login($admin, $remember);
 
         if (! bouncer()->hasPermission('dashboard')) {
             return $this->redirectToFirstAccessibleRoute();

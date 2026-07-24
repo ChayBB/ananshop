@@ -25,6 +25,7 @@ class Admin extends Authenticatable implements AdminContract
     protected $fillable = [
         'name',
         'email',
+        'username',
         'password',
         'image',
         'api_token',

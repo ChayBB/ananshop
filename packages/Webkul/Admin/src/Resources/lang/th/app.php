@@ -3,7 +3,7 @@
 return [
     'users' => [
         'sessions' => [
-            'email' => 'ที่อยู่อีเมล',
+            'email' => 'ที่อยู่อีเมล หรือ ชื่อผู้ใช้',
             'forget-password-link' => 'ลืมรหัสผ่าน?',
             'password' => 'รหัสผ่าน',
             'powered-by-description' => 'ขับเคลื่อนโดย :bagisto โครงการโอเพนซอร์สโดย :webkul',

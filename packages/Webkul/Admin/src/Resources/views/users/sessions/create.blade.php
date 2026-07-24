@@ -23,26 +23,27 @@
 
             <div class="box-shadow flex min-w-[300px] flex-col rounded-md bg-white dark:bg-gray-900">
                 <!-- Login Form -->
-                <x-admin::form :action="route('admin.session.store')">
+                <x-admin::form :action="route('admin.session.store')" autocomplete="off">
                     <p class="p-4 text-xl font-bold text-gray-800 dark:text-white">
                         @lang('admin::app.users.sessions.title')
                     </p>
 
                     <div class="border-y p-4 dark:border-gray-800">
-                        <!-- Email -->
+                        <!-- Email or Username -->
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label class="required">
                                 @lang('admin::app.users.sessions.email')
                             </x-admin::form.control-group.label>
 
                             <x-admin::form.control-group.control 
-                                type="email" 
+                                type="text" 
                                 class="w-[254px] max-w-full" 
                                 id="email"
                                 name="email" 
-                                rules="required|email" 
+                                rules="required" 
                                 :label="trans('admin::app.users.sessions.email')"
                                 :placeholder="trans('admin::app.users.sessions.email')"
+                                autocomplete="off"
                             />
 
                             <x-admin::form.control-group.error control-name="email" />
