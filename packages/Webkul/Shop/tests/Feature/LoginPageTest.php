@@ -22,14 +22,22 @@ it('should fails validation errors when email and password not provided when log
         ->assertUnprocessable();
 });
 
-it('should fails validation errors when email is not valid', function () {
+it('successfully logins a customer using username', function () {
+    // Arrange.
+    $customer = (new CustomerFaker)->factory()->create([
+        'username' => 'testuser',
+        'password' => Hash::make($password = 'admin123'),
+    ]);
+
     // Act and Assert.
-    postJson(route('shop.customer.session.create'), [
-        'email' => fake()->word(),
-        'password' => 'shop123',
+    post(route('shop.customer.session.create'), [
+        'email' => 'testuser',
+        'password' => $password,
     ])
-        ->assertJsonValidationErrorFor('email')
-        ->assertUnprocessable();
+        ->assertRedirectToRoute('shop.home.index')
+        ->assertSessionMissing('error')
+        ->assertSessionMissing('warning')
+        ->assertSessionMissing('info');
 });
 
 it('should fails validation errors when password length not valid', function () {

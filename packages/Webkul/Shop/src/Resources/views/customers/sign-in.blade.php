@@ -49,26 +49,27 @@
             {!! view_render_event('bagisto.shop.customers.login.before') !!}
 
             <div class="mt-14 rounded max-sm:mt-8">
-                <x-shop::form :action="route('shop.customer.session.create')">
+                <x-shop::form :action="route('shop.customer.session.create')" autocomplete="off">
 
                     {!! view_render_event('bagisto.shop.customers.login_form_controls.before') !!}
 
-                    <!-- Email -->
+                    <!-- Email or Username -->
                     <x-shop::form.control-group>
                         <x-shop::form.control-group.label class="required">
                             @lang('shop::app.customers.login-form.email')
                         </x-shop::form.control-group.label>
 
                         <x-shop::form.control-group.control
-                            type="email"
+                            type="text"
                             class="px-6 py-4 max-md:py-3 max-sm:py-2"
                             name="email"
-                            rules="required|email"
+                            rules="required"
                             value=""
                             :label="trans('shop::app.customers.login-form.email')"
-                            placeholder="email@example.com"
+                            placeholder="email@example.com / username"
                             :aria-label="trans('shop::app.customers.login-form.email')"
                             aria-required="true"
+                            autocomplete="off"
                         />
 
                         <x-shop::form.control-group.error control-name="email" />
@@ -91,6 +92,7 @@
                             :placeholder="trans('shop::app.customers.login-form.password')"
                             :aria-label="trans('shop::app.customers.login-form.password')"
                             aria-required="true"
+                            autocomplete="new-password"
                         />
 
                         <x-shop::form.control-group.error control-name="password" />
@@ -192,10 +194,11 @@
         <script>
             function switchVisibility() {
                 let passwordField = document.getElementById("password");
+                let checkbox = document.getElementById("show-password");
 
-                passwordField.type = passwordField.type === "password"
-                    ? "text"
-                    : "password";
+                if (passwordField) {
+                    passwordField.type = checkbox && checkbox.checked ? "text" : "password";
+                }
             }
         </script>
     @endpush
