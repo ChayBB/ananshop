@@ -6,7 +6,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
+use Webkul\Customer\Models\Customer;
 use Webkul\Shop\Http\Controllers\Controller;
 use Webkul\Shop\Http\Requests\Customer\LoginRequest;
 
@@ -33,57 +35,55 @@ class SessionController extends Controller
      */
     public function store(LoginRequest $loginRequest)
     {
-        $login = $loginRequest->input('email');
+        $login = trim($loginRequest->input('email'));
         $password = $loginRequest->input('password');
 
-        $loginField = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $channelId = core()->getCurrentChannel()->id;
 
-        $credentials = [
-            $loginField => $login,
-            'password' => $password,
-            'channel_id' => core()->getCurrentChannel()->id,
-        ];
+        $customer = Customer::where(function ($query) use ($login) {
+            $query->where('email', $login)
+                ->orWhere('username', $login)
+                ->orWhere('phone', $login)
+                ->orWhere('first_name', $login);
+        })->where('channel_id', $channelId)->first();
 
-        if (! auth()->guard('customer')->attempt($credentials)) {
-            $alternativeField = $loginField === 'email' ? 'username' : 'email';
-
-            $alternativeCredentials = [
-                $alternativeField => $login,
-                'password' => $password,
-                'channel_id' => core()->getCurrentChannel()->id,
-            ];
-
-            if (! auth()->guard('customer')->attempt($alternativeCredentials)) {
-                session()->flash('error', trans('shop::app.customers.login-form.invalid-credentials'));
-
-                return redirect()->back();
-            }
+        if (! $customer) {
+            $customer = Customer::where(function ($query) use ($login) {
+                $query->where('email', $login)
+                    ->orWhere('username', $login)
+                    ->orWhere('phone', $login)
+                    ->orWhere('first_name', $login);
+            })->first();
         }
 
-        if (! auth()->guard('customer')->user()->status) {
-            auth()->guard('customer')->logout();
+        if (! $customer || ! Hash::check($password, $customer->password)) {
+            session()->flash('error', trans('shop::app.customers.login-form.invalid-credentials'));
 
+            return redirect()->back();
+        }
+
+        if (! $customer->status) {
             session()->flash('warning', trans('shop::app.customers.login-form.not-activated'));
 
             return redirect()->back();
         }
 
-        if (! auth()->guard('customer')->user()->is_verified) {
+        if (! $customer->is_verified) {
             session()->flash('info', trans('shop::app.customers.login-form.verify-first'));
 
             Cookie::queue(Cookie::make('enable-resend', 'true', 1));
 
-            Cookie::queue(Cookie::make('email-for-resend', $loginRequest->get('email'), 1));
-
-            auth()->guard('customer')->logout();
+            Cookie::queue(Cookie::make('email-for-resend', $customer->email, 1));
 
             return redirect()->back();
         }
 
+        auth()->guard('customer')->login($customer);
+
         /**
          * Event passed to prepare cart after login.
          */
-        Event::dispatch('customer.after.login', auth()->guard()->user());
+        Event::dispatch('customer.after.login', auth()->guard('customer')->user());
 
         if (core()->getConfigData('customer.settings.login_options.redirected_to_page') == 'account') {
             return redirect()->route('shop.customers.account.profile.index');

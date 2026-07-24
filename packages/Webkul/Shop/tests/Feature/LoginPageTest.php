@@ -40,6 +40,24 @@ it('successfully logins a customer using username', function () {
         ->assertSessionMissing('info');
 });
 
+it('successfully logins a customer using phone number', function () {
+    // Arrange.
+    $customer = (new CustomerFaker)->factory()->create([
+        'phone' => '0899999999',
+        'password' => Hash::make($password = 'admin123'),
+    ]);
+
+    // Act and Assert.
+    post(route('shop.customer.session.create'), [
+        'email' => '0899999999',
+        'password' => $password,
+    ])
+        ->assertRedirectToRoute('shop.home.index')
+        ->assertSessionMissing('error')
+        ->assertSessionMissing('warning')
+        ->assertSessionMissing('info');
+});
+
 it('should fails validation errors when password length not valid', function () {
     // Act and Assert.
     postJson(route('shop.customer.session.create'), [
