@@ -1,17 +1,23 @@
 {!! view_render_event('bagisto.shop.checkout.onepage.payment_methods.before') !!}
 
 <div
-    class="mb-4 rounded-md bg-red-100 p-4 text-sm font-medium text-red-700"
+    class="mb-4 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700"
     v-if="creditLimitExceeded"
 >
-    <p>@{{ creditLimitMessage }}</p>
+    <span class="icon-toast-exclamation-mark mt-0.5 text-xl leading-none"></span>
 
-    <a
-        href="{{ route('shop.customers.account.orders.index') }}"
-        class="mt-1.5 block underline"
-    >
-        @lang('shop::app.checkout.onepage.payment.manage-orders')
-    </a>
+    <div>
+        <p class="font-medium">
+            @{{ creditLimitMessage }}
+        </p>
+
+        <a
+            href="{{ route('shop.customers.account.orders.index') }}"
+            class="mt-1 inline-block font-medium underline underline-offset-2"
+        >
+            @lang('shop::app.checkout.onepage.payment.manage-orders')
+        </a>
+    </div>
 </div>
 
 <v-payment-methods

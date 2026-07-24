@@ -114,7 +114,7 @@ class OnepageController extends APIController
 
         if (app(CreditPayment::class)->isCreditLimitExceeded()) {
             $response['credit_limit_exceeded'] = true;
-            $response['credit_limit_message'] = 'เครดิตเกินกำหนด โปรดชำระยอด ค้างเพื่อทำรายการต่อ';
+            $response['credit_limit_message'] = 'เครดิตเกินกำหนด โปรดชำระยอดค้าง เพื่อทำรายการต่อ';
         }
 
         return response()->json($response);
