@@ -34,7 +34,40 @@
 
         <!-- For Desktop View -->
         <div class="max-md:hidden">
+            @php
+                $ordersGridColumns = 'grid-template-columns: 1fr 1.3fr 0.8fr 1fr 0.8fr 1fr auto;';
+            @endphp
+
             <x-shop::datagrid :src="route('shop.customers.account.orders.index')">
+                <!-- Custom header slot, kept in lockstep with the custom body slot below -->
+                <template #header="{
+                    isLoading,
+                    available,
+                    applied,
+                    selectAll,
+                    sort,
+                    performAction
+                }">
+                    <div
+                        class="row grid items-center gap-2.5 border-b border-zinc-200 bg-zinc-100 px-4 py-4 text-sm font-medium text-black"
+                        style="{{ $ordersGridColumns }}"
+                    >
+                        <p>@lang('shop::app.customers.account.orders.order-id')</p>
+
+                        <p>@lang('shop::app.customers.account.orders.order-date')</p>
+
+                        <p>@lang('shop::app.customers.account.orders.total')</p>
+
+                        <p>@lang('shop::app.customers.account.orders.status.title')</p>
+
+                        <p>@lang('shop::app.customers.account.orders.credit')</p>
+
+                        <p>{{ app()->getLocale() === 'th' ? 'สลิป' : 'Slip' }}</p>
+
+                        <p>@lang('shop::app.customers.account.orders.action')</p>
+                    </div>
+                </template>
+
                 <!-- Custom body slot to add upload slip button -->
                 <template #body="{
                     isLoading,
@@ -51,7 +84,7 @@
                     <template v-else>
                         <template v-for="record in available.records">
                             <div class="row grid items-center gap-2.5 border-b px-4 py-6 text-sm text-gray-600 transition-all hover:bg-gray-50 last:border-none"
-                                style="grid-template-columns: 1fr 1.5fr 1fr 1fr auto;">
+                                style="{{ $ordersGridColumns }}">
 
                                 <!-- Order ID -->
                                 <p class="font-medium text-gray-800">
@@ -67,6 +100,12 @@
                                 <!-- Status -->
                                 <p v-html="record.status"></p>
 
+                                <!-- Credit rounds used/remaining -->
+                                <p class="font-medium text-gray-800">@{{ record.credit }}</p>
+
+                                <!-- Slip -->
+                                <span v-html="record.slip_actions"></span>
+
                                 <!-- Actions -->
                                 <div class="flex items-center gap-2">
                                     <!-- View button -->
@@ -75,9 +114,6 @@
                                         class="icon-eye cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-100"
                                     >
                                     </a>
-
-                                    <!-- Upload/View Slip action (rendered server-side) -->
-                                    <span v-html="record.slip_actions"></span>
                                 </div>
                             </div>
                         </template>

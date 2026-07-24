@@ -172,6 +172,7 @@ return [
             'orders' => [
                 'action' => 'Acțiune',
                 'action-view' => 'Vizualizare',
+                'credit' => 'Credit',
                 'empty-order' => 'Nu ați comandat încă niciun produs',
                 'order' => 'Comandă',
                 'order-date' => 'Data comenzii',

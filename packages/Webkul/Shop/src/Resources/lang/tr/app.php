@@ -172,6 +172,7 @@ return [
             'orders' => [
                 'action' => 'İşlem',
                 'action-view' => 'Görüntüle',
+                'credit' => 'Credit',
                 'empty-order' => 'Henüz bir sipariş vermediniz.',
                 'order' => 'Sipariş',
                 'order-date' => 'Sipariş Tarihi',

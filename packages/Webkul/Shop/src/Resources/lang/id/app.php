@@ -172,6 +172,7 @@ return [
             'orders' => [
                 'action' => 'Aksi',
                 'action-view' => 'Lihat',
+                'credit' => 'Credit',
                 'empty-order' => 'Anda belum memesan produk apa pun.',
                 'order' => 'Pesanan',
                 'order-date' => 'Tanggal Pesanan',

@@ -172,6 +172,7 @@ return [
             'orders' => [
                 'action' => 'Действие',
                 'action-view' => 'Просмотр',
+                'credit' => 'Credit',
                 'empty-order' => 'Вы еще не заказывали ни одного продукта',
                 'order' => 'Замовлення',
                 'order-date' => 'Дата замовлення',

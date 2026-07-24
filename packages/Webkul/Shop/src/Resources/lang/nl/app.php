@@ -172,6 +172,7 @@ return [
             'orders' => [
                 'action' => 'Actie',
                 'action-view' => 'Bekijken',
+                'credit' => 'Credit',
                 'empty-order' => 'U heeft nog geen product besteld',
                 'order' => 'Bestelling',
                 'order-date' => 'Besteldatum',

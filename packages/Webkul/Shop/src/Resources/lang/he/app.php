@@ -172,6 +172,7 @@ return [
             'orders' => [
                 'action' => 'פעולה',
                 'action-view' => 'צפה',
+                'credit' => 'Credit',
                 'empty-order' => 'עדיין לא הזמנת מוצר כלשהו',
                 'order' => 'הזמנה',
                 'order-date' => 'תאריך הזמנה',

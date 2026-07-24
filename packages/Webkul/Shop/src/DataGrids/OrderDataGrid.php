@@ -125,6 +125,36 @@ class OrderDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
+            'index' => 'credit',
+            'label' => app()->getLocale() === 'th' ? 'เครดิต' : 'Credit',
+            'type' => 'string',
+            'searchable' => false,
+            'filterable' => false,
+            'sortable' => false,
+            'exportable' => false,
+            'closure' => function ($row) {
+                if ($row->method !== 'credit') {
+                    return '-';
+                }
+
+                $customer = auth()->guard('customer')->user();
+
+                $creditRounds = $customer->group->credit_rounds ?? 0;
+
+                // Position of this order among the customer's non-cancelled/
+                // refunded credit orders, i.e. which round it represents -
+                // same counting rule as Credit::isCreditLimitExceeded().
+                $position = Order::where('customer_id', $customer->id)
+                    ->whereNotIn('custom_status', ['ยกเลิกออร์เดอร์', 'คืนเงิน'])
+                    ->whereHas('payment', fn ($query) => $query->where('method', 'credit'))
+                    ->where('id', '<=', $row->id)
+                    ->count();
+
+                return $position.'/'.$creditRounds;
+            },
+        ]);
+
+        $this->addColumn([
             'index' => 'slip_actions',
             'label' => app()->getLocale() === 'th' ? 'สลิป' : 'Slip',
             'type' => 'string',

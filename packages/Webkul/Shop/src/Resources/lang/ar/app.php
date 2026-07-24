@@ -172,6 +172,7 @@ return [
             'orders' => [
                 'action' => 'إجراء',
                 'action-view' => 'عرض',
+                'credit' => 'Credit',
                 'empty-order' => 'لم تقم بطلب أي منتج حتى الآن',
                 'order' => 'طلب',
                 'order-date' => 'تاريخ الطلب',

@@ -172,6 +172,7 @@ return [
             'orders' => [
                 'action' => 'Action',
                 'action-view' => 'View',
+                'credit' => 'Credit',
                 'empty-order' => 'You have not ordered any product yet',
                 'order' => 'Order',
                 'order-date' => 'Order Date',
