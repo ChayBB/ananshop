@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Webkul\Checkout\Facades\Cart;
 use Webkul\MagicAI\Facades\MagicAI;
-use Webkul\Sales\Models\OrderProxy;
+use Webkul\Payment\Payment\Credit as CreditPayment;
 use Webkul\Sales\Repositories\OrderRepository;
 
 class OnepageController extends Controller
@@ -102,17 +102,11 @@ class OnepageController extends Controller
             && $order->customer
             && $order->customer->group
         ) {
-            $orderModel = OrderProxy::modelClass();
-
-            // เครดิตที่ยืนยันการชำระเงินแล้ว: only orders whose payment has actually
-            // been confirmed (or completed) consume the customer's approved credit.
-            $creditRoundsConfirmed = $orderModel::where('customer_id', $order->customer_id)
-                ->whereIn('custom_status', ['ยืนยันการชำระเงินแล้ว', 'เสร็จสมบูรณ์'])
-                ->whereHas('payment', fn ($query) => $query->where('method', 'credit'))
-                ->count();
-
-            // เครดิตที่ใช้ได้ = เครดิตที่ได้รับอนุมัติ - เครดิตที่ยืนยันการชำระเงินแล้ว
-            $creditRoundsRemaining = max(($order->customer->group->credit_rounds ?? 0) - $creditRoundsConfirmed, 0);
+            // Same counting rule as Credit::isCreditLimitExceeded() - every
+            // non-cancelled/refunded credit order counts against the
+            // approved rounds, not just confirmed ones, so this figure
+            // matches what actually gates new credit orders at checkout.
+            $creditRoundsRemaining = app(CreditPayment::class)->getRemainingCreditRounds($order->customer);
         }
 
         return view('shop::checkout.success', compact('order', 'creditRoundsRemaining'));
