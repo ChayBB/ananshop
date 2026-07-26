@@ -127,7 +127,7 @@
 
         <!-- Filters Container -->
         <template v-else>
-            <div class="panel-side journal-scroll grid max-h-[1320px] min-w-[120px] grid-cols-[1fr] overflow-y-auto overflow-x-hidden max-xl:min-w-[110px] md:max-w-[140px] md:ltr:pr-5 md:rtl:pl-5">
+            <div class="panel-side journal-scroll grid max-h-[1320px] min-w-[145px] grid-cols-[1fr] overflow-y-auto overflow-x-hidden max-xl:min-w-[135px] md:max-w-[170px] md:ltr:pr-5 md:rtl:pl-5">
                 <!-- Filters Header Container -->
                 <div class="flex h-[50px] items-center justify-between border-b border-zinc-200 pb-2.5 max-md:hidden">
                     <p class="text-lg font-semibold max-sm:font-medium">
