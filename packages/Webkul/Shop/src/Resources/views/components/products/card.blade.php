@@ -121,10 +121,10 @@
                 {!! view_render_event('bagisto.shop.components.products.card.price.after') !!}
 
                 <!-- Product Actions Section -->
-                <div class="action-items flex items-center gap-1.5 mt-2 w-full">
+                <div class="action-items flex items-center gap-1.5 mt-2 w-full max-sm:flex-wrap max-sm:gap-1">
                     <!-- Quantity Selector -->
                     @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
-                        <div class="flex items-center justify-between rounded-xl border border-navyBlue px-2 py-1 text-sm font-medium select-none shrink-0 min-w-[70px] max-sm:min-w-[62px] max-sm:px-1.5">
+                        <div class="flex items-center justify-between rounded-xl border border-navyBlue px-2 py-1 text-sm font-medium select-none shrink-0 min-w-[70px] max-sm:min-w-[54px] max-sm:px-1">
                             <button
                                 type="button"
                                 class="cursor-pointer px-0.5 text-base font-bold text-navyBlue hover:opacity-75 disabled:opacity-30"
@@ -152,7 +152,7 @@
                         {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.before') !!}
 
                         <button
-                            class="secondary-button flex-1 min-w-0 p-2 text-sm font-medium whitespace-nowrap max-sm:rounded-xl max-sm:p-1.5 max-sm:text-xs"
+                            class="secondary-button flex-1 min-w-0 p-2 text-sm font-medium whitespace-nowrap max-sm:rounded-xl max-sm:p-1.5 max-sm:text-xs max-sm:whitespace-normal max-sm:leading-tight"
                             :disabled="! product.is_saleable || isAddingToCart"
                             @click="addToCart()"
                         >

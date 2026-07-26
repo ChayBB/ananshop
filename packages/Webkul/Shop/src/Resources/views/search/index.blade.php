@@ -138,7 +138,7 @@
                         <div v-else>
                             <!-- Product Card Shimmer Effect -->
                             <template v-if="isLoading">
-                                <div class="mt-8 grid grid-cols-3 gap-8 max-1060:grid-cols-2 max-md:gap-x-4 max-sm:mt-5 max-sm:justify-items-center max-sm:gap-y-5">
+                                <div class="mt-8 grid grid-cols-3 gap-8 max-1060:grid-cols-2 max-md:gap-x-5 max-sm:mt-5 max-sm:justify-items-center max-sm:gap-y-6">
                                     <x-shop::shimmer.products.cards.grid count="12" />
                                 </div>
                             </template>
@@ -146,7 +146,7 @@
                             <!-- Product Card Listing -->
                             <template v-else>
                                 <template v-if="products.length">
-                                    <div class="mt-8 grid grid-cols-3 gap-8 max-1060:grid-cols-2 max-md:mt-5 max-md:justify-items-center max-md:gap-x-4 max-md:gap-y-5">
+                                    <div class="mt-8 grid grid-cols-3 gap-8 max-1060:grid-cols-2 max-md:mt-5 max-md:justify-items-center max-md:gap-x-5 max-md:gap-y-6">
                                         <x-shop::products.card
                                             ::mode="'grid'"
                                             v-for="product in products"
@@ -222,6 +222,10 @@
                     }
                 },
 
+                mounted() {
+                    this.initFilters();
+                },
+
                 computed: {
                     queryParams() {
                         let queryParams = Object.assign({}, this.filters.filter, this.filters.toolbar.applied);
@@ -245,6 +249,23 @@
                 },
 
                 methods: {
+                    initFilters() {
+                        let searchParams = new URLSearchParams(window.location.search);
+                        let filterObj = {};
+
+                        searchParams.forEach((value, key) => {
+                            if (['sort', 'limit', 'mode'].includes(key)) {
+                                this.filters.toolbar.applied[key] = value;
+                            } else {
+                                filterObj[key] = value.split(',');
+                            }
+                        });
+
+                        this.filters.filter = filterObj;
+
+                        this.getProducts();
+                    },
+
                     setFilters(type, filters) {
                         this.filters[type] = filters;
                     },
