@@ -9,8 +9,8 @@
     </x-slot>
 
 	<!-- Page content -->
-	<div class="container mt-8 px-[60px] max-lg:px-8">
-		<div class="grid place-items-center gap-y-5 max-md:gap-y-2.5">
+	<div class="container mt-8 px-[60px] pb-16 max-lg:px-8">
+		<div class="grid place-items-center gap-y-6 max-md:gap-y-4">
 			{{ view_render_event('bagisto.shop.checkout.success.image.before', ['order' => $order]) }}
 
 			<img
@@ -38,7 +38,7 @@
 				$order->payment->method === 'moneytransfer'
 				&& ($qrCodePath = core()->getConfigData('sales.payment_methods.moneytransfer.qr_code'))
 			)
-				<div class="flex flex-col items-center gap-2">
+				<div class="my-2 flex flex-col items-center gap-3">
 					<p class="text-base font-medium">
 						คิวอาร์โค๊ดสำหรับโอนเงิน
 					</p>
@@ -71,17 +71,15 @@
 				@lang('shop::app.checkout.success.thanks')
 			</p>
 
-			<p class="text-xl text-zinc-500 max-md:text-center max-md:text-xs">
-				@if (! empty($order->checkout_message))
+			@if (! empty($order->checkout_message))
+				<p class="text-xl text-zinc-500 max-md:text-center max-md:text-xs">
 					{!! nl2br($order->checkout_message) !!}
-				@else
-					@lang('shop::app.checkout.success.info')
-				@endif
-			</p>
+				</p>
+			@endif
 
 			{{ view_render_event('bagisto.shop.checkout.success.continue-shopping.before', ['order' => $order]) }}
 
-			<div class="flex flex-wrap items-center justify-center gap-3">
+			<div class="mt-4 flex flex-wrap items-center justify-center gap-4">
 				@if ($order->payment->method === 'cashondelivery')
 					@if (auth()->guard('customer')->user())
 						<a href="{{ route('shop.customers.account.orders.view', $order->id) }}">
