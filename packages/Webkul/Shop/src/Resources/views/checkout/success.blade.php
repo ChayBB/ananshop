@@ -40,12 +40,12 @@
 			)
 				<div class="flex flex-col items-center gap-2">
 					<p class="text-base font-medium">
-						QR Code สำหรับโอนเงินเข้าบริษัท
+						คิวอาร์โค๊ดสำหรับโอนเงิน
 					</p>
 
 					<img
 						src="{{ \Illuminate\Support\Facades\Storage::url($qrCodePath) }}"
-						alt="QR Code สำหรับโอนเงินเข้าบริษัท"
+						alt="คิวอาร์โค๊ดสำหรับโอนเงิน"
 						class="h-48 w-48 rounded-lg border border-zinc-200 object-contain"
 					>
 
@@ -82,12 +82,6 @@
 			{{ view_render_event('bagisto.shop.checkout.success.continue-shopping.before', ['order' => $order]) }}
 
 			<div class="flex flex-wrap items-center justify-center gap-3">
-				<a href="{{ route('shop.home.index') }}">
-					<div class="w-max cursor-pointer rounded-2xl bg-navyBlue px-11 py-3 text-center text-base font-medium text-white max-md:rounded-lg max-md:px-6 max-md:py-1.5">
-             		@lang('shop::app.checkout.cart.index.continue-shopping')
-					</div>
-				</a>
-
 				@if ($order->payment->method === 'cashondelivery')
 					@if (auth()->guard('customer')->user())
 						<a href="{{ route('shop.customers.account.orders.view', $order->id) }}">
@@ -118,6 +112,12 @@
 						อัปโหลดสลิปโอนเงิน
 					</button>
 				@endif
+
+				<a href="{{ route('shop.home.index') }}">
+					<div class="w-max cursor-pointer rounded-2xl bg-navyBlue px-11 py-3 text-center text-base font-medium text-white max-md:rounded-lg max-md:px-6 max-md:py-1.5">
+             		@lang('shop::app.checkout.cart.index.continue-shopping')
+					</div>
+				</a>
 			</div>
 
 			{{ view_render_event('bagisto.shop.checkout.success.continue-shopping.after', ['order' => $order]) }}
