@@ -16,34 +16,39 @@
             <div class="flex justify-between max-md:hidden">
                 {!! view_render_event('bagisto.shop.categories.toolbar.filter.before') !!}
 
-                <!-- Product Sorting Filters -->
-                <x-shop::dropdown
-                    class="z-[1]"
-                    position="bottom-left"
-                >
-                    <x-slot:toggle>
-                        <!-- Dropdown Toggler -->
-                        <button class="flex w-full max-w-[200px] cursor-pointer items-center justify-between gap-4 rounded-lg border border-zinc-200 bg-white p-3.5 text-base transition-all hover:border-gray-400 focus:border-gray-400 max-md:w-[110px] max-md:border-0 max-md:pl-2.5 max-md:pr-2.5">
-                            @{{ sortLabel ?? "@lang('shop::app.products.sort-by.title')" }}
+                <div class="flex items-center gap-4">
+                    <!-- Product Sorting Filters -->
+                    <x-shop::dropdown
+                        class="z-[1]"
+                        position="bottom-left"
+                    >
+                        <x-slot:toggle>
+                            <!-- Dropdown Toggler -->
+                            <button class="flex w-full max-w-[200px] cursor-pointer items-center justify-between gap-4 rounded-lg border border-zinc-200 bg-white p-3.5 text-base transition-all hover:border-gray-400 focus:border-gray-400 max-md:w-[110px] max-md:border-0 max-md:pl-2.5 max-md:pr-2.5">
+                                @{{ sortLabel ?? "@lang('shop::app.products.sort-by.title')" }}
 
-                            <span
-                                class="icon-arrow-down text-2xl"
-                                role="presentation"
-                            ></span>
-                        </button>
-                    </x-slot>
+                                <span
+                                    class="icon-arrow-down text-2xl"
+                                    role="presentation"
+                                ></span>
+                            </button>
+                        </x-slot>
 
-                    <!-- Dropdown Content -->
-                    <x-slot:menu>
-                        <x-shop::dropdown.menu.item
-                            v-for="(sort, key) in filters.available.sort"
-                            ::class="{'bg-gray-100': sort.value == filters.applied.sort}"
-                            @click="apply('sort', sort.value)"
-                        >
-                            @{{ sort.title }}
-                        </x-shop::dropdown.menu.item>
-                    </x-slot>
-                </x-shop::dropdown>
+                        <!-- Dropdown Content -->
+                        <x-slot:menu>
+                            <x-shop::dropdown.menu.item
+                                v-for="(sort, key) in filters.available.sort"
+                                ::class="{'bg-gray-100': sort.value == filters.applied.sort}"
+                                @click="apply('sort', sort.value)"
+                            >
+                                @{{ sort.title }}
+                            </x-shop::dropdown.menu.item>
+                        </x-slot>
+                    </x-shop::dropdown>
+
+                    <!-- Price Range Filter Slot (teleported here from the sidebar filters) -->
+                    <div id="category-price-filter-slot"></div>
+                </div>
 
                 {!! view_render_event('bagisto.shop.categories.toolbar.filter.after') !!}
 

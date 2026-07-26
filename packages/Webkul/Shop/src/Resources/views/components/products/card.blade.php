@@ -79,46 +79,27 @@
                     >
                         @lang('shop::app.components.products.card.new')
                     </p>
-
-                    <div class="opacity-0 transition-all duration-300 group-hover:bottom-0 group-hover:opacity-100 max-lg:opacity-100 max-sm:opacity-100">
-
-                        {!! view_render_event('bagisto.shop.components.products.card.wishlist_option.before') !!}
-
-                        @if (core()->getConfigData('customer.settings.wishlist.wishlist_option'))
-                            <span
-                                class="absolute top-2.5 flex h-6 w-6 items-center justify-center rounded-full border border-zinc-200 bg-white text-lg md:hidden ltr:right-1.5 rtl:left-1.5"
-                                role="button"
-                                aria-label="@lang('shop::app.components.products.card.add-to-wishlist')"
-                                tabindex="0"
-                                :class="product.is_wishlist ? 'icon-heart-fill text-red-500' : 'icon-heart'"
-                                @click="addToWishlist()"
-                            >
-                            </span>
-                        @endif
-
-                        {!! view_render_event('bagisto.shop.components.products.card.wishlist_option.after') !!}
-
-                        {!! view_render_event('bagisto.shop.components.products.card.compare_option.before') !!}
-
-                        @if (core()->getConfigData('catalog.products.settings.compare_option'))
-                            <span
-                                class="icon-compare absolute top-10 flex h-6 w-6 items-center justify-center rounded-full border border-zinc-200 bg-white text-lg sm:hidden ltr:right-1.5 rtl:left-1.5"
-                                role="button"
-                                aria-label="@lang('shop::app.components.products.card.add-to-compare')"
-                                tabindex="0"
-                                @click="addToCompare(product.id)"
-                            >
-                            </span>
-                        @endif
-
-                        {!! view_render_event('bagisto.shop.components.products.card.compare_option.after') !!}
-
-                    </div>
                 </div>
+
+                {!! view_render_event('bagisto.shop.components.products.card.wishlist_option.before') !!}
+
+                @if (core()->getConfigData('customer.settings.wishlist.wishlist_option'))
+                    <span
+                        class="absolute top-1.5 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full border border-zinc-200 bg-white text-lg max-sm:h-6 max-sm:w-6 max-sm:text-base ltr:right-1.5 rtl:left-1.5"
+                        role="button"
+                        aria-label="@lang('shop::app.components.products.card.add-to-wishlist')"
+                        tabindex="0"
+                        :class="product.is_wishlist ? 'icon-heart-fill text-red-600' : 'icon-heart'"
+                        @click="addToWishlist()"
+                    >
+                    </span>
+                @endif
+
+                {!! view_render_event('bagisto.shop.components.products.card.wishlist_option.after') !!}
             </div>
 
             <!-- Product Information Section -->
-            <div class="-mt-9 grid max-w-[291px] translate-y-9 content-start gap-2.5 bg-white p-2.5 transition-transform duration-300 ease-out group-hover:-translate-y-0 group-hover:rounded-t-lg max-md:relative max-md:mt-0 max-md:translate-y-0 max-md:gap-0 max-md:px-0 max-md:py-1.5 max-sm:min-w-[170px] max-sm:max-w-[192px]">
+            <div class="grid max-w-[291px] content-start gap-2.5 bg-white p-2.5 max-md:relative max-md:mt-0 max-md:gap-1.5 max-md:px-0 max-md:py-1.5 max-sm:min-w-[170px] max-sm:max-w-[192px]">
 
                 {!! view_render_event('bagisto.shop.components.products.card.name.before') !!}
 
@@ -140,12 +121,38 @@
                 {!! view_render_event('bagisto.shop.components.products.card.price.after') !!}
 
                 <!-- Product Actions Section -->
-                <div class="action-items flex items-center justify-between opacity-0 transition-all duration-300 ease-in-out group-hover:opacity-100 max-md:mt-1.5 max-md:opacity-100">
+                <div class="action-items flex items-center gap-1.5 mt-2 w-full">
+                    <!-- Quantity Selector -->
+                    @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
+                        <div class="flex items-center justify-between rounded-xl border border-navyBlue px-2 py-1 text-sm font-medium select-none shrink-0 min-w-[70px] max-sm:min-w-[62px] max-sm:px-1.5">
+                            <button
+                                type="button"
+                                class="cursor-pointer px-0.5 text-base font-bold text-navyBlue hover:opacity-75 disabled:opacity-30"
+                                :disabled="quantity <= 1"
+                                @click="decreaseQty()"
+                            >
+                                -
+                            </button>
+
+                            <span class="px-1 text-sm font-semibold text-navyBlue max-sm:text-xs">
+                                @{{ quantity }}
+                            </span>
+
+                            <button
+                                type="button"
+                                class="cursor-pointer px-0.5 text-base font-bold text-navyBlue hover:opacity-75"
+                                @click="increaseQty()"
+                            >
+                                +
+                            </button>
+                        </div>
+                    @endif
+
                     @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
                         {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.before') !!}
 
                         <button
-                            class="secondary-button w-full max-w-full p-2.5 text-sm font-medium max-sm:rounded-xl max-sm:p-2"
+                            class="secondary-button flex-1 min-w-0 p-2 text-sm font-medium whitespace-nowrap max-sm:rounded-xl max-sm:p-1.5 max-sm:text-xs"
                             :disabled="! product.is_saleable || isAddingToCart"
                             @click="addToCart()"
                         >
@@ -154,37 +161,6 @@
 
                         {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.after') !!}
                     @endif
-
-                    {!! view_render_event('bagisto.shop.components.products.card.wishlist_option.before') !!}
-
-                    @if (core()->getConfigData('customer.settings.wishlist.wishlist_option'))
-                        <span
-                            class="cursor-pointer p-2.5 text-2xl max-sm:hidden"
-                            role="button"
-                            aria-label="@lang('shop::app.components.products.card.add-to-wishlist')"
-                            tabindex="0"
-                            :class="product.is_wishlist ? 'icon-heart-fill text-red-600' : 'icon-heart'"
-                            @click="addToWishlist()"
-                        >
-                        </span>
-                    @endif
-
-                    {!! view_render_event('bagisto.shop.components.products.card.wishlist_option.after') !!}
-
-                    {!! view_render_event('bagisto.shop.components.products.card.compare_option.before') !!}
-
-                    @if (core()->getConfigData('catalog.products.settings.compare_option'))
-                        <span
-                            class="icon-compare cursor-pointer p-2.5 text-2xl max-sm:hidden"
-                            role="button"
-                            aria-label="@lang('shop::app.components.products.card.add-to-compare')"
-                            tabindex="0"
-                            @click="addToCompare(product.id)"
-                        >
-                        </span>
-                    @endif
-
-                    {!! view_render_event('bagisto.shop.components.products.card.compare_option.after') !!}
                 </div>
             </div>
         </div>
@@ -350,10 +326,22 @@
                     isCustomer: '{{ auth()->guard('customer')->check() }}',
 
                     isAddingToCart: false,
+
+                    quantity: 1,
                 }
             },
 
             methods: {
+                decreaseQty() {
+                    if (this.quantity > 1) {
+                        this.quantity--;
+                    }
+                },
+
+                increaseQty() {
+                    this.quantity++;
+                },
+
                 addToWishlist() {
                     if (this.isCustomer) {
                         this.$axios.post(`{{ route('shop.api.customers.account.wishlist.store') }}`, {
@@ -431,7 +419,7 @@
                     this.isAddingToCart = true;
 
                     this.$axios.post('{{ route("shop.api.checkout.cart.store") }}', {
-                            'quantity': 1,
+                            'quantity': this.quantity,
                             'product_id': this.product.id,
                         })
                         .then(response => {
