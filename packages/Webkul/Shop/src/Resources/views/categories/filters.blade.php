@@ -221,7 +221,6 @@
             <!-- Filter Item Content -->
             <x-slot:content class="!p-0">
                 <!-- Checkbox Filter Options -->
-                <template>
 
                     <!-- Filter Options -->
                     <ul class="pb-3 text-base text-gray-700">
@@ -326,7 +325,6 @@
                             </span>
                         </button>
                     </div>
-                </template>
             </x-slot>
         </x-shop::accordion>
     </script>
