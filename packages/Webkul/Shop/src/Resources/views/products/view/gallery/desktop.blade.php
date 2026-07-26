@@ -58,48 +58,60 @@
     </div>
 
     <!-- Product Base Image and Video with Shimmer-->
-    <div
-        class="max-h-[610px] max-w-[560px]"
-        v-show="isMediaLoading"
-    >
-        <div class="shimmer min-h-[607px] min-w-[560px] rounded-xl bg-zinc-200"></div>
-    </div>
-
-    <div
-        class="max-h-[610px] max-w-[560px]"
-        v-show="! isMediaLoading"
-    >
-        <img
-            class="min-w-[450px] cursor-pointer rounded-xl"
-            :src="baseFile.path"
-            v-if="baseFile.type == 'image'"
-            alt="{{ $product->name }}"
-            width="560"
-            height="610"
-            tabindex="0"
-            @click="isImageZooming = !isImageZooming"
-            @load="onMediaLoad()"
-            fetchpriority="high"
-        />
+    <div class="relative max-h-[610px] max-w-[560px]">
+        <div
+            v-show="isMediaLoading"
+        >
+            <div class="shimmer min-h-[607px] min-w-[560px] rounded-xl bg-zinc-200"></div>
+        </div>
 
         <div
-            class="min-w-[450px] cursor-pointer rounded-xl"
-            tabindex="0"
-            v-if="baseFile.type == 'video'"
+            v-show="! isMediaLoading"
         >
-            <video
-                controls
-                width="475"
+            <img
+                class="min-w-[450px] cursor-pointer rounded-xl"
+                :src="baseFile.path"
+                v-if="baseFile.type == 'image'"
                 alt="{{ $product->name }}"
+                width="560"
+                height="610"
+                tabindex="0"
                 @click="isImageZooming = !isImageZooming"
-                @loadeddata="onMediaLoad()"
-                :key="baseFile.path"
+                @load="onMediaLoad()"
+                fetchpriority="high"
+            />
+
+            <div
+                class="min-w-[450px] cursor-pointer rounded-xl"
+                tabindex="0"
+                v-if="baseFile.type == 'video'"
             >
-                <source
-                    :src="baseFile.path"
-                    type="video/mp4"
-                />
-            </video>
+                <video
+                    controls
+                    width="475"
+                    alt="{{ $product->name }}"
+                    @click="isImageZooming = !isImageZooming"
+                    @loadeddata="onMediaLoad()"
+                    :key="baseFile.path"
+                >
+                    <source
+                        :src="baseFile.path"
+                        type="video/mp4"
+                    />
+                </video>
+            </div>
         </div>
+
+        @if (core()->getConfigData('customer.settings.wishlist.wishlist_option'))
+            <div
+                class="absolute top-3 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border bg-white text-2xl transition-all hover:opacity-[0.8] ltr:right-3 rtl:left-3"
+                role="button"
+                aria-label="@lang('shop::app.products.view.add-to-wishlist')"
+                tabindex="0"
+                :class="isWishlist ? 'icon-heart-fill text-red-600' : 'icon-heart'"
+                @click="$emit('toggle-wishlist')"
+            >
+            </div>
+        @endif
     </div>
 </div>

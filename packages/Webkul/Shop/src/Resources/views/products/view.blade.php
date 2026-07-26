@@ -55,16 +55,6 @@
 
     {!! view_render_event('bagisto.shop.products.view.before', ['product' => $product]) !!}
 
-    <!-- Breadcrumbs -->
-    @if ((core()->getConfigData('general.general.breadcrumbs.shop')))
-        <div class="flex justify-center px-7 max-lg:hidden">
-            <x-shop::breadcrumbs
-                name="product"
-                :entity="$product"
-            />
-        </div>
-    @endif
-
     <!-- Product Information Vue Component -->
     <v-product>
         <x-shop::shimmer.products.view />
@@ -297,23 +287,9 @@
                             <div class="relative max-w-[590px] max-1180:w-full max-1180:max-w-full max-1180:px-5 max-sm:px-4">
                                 {!! view_render_event('bagisto.shop.products.name.before', ['product' => $product]) !!}
 
-                                <div class="flex justify-between gap-4">
-                                    <h1 class="break-words text-3xl font-medium max-sm:text-xl" v-pre>
-                                        {{ $product->name }}
-                                    </h1>
-
-                                    @if (core()->getConfigData('customer.settings.wishlist.wishlist_option'))
-                                        <div
-                                            class="max-sm:min-h-7 max-sm:min-w-7 flex max-h-[46px] min-h-[46px] min-w-[46px] cursor-pointer items-center justify-center rounded-full border bg-white text-2xl transition-all hover:opacity-[0.8] max-sm:max-h-7 max-sm:text-base"
-                                            role="button"
-                                            aria-label="@lang('shop::app.products.view.add-to-wishlist')"
-                                            tabindex="0"
-                                            :class="isWishlist ? 'icon-heart-fill text-red-600' : 'icon-heart'"
-                                            @click="addToWishlist"
-                                        >
-                                        </div>
-                                    @endif
-                                </div>
+                                <h1 class="break-words text-3xl font-medium max-sm:text-xl" v-pre>
+                                    {{ $product->name }}
+                                </h1>
 
                                 {!! view_render_event('bagisto.shop.products.name.after', ['product' => $product]) !!}
 

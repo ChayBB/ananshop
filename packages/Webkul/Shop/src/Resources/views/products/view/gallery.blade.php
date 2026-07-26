@@ -1,4 +1,8 @@
-<v-product-gallery ref="gallery">
+<v-product-gallery
+    ref="gallery"
+    :is-wishlist="isWishlist"
+    @toggle-wishlist="addToWishlist"
+>
     <x-shop::shimmer.products.gallery />
 </v-product-gallery>
 
@@ -26,6 +30,10 @@
     <script type="module">
         app.component('v-product-gallery', {
             template: '#v-product-gallery-template',
+
+            props: ['isWishlist'],
+
+            emits: ['toggle-wishlist'],
 
             data() {
                 return {

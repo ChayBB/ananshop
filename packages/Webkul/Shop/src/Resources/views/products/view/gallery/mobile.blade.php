@@ -1,23 +1,37 @@
-<div
-    class="overflow-hidden 1180:hidden"
-    v-if="isMediaLoading"
->
-    <div class="shimmer aspect-square max-h-screen w-screen bg-zinc-200"></div>
-</div>
-
-<div
-    class="scrollbar-hide flex w-screen gap-8 overflow-auto max-sm:gap-5 1180:hidden"
-    v-else
->
-    <v-product-carousel
-        :options="[
-            ...media.images,
-            ...media.videos
-        ]"
-        @click="isImageZooming = ! isImageZooming"
+<div class="relative 1180:hidden">
+    <div
+        class="overflow-hidden"
+        v-if="isMediaLoading"
     >
-        <x-shop::shimmer.products.gallery />
-    </v-product-carousel>
+        <div class="shimmer aspect-square max-h-screen w-screen bg-zinc-200"></div>
+    </div>
+
+    <div
+        class="scrollbar-hide flex w-screen gap-8 overflow-auto max-sm:gap-5"
+        v-else
+    >
+        <v-product-carousel
+            :options="[
+                ...media.images,
+                ...media.videos
+            ]"
+            @click="isImageZooming = ! isImageZooming"
+        >
+            <x-shop::shimmer.products.gallery />
+        </v-product-carousel>
+    </div>
+
+    @if (core()->getConfigData('customer.settings.wishlist.wishlist_option'))
+        <div
+            class="absolute top-3 z-10 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border bg-white text-xl transition-all hover:opacity-[0.8] ltr:right-3 rtl:left-3"
+            role="button"
+            aria-label="@lang('shop::app.products.view.add-to-wishlist')"
+            tabindex="0"
+            :class="isWishlist ? 'icon-heart-fill text-red-600' : 'icon-heart'"
+            @click="$emit('toggle-wishlist')"
+        >
+        </div>
+    @endif
 </div>
 
 @pushOnce('scripts')
