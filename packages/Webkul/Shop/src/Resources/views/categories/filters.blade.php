@@ -129,15 +129,15 @@
         <template v-else>
             <div class="panel-side journal-scroll grid max-h-[1320px] min-w-[145px] grid-cols-[1fr] overflow-y-auto overflow-x-hidden max-xl:min-w-[135px] md:max-w-[170px] md:ltr:pr-5 md:rtl:pl-5">
                 <!-- Filters Header Container -->
-                <div class="flex h-[50px] items-center justify-between border-b border-zinc-200 pb-2.5 max-md:hidden">
-                    <p class="text-lg font-semibold max-sm:font-medium">
+                <div class="flex flex-col gap-2 border-b border-zinc-200 pb-2.5 max-md:hidden">
+                    <p class="text-base font-semibold max-sm:font-medium">
                         @lang('shop::app.categories.filters.filters')
                     </p>
 
-                    <div class="flex items-center gap-3">
+                    <div class="flex items-center justify-between gap-2">
                         <button
                             type="button"
-                            class="primary-button rounded-xl px-3.5 py-1.5 text-xs font-semibold"
+                            class="primary-button rounded-xl px-3 py-1 text-xs font-semibold"
                             @click="$emit('filter-applied', filters.applied)"
                         >
                             @lang('shop::app.categories.filters.search.title')
