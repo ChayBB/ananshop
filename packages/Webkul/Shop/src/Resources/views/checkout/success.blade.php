@@ -34,6 +34,31 @@
 				@endif
 			</p>
 
+			@if (
+				$order->payment->method === 'moneytransfer'
+				&& ($qrCodePath = core()->getConfigData('sales.payment_methods.moneytransfer.qr_code'))
+			)
+				<div class="flex flex-col items-center gap-2">
+					<p class="text-base font-medium">
+						QR Code สำหรับโอนเงินเข้าบริษัท
+					</p>
+
+					<img
+						src="{{ \Illuminate\Support\Facades\Storage::url($qrCodePath) }}"
+						alt="QR Code สำหรับโอนเงินเข้าบริษัท"
+						class="h-48 w-48 rounded-lg border border-zinc-200 object-contain"
+					>
+
+					<a
+						href="{{ \Illuminate\Support\Facades\Storage::url($qrCodePath) }}"
+						download
+						class="text-sm font-medium text-navyBlue underline"
+					>
+						ดาวน์โหลด QR Code
+					</a>
+				</div>
+			@endif
+
 			<p class="text-xl max-md:text-sm">
 				<span class="font-bold">
 					@lang('shop::app.checkout.onepage.summary.grand-total')
