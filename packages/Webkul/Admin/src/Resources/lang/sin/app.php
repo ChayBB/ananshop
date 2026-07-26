@@ -4951,6 +4951,8 @@ return [
                     'phonepe-merchant-info' => 'PhonePe නියන්ත්‍රණ පුවරුවෙන් ලබා ගත් ඔබේ PhonePe වෙළඳ දෙමාස අංකය ඇතුළත් කරන්න',
                     'processing' => 'සංස්කරණය කිරීම',
                     'production-mode-info' => 'නිෂ්පාදන මාදිලිය සඳහා පමණක්.',
+                    'qr-code' => 'Payment QR Code',
+                    'qr-code-information' => 'Upload a QR code for receiving payment into the company account.',
                     'razorpay' => 'Razorpay',
                     'razorpay-info' => 'Razorpay යනු ව්‍යාපාරයන්ට ගෙවීම් පිළිගැනීමට, සැකසීමට සහ බෙදා හැරීමට උපකාර කරන මූල්‍ය තාක්ෂණ වේදිකාවකි.',
                     'sandbox' => 'සැම්ප්ලින්',

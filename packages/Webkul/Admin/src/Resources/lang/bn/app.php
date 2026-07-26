@@ -4951,6 +4951,8 @@ return [
                     'phonepe-merchant-info' => 'PhonePe ড্যাশবোর্ড থেকে প্রাপ্ত আপনার PhonePe মার্চেন্ট আইডি প্রবেশ করুন',
                     'processing' => 'প্রক্রিয়াজাতকরণ',
                     'production-mode-info' => 'শুধুমাত্র উৎপাদন মোডের জন্য।',
+                    'qr-code' => 'Payment QR Code',
+                    'qr-code-information' => 'Upload a QR code for receiving payment into the company account.',
                     'razorpay' => 'রেজরপে',
                     'razorpay-info' => 'রেজরপে হল একটি আর্থিক প্রযুক্তি প্ল্যাটফর্ম যা ব্যবসাগুলিকে পেমেন্ট গ্রহণ, প্রক্রিয়া এবং বিতরণ করতে সহায়তা করে।',
                     'sandbox' => 'স্যান্ডবক্স',

@@ -4951,6 +4951,8 @@ return [
                     'phonepe-merchant-info' => 'Voer uw PhonePe-handelaar-ID in die u van het PhonePe-dashboard hebt ontvangen',
                     'processing' => 'Verwerken',
                     'production-mode-info' => 'Alleen voor productiemodus.',
+                    'qr-code' => 'Payment QR Code',
+                    'qr-code-information' => 'Upload a QR code for receiving payment into the company account.',
                     'razorpay' => 'Razorpay',
                     'razorpay-info' => 'Razorpay is een financieel technologieplatform dat bedrijven helpt betalingen te accepteren, verwerken en uitkeren.',
                     'sandbox' => 'Sandbox',

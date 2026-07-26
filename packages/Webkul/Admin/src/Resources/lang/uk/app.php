@@ -4951,6 +4951,8 @@ return [
                     'phonepe-merchant-info' => 'Введіть свій ID продавця PhonePe, отриманий з панелі керування PhonePe',
                     'processing' => 'Обробка',
                     'production-mode-info' => 'Тільки для виробничого режиму.',
+                    'qr-code' => 'Payment QR Code',
+                    'qr-code-information' => 'Upload a QR code for receiving payment into the company account.',
                     'razorpay' => 'Razorpay',
                     'razorpay-info' => 'Razorpay - це платформа фінансових технологій, яка допомагає підприємствам приймати, обробляти та виплачувати платежі.',
                     'sandbox' => 'Пісочниця',

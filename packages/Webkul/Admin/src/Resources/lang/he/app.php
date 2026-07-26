@@ -4951,6 +4951,8 @@ return [
                     'phonepe-merchant-info' => 'הזן את מזהה הסוחר PhonePe שלך המתקבל מלוח הבקרה של PhonePe',
                     'processing' => 'מעבד',
                     'production-mode-info' => 'למצב ייצור בלבד.',
+                    'qr-code' => 'Payment QR Code',
+                    'qr-code-information' => 'Upload a QR code for receiving payment into the company account.',
                     'razorpay' => 'Razorpay',
                     'razorpay-info' => 'Razorpay היא פלטפורמת טכנולוגיה פיננסית שמסייעת לעסקים לקבל, לעבד ולשלם תשלומים.',
                     'sandbox' => 'סנדבוקס',

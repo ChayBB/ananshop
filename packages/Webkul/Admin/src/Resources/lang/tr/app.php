@@ -4951,6 +4951,8 @@ return [
                     'phonepe-merchant-info' => 'PhonePe panosundan alınan PhonePe Tüccar Kimliğinizi girin',
                     'processing' => 'İşleniyor',
                     'production-mode-info' => 'Yalnızca üretim modu için.',
+                    'qr-code' => 'Payment QR Code',
+                    'qr-code-information' => 'Upload a QR code for receiving payment into the company account.',
                     'razorpay' => 'Razorpay',
                     'razorpay-info' => 'Razorpay, işletmelerin ödemeleri kabul etmesine, işlemesine ve ödemesine yardımcı olan bir finansal teknoloji platformudur.',
                     'sandbox' => 'Kum Havuzu',

@@ -4951,6 +4951,8 @@ return [
                     'phonepe-merchant-info' => 'شناسه پذیرنده PhonePe خود را که از داشبورد PhonePe بدست آمده است وارد کنید',
                     'processing' => 'در حال پردازش',
                     'production-mode-info' => 'فقط برای حالت تولید.',
+                    'qr-code' => 'Payment QR Code',
+                    'qr-code-information' => 'Upload a QR code for receiving payment into the company account.',
                     'razorpay' => 'رازورپی',
                     'razorpay-info' => 'رازورپی یک پلتفرم تکنولوژی مالی است که به کسب و کارها در پذیرش، پردازش و پرداخت پرداخت ها کمک می کند.',
                     'sandbox' => 'محیط آزمایشی',

@@ -4511,6 +4511,8 @@ return [
                     'phonepe-merchant-info' => 'กรอก ID ผู้ขาย PhonePe ที่ได้จากแผงควบคุม PhonePe',
                     'processing' => 'กำลังประมวลผล',
                     'production-mode-info' => 'เฉพาะโหมดการผลิตเท่านั้น',
+                    'qr-code' => 'QR Code รับเงิน',
+                    'qr-code-information' => 'อัปโหลด QR Code สำหรับรับเงินเข้าบัญชีบริษัท',
                     'razorpay' => 'Razorpay',
                     'razorpay-info' => 'Razorpay เป็นแพลตฟอร์มเทคโนโลยีการเงินที่ช่วยให้ธุรกิจสามารถรับชำระเงิน, ประมวลผลและส่งมอบเงินได้',
                     'sandbox' => 'พื้นที่ทดลอง',

@@ -2541,6 +2541,15 @@ return [
                 'locale_based' => false,
                 'validation' => 'mimes:bmp,jpeg,jpg,png,webp',
             ], [
+                'name' => 'qr_code',
+                'title' => 'admin::app.configuration.index.sales.payment-methods.qr-code',
+                'type' => 'image',
+                'info' => 'admin::app.configuration.index.sales.payment-methods.qr-code-information',
+                'depends' => 'active:1',
+                'channel_based' => true,
+                'locale_based' => false,
+                'validation' => 'mimes:bmp,jpeg,jpg,png,webp',
+            ], [
                 'name' => 'generate_invoice',
                 'title' => 'admin::app.configuration.index.sales.payment-methods.generate-invoice',
                 'type' => 'boolean',

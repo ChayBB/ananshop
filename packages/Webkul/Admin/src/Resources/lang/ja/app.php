@@ -4951,6 +4951,8 @@ return [
                     'phonepe-merchant-info' => 'PhonePeダッシュボードから取得したPhonePeマーチャントIDを入力してください',
                     'processing' => '処理中',
                     'production-mode-info' => '本番モードのみ。',
+                    'qr-code' => 'Payment QR Code',
+                    'qr-code-information' => 'Upload a QR code for receiving payment into the company account.',
                     'razorpay' => 'Razorpay',
                     'razorpay-info' => 'Razorpayは、企業が支払いを受け入れ、処理し、支払いを行うのを支援する金融技術プラットフォームです。',
                     'sandbox' => 'サンドボックス',

@@ -4951,6 +4951,8 @@ return [
                     'phonepe-merchant-info' => 'أدخل معرّف التاجر PhonePe الخاص بك المحصل عليه من لوحة تحكم PhonePe',
                     'processing' => 'معالجة',
                     'production-mode-info' => 'لوضع الإنتاج فقط.',
+                    'qr-code' => 'Payment QR Code',
+                    'qr-code-information' => 'Upload a QR code for receiving payment into the company account.',
                     'razorpay' => 'رازورباي',
                     'razorpay-info' => 'رازورباي هي منصة تكنولوجيا مالية تساعد الشركات على قبول ومعالجة وصرف المدفوعات.',
                     'sandbox' => 'صندوق رملي',

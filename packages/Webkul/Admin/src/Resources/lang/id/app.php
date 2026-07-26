@@ -4951,6 +4951,8 @@ return [
                     'phonepe-merchant-info' => 'Masukkan ID Pedagang PhonePe Anda yang diperoleh dari dasbor PhonePe',
                     'processing' => 'Proses',
                     'production-mode-info' => 'Hanya untuk mode produksi.',
+                    'qr-code' => 'Payment QR Code',
+                    'qr-code-information' => 'Upload a QR code for receiving payment into the company account.',
                     'razorpay' => 'Razorpay',
                     'razorpay-info' => 'Razorpay adalah platform teknologi keuangan yang membantu bisnis menerima, memproses, dan mencairkan pembayaran.',
                     'sandbox' => 'Sandbox',

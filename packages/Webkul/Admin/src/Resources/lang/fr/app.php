@@ -4951,6 +4951,8 @@ return [
                     'phonepe-merchant-info' => 'Entrez votre ID marchand PhonePe obtenu du tableau de bord PhonePe',
                     'processing' => 'En cours de traitement',
                     'production-mode-info' => 'Pour le mode production uniquement.',
+                    'qr-code' => 'Payment QR Code',
+                    'qr-code-information' => 'Upload a QR code for receiving payment into the company account.',
                     'razorpay' => 'Razorpay',
                     'razorpay-info' => 'Razorpay est une plateforme de technologie financière qui aide les entreprises à accepter, traiter et décaisser des paiements.',
                     'sandbox' => 'Environnement de test',

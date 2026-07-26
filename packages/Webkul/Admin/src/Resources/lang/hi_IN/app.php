@@ -4951,6 +4951,8 @@ return [
                     'phonepe-merchant-info' => 'PhonePe डैशबोर्ड से प्राप्त अपनी PhonePe मर्चेंट आईडी दर्ज करें',
                     'processing' => 'प्रसंस्करण',
                     'production-mode-info' => 'केवल उत्पादन मोड के लिए।',
+                    'qr-code' => 'Payment QR Code',
+                    'qr-code-information' => 'Upload a QR code for receiving payment into the company account.',
                     'razorpay' => 'रेज़रपे',
                     'razorpay-info' => 'रेज़रपे एक वित्तीय प्रौद्योगिकी मंच है जो व्यवसायों को भुगतान स्वीकार करने, संसाधित करने और वितरित करने में मदद करता है।',
                     'sandbox' => 'सैंडबॉक्स',

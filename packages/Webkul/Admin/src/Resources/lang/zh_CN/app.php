@@ -4951,6 +4951,8 @@ return [
                     'phonepe-merchant-info' => '输入从 PhonePe 仪表板获取的 PhonePe 商家 ID',
                     'processing' => '处理中',
                     'production-mode-info' => '仅限生产模式。',
+                    'qr-code' => 'Payment QR Code',
+                    'qr-code-information' => 'Upload a QR code for receiving payment into the company account.',
                     'razorpay' => 'Razorpay',
                     'razorpay-info' => 'Razorpay 是一个金融技术平台，帮助企业接受、处理和支付款项。',
                     'sandbox' => '沙盒',
