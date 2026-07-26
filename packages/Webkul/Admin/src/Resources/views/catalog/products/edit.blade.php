@@ -12,7 +12,7 @@
         {!! view_render_event('bagisto.admin.catalog.product.edit.actions.before', ['product' => $product]) !!}
 
         <!-- Page Header -->
-        <div class="grid gap-2.5">
+        <div class="sticky top-[62px] z-[9999] grid gap-2.5 border-b border-gray-200 bg-white py-2 dark:border-gray-800 dark:bg-gray-950">
             <div class="flex items-center justify-between gap-4 max-sm:flex-wrap">
                 <div class="grid gap-1.5">
                     <p class="text-xl font-bold leading-6 text-gray-800 dark:text-white">

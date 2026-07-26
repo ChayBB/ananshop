@@ -122,7 +122,7 @@
                     @endif
 
                     <!-- Page Content Blade Component -->
-                    <div class="w-full overflow-x-hidden">
+                    <div class="w-full overflow-x-clip">
                         {{ $slot }}
                     </div>
                 </div>
