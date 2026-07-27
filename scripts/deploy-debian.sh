@@ -26,10 +26,10 @@ composer install --no-dev --optimize-autoloader --no-interaction
 
 if [ "$BUILD_ASSETS" = "true" ]; then
     echo "==> Building Admin theme assets"
-    (cd packages/Webkul/Admin && npm ci && npm run build)
+    (cd packages/Webkul/Admin && npm install && npm run build)
 
     echo "==> Building Shop theme assets"
-    (cd packages/Webkul/Shop && npm ci && npm run build)
+    (cd packages/Webkul/Shop && npm install && npm run build)
 else
     echo "==> Skipping asset build (BUILD_ASSETS=true to enable)"
 fi
