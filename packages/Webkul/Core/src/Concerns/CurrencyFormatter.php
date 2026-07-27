@@ -12,11 +12,11 @@ trait CurrencyFormatter
      */
     public function formatCurrency(?float $price, Currency $currency): string
     {
-        if ($currency->currency_position) {
-            return $this->useCustomCurrencyFormatter($price, $currency);
-        }
+        $formatted = $currency->currency_position
+            ? $this->useCustomCurrencyFormatter($price, $currency)
+            : $this->useDefaultCurrencyFormatter($price, $currency);
 
-        return $this->useDefaultCurrencyFormatter($price, $currency);
+        return preg_replace('/฿\s*/u', '฿ ', $formatted);
     }
 
     /**
