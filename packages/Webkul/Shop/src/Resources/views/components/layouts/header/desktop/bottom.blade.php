@@ -56,7 +56,7 @@
         <div class="relative w-full">
             <form
                 action="{{ route('shop.search.index') }}"
-                class="flex max-w-[445px] items-center"
+                class="flex items-center w-full"
                 role="search"
             >
                 <label
