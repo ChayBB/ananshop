@@ -124,7 +124,7 @@
                 <div class="action-items flex items-center gap-1.5 mt-2 w-full max-sm:flex-wrap max-sm:gap-1">
                     <!-- Quantity Selector -->
                     @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
-                        <div class="flex items-center justify-between rounded-xl border border-navyBlue px-2 py-1 text-sm font-medium select-none shrink-0 min-w-[70px] max-sm:min-w-[54px] max-sm:px-1">
+                        <div class="flex items-center justify-between rounded-xl border border-navyBlue px-3 py-1 text-sm font-medium select-none shrink-0 min-w-[96px] max-sm:min-w-[76px] max-sm:px-2">
                             <button
                                 type="button"
                                 class="cursor-pointer px-0.5 text-base font-bold text-navyBlue hover:opacity-75 disabled:opacity-30"
