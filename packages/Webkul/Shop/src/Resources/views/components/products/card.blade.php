@@ -124,23 +124,23 @@
                 <div class="action-items flex items-center gap-1.5 mt-2 w-full max-sm:flex-wrap max-sm:gap-1">
                     <!-- Quantity Selector -->
                     @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
-                        <div class="flex items-center justify-between rounded-xl border border-navyBlue px-3 py-1 text-sm font-medium select-none shrink-0 min-w-[189px] max-sm:min-w-[148px] max-sm:px-2">
+                        <div class="flex items-center justify-between gap-0.5 rounded-xl border border-navyBlue p-1 text-sm font-medium select-none shrink-0">
                             <button
                                 type="button"
-                                class="cursor-pointer px-0.5 text-base font-bold text-navyBlue hover:opacity-75 disabled:opacity-30"
+                                class="flex h-7 w-7 shrink-0 cursor-pointer items-center justify-center rounded-lg text-base font-bold text-navyBlue hover:bg-navyBlue/10 disabled:opacity-30"
                                 :disabled="quantity <= 1"
                                 @click="decreaseQty()"
                             >
                                 -
                             </button>
 
-                            <span class="px-1 text-sm font-semibold text-navyBlue max-sm:text-xs">
+                            <span class="min-w-[1.5rem] text-center text-sm font-semibold text-navyBlue max-sm:text-xs">
                                 @{{ quantity }}
                             </span>
 
                             <button
                                 type="button"
-                                class="cursor-pointer px-0.5 text-base font-bold text-navyBlue hover:opacity-75"
+                                class="flex h-7 w-7 shrink-0 cursor-pointer items-center justify-center rounded-lg text-base font-bold text-navyBlue hover:bg-navyBlue/10"
                                 @click="increaseQty()"
                             >
                                 +
