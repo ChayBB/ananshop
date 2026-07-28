@@ -44,14 +44,14 @@
 					</p>
 
 					<img
-						src="{{ \Illuminate\Support\Facades\Storage::url($qrCodePath) }}"
+						src="{{ asset('storage/'.$qrCodePath) }}"
 						alt="คิวอาร์โค๊ดสำหรับโอนเงิน"
 						class="h-48 w-48 rounded-lg border border-zinc-200 object-contain"
 					>
 
 					<a
-						href="{{ \Illuminate\Support\Facades\Storage::url($qrCodePath) }}"
-						download
+						href="{{ asset('storage/'.$qrCodePath) }}"
+						download="Ananshop-QR-Payment.{{ pathinfo($qrCodePath, PATHINFO_EXTENSION) }}"
 						class="text-sm font-medium text-navyBlue underline"
 					>
 						ดาวน์โหลด QR Code
