@@ -100,17 +100,21 @@
 
                         <!-- Modal Footer -->
                         <x-slot:footer>
-                            <div class="flex flex-wrap items-center gap-4">
+                            <div class="flex w-full flex-col items-center gap-3">
                                 <x-shop::button
-                                    class="primary-button max-w-none flex-auto rounded-sm px-11 py-3 max-md:rounded-lg max-md:py-1.5"
+                                    class="primary-button max-w-none w-full rounded-sm px-11 py-3 max-md:rounded-lg max-md:py-1.5"
                                     :title="trans('shop::app.checkout.login.title')"
                                     ::loading="isStoring"
                                     ::disabled="isStoring"
                                 />
 
+                                <p class="text-sm text-zinc-400">
+                                    {{ app()->getLocale() == 'th' ? 'หรือ' : 'or' }}
+                                </p>
+
                                 <a
                                     href="{{ route('shop.customers.register.index') }}"
-                                    class="secondary-button max-w-none flex-auto rounded-sm px-11 py-3 text-center max-md:rounded-lg max-md:py-1.5"
+                                    class="secondary-button max-w-none w-full rounded-sm px-11 py-3 text-center max-md:rounded-lg max-md:py-1.5"
                                 >
                                     {{ trans('shop::app.components.layouts.header.desktop.bottom.sign-up') }}
                                 </a>
