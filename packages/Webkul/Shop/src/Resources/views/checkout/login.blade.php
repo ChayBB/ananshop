@@ -54,12 +54,12 @@
                                 </x-shop::form.control-group.label>
 
                                 <x-shop::form.control-group.control
-                                    type="email"
+                                    type="text"
                                     class="px-6 py-4"
                                     name="email"
-                                    rules="required|email"
+                                    rules="required"
                                     :label="trans('shop::app.checkout.login.email')"
-                                    placeholder="email@example.com"
+                                    :placeholder="trans('shop::app.checkout.login.email')"
                                     :aria-label="trans('shop::app.checkout.login.email')"
                                     aria-required="true"
                                 />
@@ -107,6 +107,13 @@
                                     ::loading="isStoring"
                                     ::disabled="isStoring"
                                 />
+
+                                <a
+                                    href="{{ route('shop.customers.register.index') }}"
+                                    class="secondary-button max-w-none flex-auto rounded-sm px-11 py-3 text-center max-md:rounded-lg max-md:py-1.5"
+                                >
+                                    {{ trans('shop::app.components.layouts.header.desktop.bottom.sign-up') }}
+                                </a>
                             </div>
                         </x-slot>
                     </x-shop::modal>

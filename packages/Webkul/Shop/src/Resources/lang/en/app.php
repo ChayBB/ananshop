@@ -1217,7 +1217,7 @@ return [
         ],
 
         'login' => [
-            'email' => 'Email',
+            'email' => 'Email or Username',
             'password' => 'Password',
             'title' => 'Sign In',
         ],

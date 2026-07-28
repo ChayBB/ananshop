@@ -6,6 +6,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Hash;
+use Webkul\Customer\Models\Customer;
 use Webkul\Shop\Http\Requests\Customer\LoginRequest;
 
 class CustomerController extends APIController
@@ -17,11 +19,34 @@ class CustomerController extends APIController
      */
     public function login(LoginRequest $request)
     {
-        if (! auth()->guard('customer')->attempt($request->only(['email', 'password']))) {
+        $login = trim($request->input('email'));
+
+        $channelId = core()->getCurrentChannel()->id;
+
+        $customer = Customer::where(function ($query) use ($login) {
+            $query->where('email', $login)
+                ->orWhere('username', $login)
+                ->orWhere('phone', $login);
+        })->where('channel_id', $channelId)->first();
+
+        if (! $customer) {
+            $customer = Customer::where(function ($query) use ($login) {
+                $query->where('email', $login)
+                    ->orWhere('username', $login)
+                    ->orWhere('phone', $login);
+            })->first();
+        }
+
+        if (
+            ! $customer
+            || ! Hash::check($request->input('password'), $customer->password)
+        ) {
             return response()->json([
                 'message' => trans('shop::app.customers.login-form.invalid-credentials'),
             ], Response::HTTP_FORBIDDEN);
         }
+
+        auth()->guard('customer')->login($customer);
 
         if (! auth()->guard('customer')->user()->status) {
             auth()->guard('customer')->logout();
