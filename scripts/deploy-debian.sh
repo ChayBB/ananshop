@@ -16,6 +16,9 @@ BUILD_ASSETS="${BUILD_ASSETS:-false}"
 
 cd "$APP_PATH"
 
+echo "==> Entering maintenance mode"
+php artisan down --retry=5 || true
+
 echo "==> Pulling latest code ($GIT_BRANCH) in $APP_PATH"
 git fetch origin "$GIT_BRANCH"
 git checkout "$GIT_BRANCH"
@@ -58,5 +61,8 @@ sudo systemctl restart "$PHP_FPM_SERVICE"
 
 echo "==> Reloading Nginx"
 sudo systemctl reload nginx
+
+echo "==> Leaving maintenance mode"
+php artisan up
 
 echo "==> Deploy complete"
