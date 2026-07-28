@@ -124,7 +124,7 @@
                 <div class="action-items flex items-center gap-1.5 mt-2 w-full max-sm:flex-wrap max-sm:gap-1">
                     <!-- Quantity Selector -->
                     @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
-                        <div class="flex items-center justify-between gap-0.5 rounded-xl border border-navyBlue p-1 text-sm font-medium select-none shrink-0">
+                        <div class="flex items-center justify-between gap-0 rounded-xl border border-navyBlue p-0.5 text-sm font-medium select-none shrink-0">
                             <button
                                 type="button"
                                 class="flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center rounded-lg text-base font-bold text-navyBlue hover:bg-navyBlue/10 disabled:opacity-30"
@@ -134,7 +134,7 @@
                                 -
                             </button>
 
-                            <span class="min-w-[1.5rem] text-center text-sm font-semibold text-navyBlue max-sm:text-xs">
+                            <span class="min-w-[1rem] text-center text-sm font-semibold text-navyBlue max-sm:text-xs">
                                 @{{ quantity }}
                             </span>
 
@@ -152,7 +152,7 @@
                         {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.before') !!}
 
                         <button
-                            class="secondary-button max-w-none flex-1 min-w-0 p-2 text-sm font-medium whitespace-nowrap max-sm:rounded-xl max-sm:p-1.5 max-sm:text-xs max-sm:whitespace-normal max-sm:leading-tight"
+                            class="secondary-button p-2 text-sm font-medium whitespace-nowrap max-sm:max-w-none max-sm:flex-1 max-sm:min-w-0 max-sm:rounded-xl max-sm:p-1.5 max-sm:text-xs max-sm:whitespace-normal max-sm:leading-tight"
                             :disabled="! product.is_saleable || isAddingToCart"
                             @click="addToCart()"
                         >
