@@ -205,26 +205,25 @@
 
     <!-- Serach Catalog Form -->
     <div class="-mx-4 w-[calc(100%+2rem)] px-2">
-        <v-search-bar>
-            <form action="{{ route('shop.search.index') }}" class="flex items-center w-full">
-                <label for="organic-search" class="sr-only">
-                    @lang('shop::app.components.layouts.header.mobile.search')
-                </label>
+        <form action="{{ route('shop.search.index') }}" class="flex items-center w-full">
+            <label for="organic-search-mobile" class="sr-only">
+                @lang('shop::app.components.layouts.header.mobile.search')
+            </label>
 
-                <div class="relative w-full">
-                    <div class="icon-search pointer-events-none absolute top-3 flex items-center text-2xl max-md:text-xl max-sm:top-2.5 ltr:left-3 rtl:right-3"></div>
+            <div class="relative w-full">
+                <div class="icon-search pointer-events-none absolute top-3 flex items-center text-2xl max-md:text-xl max-sm:top-2.5 ltr:left-3 rtl:right-3"></div>
 
-                    <input
-                        type="text"
-                        class="block w-full rounded-xl border border-['#E3E3E3'] px-11 py-3.5 text-sm font-medium text-gray-900 max-md:rounded-lg max-md:px-10 max-md:py-3 max-md:font-normal max-sm:text-xs"
-                        name="query"
-                        value="{{ request('query') }}"
-                        placeholder="@lang('shop::app.components.layouts.header.mobile.search-text')"
-                        required
-                    >
-                </div>
-            </form>
-        </v-search-bar>
+                <input
+                    type="text"
+                    id="organic-search-mobile"
+                    class="block w-full rounded-xl border border-['#E3E3E3'] px-11 py-3.5 text-sm font-medium text-gray-900 max-md:rounded-lg max-md:px-10 max-md:py-3 max-md:font-normal max-sm:text-xs"
+                    name="query"
+                    value="{{ request('query') }}"
+                    placeholder="@lang('shop::app.components.layouts.header.mobile.search-text')"
+                    required
+                >
+            </div>
+        </form>
     </div>
 
     {!! view_render_event('bagisto.shop.components.layouts.header.mobile.search.after') !!}

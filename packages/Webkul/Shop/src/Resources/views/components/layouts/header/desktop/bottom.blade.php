@@ -70,6 +70,7 @@
 
                 <input
                     type="text"
+                    id="organic-search"
                     name="query"
                     value="{{ request('query') }}"
                     class="block w-full py-3 text-xs font-medium text-gray-900 transition-all border border-transparent rounded-lg bg-zinc-100 px-11 hover:border-gray-400 focus:border-gray-400"
