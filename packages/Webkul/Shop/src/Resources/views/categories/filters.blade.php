@@ -163,6 +163,7 @@
     >
         <!-- Price Range Filter: teleported into the toolbar, next to the sort dropdown -->
         <Teleport
+            defer
             to="#category-price-filter-slot"
             v-if="filter.type === 'price'"
         >
@@ -195,9 +196,9 @@
             </x-shop::dropdown>
         </Teleport>
 
+        <template v-else>
         <x-shop::accordion
             class="last:border-b-0"
-            v-else
         >
             <!-- Filter Item Header -->
             <x-slot:header class="px-0 py-2.5 max-sm:!pb-1.5">
@@ -317,6 +318,7 @@
                     </div>
             </x-slot>
         </x-shop::accordion>
+        </template>
     </script>
 
     <script
