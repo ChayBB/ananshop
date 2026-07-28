@@ -54,6 +54,7 @@
 
         <!-- Search Bar Container -->
         <div class="relative w-full">
+            <v-search-bar>
             <form
                 action="{{ route('shop.search.index') }}"
                 class="flex items-center w-full"
@@ -72,6 +73,7 @@
                     type="text"
                     id="organic-search"
                     name="query"
+                    autocomplete="off"
                     value="{{ request('query') }}"
                     class="block w-full py-3 text-xs font-medium text-gray-900 transition-all border border-transparent rounded-lg bg-zinc-100 px-11 hover:border-gray-400 focus:border-gray-400"
                     minlength="{{ core()->getConfigData('catalog.products.search.min_query_length') }}"
@@ -94,6 +96,7 @@
                     @include('shop::search.images.index')
                 @endif
             </form>
+            </v-search-bar>
         </div>
 
         {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.search_bar.after') !!}
@@ -286,7 +289,6 @@
             ></span>
         </div>
 
-        <!-- Default category layout -->
         <div
             class="flex items-center"
             v-else-if="'{{ core()->getConfigData('general.design.categories.category_view') }}' !== 'sidebar'"
@@ -340,7 +342,6 @@
             </div>
         </div>
 
-        <!-- Sidebar category layout -->
         <div v-else>
             <!-- Categories Navigation -->
             <div class="flex items-center">

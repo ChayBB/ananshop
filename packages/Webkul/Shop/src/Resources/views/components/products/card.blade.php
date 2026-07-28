@@ -165,7 +165,6 @@
             </div>
         </div>
 
-        <!-- List Card -->
         <div
             class="relative flex max-w-max grid-cols-2 gap-4 overflow-hidden rounded max-sm:flex-wrap"
             v-else

@@ -205,6 +205,7 @@
 
     <!-- Serach Catalog Form -->
     <div class="-mx-4 w-[calc(100%+2rem)] px-2">
+        <v-search-bar>
         <form action="{{ route('shop.search.index') }}" class="flex items-center w-full">
             <label for="organic-search-mobile" class="sr-only">
                 @lang('shop::app.components.layouts.header.mobile.search')
@@ -216,6 +217,7 @@
                 <input
                     type="text"
                     id="organic-search-mobile"
+                    autocomplete="off"
                     class="block w-full rounded-xl border border-['#E3E3E3'] px-11 py-3.5 text-sm font-medium text-gray-900 max-md:rounded-lg max-md:px-10 max-md:py-3 max-md:font-normal max-sm:text-xs"
                     name="query"
                     value="{{ request('query') }}"
@@ -224,6 +226,7 @@
                 >
             </div>
         </form>
+        </v-search-bar>
     </div>
 
     {!! view_render_event('bagisto.shop.components.layouts.header.mobile.search.after') !!}
