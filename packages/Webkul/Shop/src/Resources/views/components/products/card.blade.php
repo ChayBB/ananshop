@@ -152,7 +152,7 @@
                         {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.before') !!}
 
                         <button
-                            class="secondary-button flex-1 min-w-0 p-2 text-sm font-medium whitespace-nowrap max-sm:rounded-xl max-sm:p-1.5 max-sm:text-xs max-sm:whitespace-normal max-sm:leading-tight"
+                            class="secondary-button max-w-none flex-1 min-w-0 p-2 text-sm font-medium whitespace-nowrap max-sm:rounded-xl max-sm:p-1.5 max-sm:text-xs max-sm:whitespace-normal max-sm:leading-tight"
                             :disabled="! product.is_saleable || isAddingToCart"
                             @click="addToCart()"
                         >
