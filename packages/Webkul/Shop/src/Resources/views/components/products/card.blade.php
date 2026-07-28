@@ -127,7 +127,7 @@
                         <div class="flex items-center justify-between gap-0.5 rounded-xl border border-navyBlue p-1 text-sm font-medium select-none shrink-0">
                             <button
                                 type="button"
-                                class="flex h-7 w-7 shrink-0 cursor-pointer items-center justify-center rounded-lg text-base font-bold text-navyBlue hover:bg-navyBlue/10 disabled:opacity-30"
+                                class="flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center rounded-lg text-base font-bold text-navyBlue hover:bg-navyBlue/10 disabled:opacity-30"
                                 :disabled="quantity <= 1"
                                 @click="decreaseQty()"
                             >
@@ -140,7 +140,7 @@
 
                             <button
                                 type="button"
-                                class="flex h-7 w-7 shrink-0 cursor-pointer items-center justify-center rounded-lg text-base font-bold text-navyBlue hover:bg-navyBlue/10"
+                                class="flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center rounded-lg text-base font-bold text-navyBlue hover:bg-navyBlue/10"
                                 @click="increaseQty()"
                             >
                                 +
