@@ -93,6 +93,31 @@
                                     <span class="icon-sort-right rtl:icon-sort-left cursor-pointer p-1.5 text-2xl hover:rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 ltr:ml-1 rtl:mr-1"></span>
                                 </a>
                             </div>
+
+                            @php
+                                $lowStockThreshold = (float) (core()->getConfigData('catalog.inventory.stock_options.low_stock_threshold') ?: 20);
+                                $mediumStockThreshold = (float) (core()->getConfigData('catalog.inventory.stock_options.medium_stock_threshold') ?: 30);
+                                $gaugeMax = max($mediumStockThreshold * 2, $lowStockThreshold + 1);
+                                $redWidth = min($lowStockThreshold / $gaugeMax * 100, 100);
+                                $yellowWidth = max(min(($mediumStockThreshold - $lowStockThreshold) / $gaugeMax * 100, 100), 0);
+                                $greenWidth = max(100 - $redWidth - $yellowWidth, 0);
+                            @endphp
+
+                            <!-- Stock Level Gauge: red 0-{{ $lowStockThreshold }}, yellow {{ $lowStockThreshold }}-{{ $mediumStockThreshold }}, green {{ $mediumStockThreshold }}+ (thresholds configurable in Catalog > Inventory) -->
+                            <div class="col-span-2 max-sm:col-span-1">
+                                <div class="relative h-1.5 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
+                                    <div class="absolute inset-y-0 left-0 bg-red-400" style="width: {{ $redWidth }}%"></div>
+
+                                    <div class="absolute inset-y-0 bg-amber-400" style="left: {{ $redWidth }}%; width: {{ $yellowWidth }}%"></div>
+
+                                    <div class="absolute inset-y-0 bg-emerald-400" style="left: {{ $redWidth + $yellowWidth }}%; width: {{ $greenWidth }}%"></div>
+
+                                    <div
+                                        class="absolute top-1/2 h-3 w-3 -translate-y-1/2 rounded-full border-2 border-white bg-gray-800 shadow dark:border-gray-900"
+                                        :style="{ left: 'calc(' + Math.min(product.total_qty, {{ $gaugeMax }}) / {{ $gaugeMax }} * 100 + '% - 6px)' }"
+                                    ></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
