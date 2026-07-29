@@ -25,8 +25,8 @@
 
                     <!-- Actions -->
                     <div class="flex items-center gap-1.5">
-                       <!-- Back Button: stock has no landing page to go back to -->
-                        <div v-if="entity !== 'stock'">
+                       <!-- Back Button -->
+                        <div>
                             <a v-if="entity === 'customers'"
                                 href="{{ route('admin.reporting.customers.index') }}"
                                 class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800">
@@ -35,6 +35,12 @@
                             
                             <a v-else-if="entity === 'products'"
                                 href="{{ route('admin.reporting.products.index') }}"
+                                class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800">
+                                @lang('admin::app.reporting.view.back-btn')
+                            </a>
+
+                            <a v-else-if="entity === 'stock'"
+                                href="{{ route('admin.reporting.stock.index') }}"
                                 class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800">
                                 @lang('admin::app.reporting.view.back-btn')
                             </a>

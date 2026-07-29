@@ -1014,6 +1014,92 @@ class Reporting
     }
 
     /**
+     * Returns stock health across the catalogue plus the products currently
+     * sitting in the critical band, for the stock control center.
+     *
+     * @param  string  $type
+     */
+    public function getStockControlCenterStats($type = 'graph'): array
+    {
+        $summary = [
+            'critical' => 0,
+            'low'      => 0,
+            'healthy'  => 0,
+            'unset'    => 0,
+        ];
+
+        $criticalProducts = [];
+
+        foreach ($this->productReporting->getStockThresholdProducts() as $inventory) {
+            $maxStockLevel = (float) ($inventory->product?->max_stock_level ?? 0);
+
+            /**
+             * Without a max stock level there is nothing to measure the
+             * quantity against, so these are surfaced separately rather than
+             * being counted as healthy.
+             */
+            if ($maxStockLevel <= 0) {
+                $summary['unset']++;
+
+                continue;
+            }
+
+            $quantity = (int) $inventory->total_qty;
+
+            $ratio = min($quantity / $maxStockLevel, 1);
+
+            if ($ratio < 0.2) {
+                $summary['critical']++;
+
+                $criticalProducts[] = [
+                    'id'              => $inventory->product_id,
+                    'name'            => $inventory->product?->name,
+                    'sku'             => $inventory->product?->sku,
+                    'quantity'        => $quantity,
+                    'max_stock_level' => $maxStockLevel,
+                    'percentage'      => round($ratio * 100),
+                ];
+            } elseif ($ratio < 0.5) {
+                $summary['low']++;
+            } else {
+                $summary['healthy']++;
+            }
+        }
+
+        usort($criticalProducts, fn ($a, $b) => $a['percentage'] <=> $b['percentage']);
+
+        return [
+            'summary' => $summary,
+
+            'total' => array_sum($summary),
+
+            'critical_products' => array_slice($criticalProducts, 0, 8),
+
+            'chart' => [
+                'labels' => [
+                    trans('admin::app.reporting.stock.index.critical'),
+                    trans('admin::app.reporting.stock.index.low'),
+                    trans('admin::app.reporting.stock.index.healthy'),
+                    trans('admin::app.reporting.stock.index.unset'),
+                ],
+
+                'datasets' => [
+                    [
+                        'data' => [
+                            $summary['critical'],
+                            $summary['low'],
+                            $summary['healthy'],
+                            $summary['unset'],
+                        ],
+                        'backgroundColor' => ['#f87171', '#fbbf24', '#34d399', '#cbd5e1'],
+                        'borderRadius'    => 4,
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
      * Returns the last search terms.
      *
      * @param  string  $type
