@@ -30,5 +30,8 @@ class EventServiceProvider extends ServiceProvider
         'sales.refund.save.after' => [
             'Webkul\Product\Listeners\Refund@afterCreate',
         ],
+        'sales.shipment.save.after' => [
+            'Webkul\Product\Listeners\Shipment@afterCreate',
+        ],
     ];
 }

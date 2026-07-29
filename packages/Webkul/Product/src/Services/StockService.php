@@ -70,16 +70,39 @@ class StockService
     }
 
     /**
-     * Issue stock using FEFO: consume the batch that expires soonest first.
+     * Issue stock using FEFO and lower the source inventory to match.
+     *
+     * Use this when the caller owns the whole deduction (e.g. a manual issue).
+     * For shipments, where Bagisto has already lowered the source inventory,
+     * use consumeBatchesFefo so the source is not deducted twice.
      *
      * Returns the batches drawn from, so the caller can show what was picked.
      */
     public function issueFefo(int $productId, int $inventorySourceId, int $qty, array $reference = []): array
     {
         return DB::transaction(function () use ($productId, $inventorySourceId, $qty, $reference) {
+            $allocations = $this->consumeBatchesFefo($productId, $inventorySourceId, $qty, $reference);
+
+            $this->adjustSourceInventory($productId, $inventorySourceId, -$qty);
+
+            return $allocations;
+        });
+    }
+
+    /**
+     * Draw a quantity out of batches using FEFO and write the movement ledger,
+     * without touching the source inventory.
+     *
+     * Returns the batches drawn from.
+     */
+    public function consumeBatchesFefo(int $productId, int $inventorySourceId, int $qty, array $reference = []): array
+    {
+        return DB::transaction(function () use ($productId, $inventorySourceId, $qty, $reference) {
             $remaining = $qty;
 
             $allocations = [];
+
+            $type = $reference['type'] ?? StockMovement::TYPE_ISSUE;
 
             $batches = ProductBatchProxy::modelClass()::query()
                 ->where('product_id', $productId)
@@ -98,13 +121,13 @@ class StockService
                 $batch->decrement('qty', $take);
 
                 $this->recordMovement([
-                    'type'                => StockMovement::TYPE_ISSUE,
+                    'type'                => $type,
                     'product_id'          => $productId,
                     'product_batch_id'    => $batch->id,
                     'inventory_source_id' => $inventorySourceId,
                     'qty'                 => -$take,
-                    'reference_type'      => $reference['type'] ?? null,
-                    'reference_id'        => $reference['id'] ?? null,
+                    'reference_type'      => $reference['reference_type'] ?? null,
+                    'reference_id'        => $reference['reference_id'] ?? null,
                 ]);
 
                 $allocations[] = [
@@ -124,14 +147,14 @@ class StockService
              */
             if ($remaining > 0) {
                 $this->recordMovement([
-                    'type'                => StockMovement::TYPE_ISSUE,
+                    'type'                => $type,
                     'product_id'          => $productId,
                     'product_batch_id'    => null,
                     'inventory_source_id' => $inventorySourceId,
                     'qty'                 => -$remaining,
                     'reason'              => 'unbatched',
-                    'reference_type'      => $reference['type'] ?? null,
-                    'reference_id'        => $reference['id'] ?? null,
+                    'reference_type'      => $reference['reference_type'] ?? null,
+                    'reference_id'        => $reference['reference_id'] ?? null,
                 ]);
 
                 $allocations[] = [
@@ -141,8 +164,6 @@ class StockService
                     'qty'          => $remaining,
                 ];
             }
-
-            $this->adjustSourceInventory($productId, $inventorySourceId, -$qty);
 
             return $allocations;
         });
