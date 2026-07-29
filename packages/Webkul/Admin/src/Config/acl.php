@@ -335,6 +335,15 @@ return [
         ],
         'sort' => 4,
     ], [
+        'key' => 'catalog.batches',
+        'name' => 'admin::app.acl.batches',
+        'route' => ['admin.catalog.batches.index', 'admin.catalog.batches.create', 'admin.catalog.batches.store'],
+        'sort' => 3,
+    ], [
+        'key' => 'catalog.batches.delete',
+        'name' => 'admin::app.acl.delete',
+        'route' => 'admin.catalog.batches.delete',
+        'sort' => 1,    ], [
         'key' => 'catalog.categories',
         'name' => 'admin::app.acl.categories',
         'route' => 'admin.catalog.categories.index',

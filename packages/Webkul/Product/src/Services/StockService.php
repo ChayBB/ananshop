@@ -149,6 +149,32 @@ class StockService
     }
 
     /**
+     * Remove a batch and take whatever is left in it out of the source
+     * inventory, so deleting a batch cannot leave phantom stock behind.
+     */
+    public function discardBatch($batch): void
+    {
+        DB::transaction(function () use ($batch) {
+            $remaining = (int) $batch->qty;
+
+            if ($remaining > 0) {
+                $this->recordMovement([
+                    'type'                => StockMovement::TYPE_ADJUST,
+                    'product_id'          => $batch->product_id,
+                    'product_batch_id'    => $batch->id,
+                    'inventory_source_id' => $batch->inventory_source_id,
+                    'qty'                 => -$remaining,
+                    'reason'              => 'batch-discarded',
+                ]);
+
+                $this->adjustSourceInventory($batch->product_id, $batch->inventory_source_id, -$remaining);
+            }
+
+            $batch->delete();
+        });
+    }
+
+    /**
      * Keep the source inventory that the storefront reads in step with the
      * batch ledger.
      */

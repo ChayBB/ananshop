@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\Catalog\AttributeController;
 use Webkul\Admin\Http\Controllers\Catalog\AttributeFamilyController;
 use Webkul\Admin\Http\Controllers\Catalog\CategoryController;
+use Webkul\Admin\Http\Controllers\Catalog\ProductBatchController;
 use Webkul\Admin\Http\Controllers\Catalog\Product\BundleController;
 use Webkul\Admin\Http\Controllers\Catalog\Product\ConfigurableController;
 use Webkul\Admin\Http\Controllers\Catalog\Product\DownloadableController;
@@ -57,6 +58,16 @@ Route::prefix('catalog')->group(function () {
     /**
      * Categories routes.
      */
+    Route::controller(ProductBatchController::class)->prefix('batches')->group(function () {
+        Route::get('', 'index')->name('admin.catalog.batches.index');
+
+        Route::get('create', 'create')->name('admin.catalog.batches.create');
+
+        Route::post('create', 'store')->name('admin.catalog.batches.store');
+
+        Route::delete('{id}', 'destroy')->name('admin.catalog.batches.delete');
+    });
+
     Route::controller(CategoryController::class)->prefix('categories')->group(function () {
         Route::get('', 'index')->name('admin.catalog.categories.index');
 
