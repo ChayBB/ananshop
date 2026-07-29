@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Http\Controllers\Reporting;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class StockController extends Controller
@@ -16,13 +17,16 @@ class StockController extends Controller
     ];
 
     /**
-     * Display a listing of the resource.
+     * Stock reporting has a single report, so send the index straight to it
+     * rather than showing a landing page with one widget on it.
      *
-     * @return View
+     * @return RedirectResponse
      */
     public function index()
     {
-        return view('admin::reporting.stock.index');
+        return redirect()->route('admin.reporting.stock.view', [
+            'type' => 'stock-threshold-products',
+        ]);
     }
 
     /**

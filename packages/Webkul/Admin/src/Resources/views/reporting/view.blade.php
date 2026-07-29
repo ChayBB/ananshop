@@ -25,8 +25,8 @@
 
                     <!-- Actions -->
                     <div class="flex items-center gap-1.5">
-                       <!-- Back Button -->
-                        <div>
+                       <!-- Back Button: stock has no landing page to go back to -->
+                        <div v-if="entity !== 'stock'">
                             <a v-if="entity === 'customers'"
                                 href="{{ route('admin.reporting.customers.index') }}"
                                 class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800">
@@ -35,12 +35,6 @@
                             
                             <a v-else-if="entity === 'products'"
                                 href="{{ route('admin.reporting.products.index') }}"
-                                class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800">
-                                @lang('admin::app.reporting.view.back-btn')
-                            </a>
-
-                            <a v-else-if="entity === 'stock'"
-                                href="{{ route('admin.reporting.stock.index') }}"
                                 class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800">
                                 @lang('admin::app.reporting.view.back-btn')
                             </a>
@@ -207,14 +201,20 @@
                             <p v-for="column in reporting.statistics.columns">
                                 <span
                                     v-if="column.type === 'bar'"
-                                    class="relative block h-1.5 w-[30px] overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800"
+                                    class="flex items-center gap-2"
                                 >
-                                    <span
-                                        class="absolute inset-y-0 left-0 rounded-full"
-                                        v-if="record[column.key] !== null"
-                                        :class="record[column.class_key]"
-                                        :style="{ width: Math.max(record[column.key], 3) + '%' }"
-                                    ></span>
+                                    <span class="relative block h-1.5 w-[30px] shrink-0 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
+                                        <span
+                                            class="absolute inset-y-0 left-0 rounded-full"
+                                            v-if="record[column.key] !== null"
+                                            :class="record[column.class_key]"
+                                            :style="{ width: Math.max(record[column.key], 3) + '%' }"
+                                        ></span>
+                                    </span>
+
+                                    <span v-if="record[column.key] !== null">
+                                        (@{{ record[column.key] }}%)
+                                    </span>
                                 </span>
 
                                 <a
