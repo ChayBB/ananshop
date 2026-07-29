@@ -5,6 +5,7 @@ namespace Webkul\Product\Providers;
 use Webkul\Core\Providers\CoreModuleServiceProvider;
 use Webkul\Product\Models\Product;
 use Webkul\Product\Models\ProductAttributeValue;
+use Webkul\Product\Models\ProductBatch;
 use Webkul\Product\Models\ProductBundleOption;
 use Webkul\Product\Models\ProductBundleOptionProduct;
 use Webkul\Product\Models\ProductBundleOptionTranslation;
@@ -25,6 +26,7 @@ use Webkul\Product\Models\ProductReview;
 use Webkul\Product\Models\ProductReviewAttachment;
 use Webkul\Product\Models\ProductSalableInventory;
 use Webkul\Product\Models\ProductVideo;
+use Webkul\Product\Models\StockMovement;
 
 class ModuleServiceProvider extends CoreModuleServiceProvider
 {
@@ -36,6 +38,7 @@ class ModuleServiceProvider extends CoreModuleServiceProvider
     protected $models = [
         Product::class,
         ProductAttributeValue::class,
+        ProductBatch::class,
         ProductBundleOption::class,
         ProductBundleOptionProduct::class,
         ProductBundleOptionTranslation::class,
@@ -56,5 +59,6 @@ class ModuleServiceProvider extends CoreModuleServiceProvider
         ProductReviewAttachment::class,
         ProductSalableInventory::class,
         ProductVideo::class,
+        StockMovement::class,
     ];
 }
