@@ -3763,6 +3763,7 @@ return [
                 'sku' => 'SKU',
                 'pending-quantity' => 'จำนวนค้างส่ง',
                 'max-stock-level' => 'ระดับสต๊อกสูงสุด',
+                'stock-level' => 'ระดับสต๊อก',
                 'max-stock-level-not-set' => 'ยังไม่ได้ตั้งค่าระดับสต๊อกสูงสุด',
             ],
         ],

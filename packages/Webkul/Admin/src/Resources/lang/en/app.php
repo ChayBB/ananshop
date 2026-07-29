@@ -4088,6 +4088,7 @@ return [
                 'sku' => 'SKU',
                 'pending-quantity' => 'Pending Quantity',
                 'max-stock-level' => 'Max Stock Level',
+                'stock-level' => 'Stock Level',
                 'max-stock-level-not-set' => 'Max Stock Level not set',
             ],
         ],

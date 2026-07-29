@@ -942,13 +942,31 @@ class Reporting
     {
         if ($type == 'table') {
             $records = $this->productReporting->getStockThresholdProducts()->map(function ($product) {
+                $quantity = (int) $product->total_qty;
+
+                $maxStockLevel = (float) ($product->product?->max_stock_level ?? 0);
+
+                /**
+                 * Without a max stock level there is no scale to plot the
+                 * quantity against, so the bar is left empty for that row.
+                 */
+                $ratio = $maxStockLevel > 0
+                    ? min($quantity / $maxStockLevel, 1)
+                    : null;
+
                 return [
                     'product_id'      => $product->product_id,
                     'product_name'    => $product->product?->name,
-                    'sku'             => $product->product?->sku,
-                    'quantity'        => (int) $product->total_qty,
+                    'quantity'        => $quantity,
                     'pending_qty'     => (int) ($product->product?->ordered_inventories->sum('qty') ?? 0),
                     'max_stock_level' => $product->product?->max_stock_level,
+                    'stock_bar'       => $ratio === null ? null : round($ratio * 100),
+                    'stock_bar_class' => match (true) {
+                        $ratio === null => '',
+                        $ratio < 0.2    => 'bg-red-400',
+                        $ratio < 0.5    => 'bg-amber-400',
+                        default         => 'bg-emerald-400',
+                    },
                 ];
             })->values()->toArray();
 
@@ -961,9 +979,6 @@ class Reporting
                         'key' => 'product_name',
                         'label' => trans('admin::app.reporting.products.index.name'),
                     ], [
-                        'key' => 'sku',
-                        'label' => trans('admin::app.reporting.stock.index.sku'),
-                    ], [
                         'key' => 'quantity',
                         'label' => trans('admin::app.reporting.stock.index.quantity'),
                     ], [
@@ -972,6 +987,11 @@ class Reporting
                     ], [
                         'key' => 'max_stock_level',
                         'label' => trans('admin::app.reporting.stock.index.max-stock-level'),
+                    ], [
+                        'key' => 'stock_bar',
+                        'label' => trans('admin::app.reporting.stock.index.stock-level'),
+                        'type' => 'bar',
+                        'class_key' => 'stock_bar_class',
                     ],
                 ],
 

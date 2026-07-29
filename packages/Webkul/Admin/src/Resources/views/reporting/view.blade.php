@@ -205,8 +205,20 @@
                             v-for="record in sortedRecords"
                         >
                             <p v-for="column in reporting.statistics.columns">
+                                <span
+                                    v-if="column.type === 'bar'"
+                                    class="relative block h-1.5 w-[30px] overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800"
+                                >
+                                    <span
+                                        class="absolute inset-y-0 left-0 rounded-full"
+                                        v-if="record[column.key] !== null"
+                                        :class="record[column.class_key]"
+                                        :style="{ width: Math.max(record[column.key], 3) + '%' }"
+                                    ></span>
+                                </span>
+
                                 <a
-                                    v-if="column.link && record[column.link]"
+                                    v-else-if="column.link && record[column.link]"
                                     :href="record[column.link]"
                                     class="text-blue-600 transition-all hover:underline dark:text-blue-400"
                                 >
