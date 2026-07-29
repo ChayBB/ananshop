@@ -95,7 +95,7 @@
                             </div>
 
                             <!-- Stock Level Bar: filled to qty/max, red below 20%, yellow 20-50%, green from 50% -->
-                            <div class="col-span-2 max-sm:col-span-1">
+                            <div class="w-full max-w-[180px]">
                                 <div class="relative h-1.5 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
                                     <div
                                         class="absolute inset-y-0 left-0 rounded-full transition-all"
