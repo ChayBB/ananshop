@@ -38,7 +38,13 @@
                                 class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800">
                                 @lang('admin::app.reporting.view.back-btn')
                             </a>
-                            
+
+                            <a v-else-if="entity === 'stock'"
+                                href="{{ route('admin.reporting.stock.index') }}"
+                                class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800">
+                                @lang('admin::app.reporting.view.back-btn')
+                            </a>
+
                             <a v-else
                                 href="{{ route('admin.reporting.sales.index') }}"
                                 class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800">

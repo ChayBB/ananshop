@@ -852,6 +852,11 @@ return [
         'name' => 'admin::app.acl.products',
         'route' => 'admin.reporting.products.index',
         'sort' => 3,
+    ], [
+        'key' => 'reporting.stock',
+        'name' => 'admin::app.acl.stock',
+        'route' => 'admin.reporting.stock.index',
+        'sort' => 4,
     ],
 
     /*

@@ -934,6 +934,57 @@ class Reporting
     }
 
     /**
+     * Returns the stock threshold products statistics.
+     *
+     * @param  string  $type
+     */
+    public function getStockThresholdProductsStats($type = 'graph'): array
+    {
+        if ($type == 'table') {
+            $records = $this->productReporting->getStockThresholdProducts()->map(function ($product) {
+                return [
+                    'product_id'   => $product->product_id,
+                    'product_name' => $product->product?->name,
+                    'sku'          => $product->product?->sku,
+                    'quantity'     => (int) $product->total_qty,
+                ];
+            })->values()->toArray();
+
+            return [
+                'columns' => [
+                    [
+                        'key' => 'product_id',
+                        'label' => trans('admin::app.reporting.products.index.id'),
+                    ], [
+                        'key' => 'product_name',
+                        'label' => trans('admin::app.reporting.products.index.name'),
+                    ], [
+                        'key' => 'sku',
+                        'label' => trans('admin::app.reporting.stock.index.sku'),
+                    ], [
+                        'key' => 'quantity',
+                        'label' => trans('admin::app.reporting.stock.index.quantity'),
+                    ],
+                ],
+
+                'records' => $records,
+            ];
+        }
+
+        return $this->productReporting->getStockThresholdProducts(5)->map(function ($product) {
+            return [
+                'id'              => $product->product_id,
+                'sku'             => $product->product?->sku,
+                'name'            => $product->product?->name,
+                'price'           => $product->product?->price,
+                'formatted_price' => core()->formatBasePrice($product->product?->price),
+                'total_qty'       => $product->total_qty,
+                'image'           => $product->product?->base_image_url,
+            ];
+        })->values()->toArray();
+    }
+
+    /**
      * Returns the last search terms.
      *
      * @param  string  $type

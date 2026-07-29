@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\Reporting\CustomerController;
 use Webkul\Admin\Http\Controllers\Reporting\ProductController;
 use Webkul\Admin\Http\Controllers\Reporting\SaleController;
+use Webkul\Admin\Http\Controllers\Reporting\StockController;
 
 /**
  * Reporting routes.
@@ -37,6 +38,21 @@ Route::prefix('reporting')->group(function () {
         Route::get('view', 'view')->name('admin.reporting.products.view');
 
         Route::get('view/stats', 'viewStats')->name('admin.reporting.products.view.stats');
+    });
+
+    /**
+     * Stock routes.
+     */
+    Route::controller(StockController::class)->prefix('stock')->group(function () {
+        Route::get('', 'index')->name('admin.reporting.stock.index');
+
+        Route::get('stats', 'stats')->name('admin.reporting.stock.stats');
+
+        Route::get('export', 'export')->name('admin.reporting.stock.export');
+
+        Route::get('view', 'view')->name('admin.reporting.stock.view');
+
+        Route::get('view/stats', 'viewStats')->name('admin.reporting.stock.view.stats');
     });
 
     /**

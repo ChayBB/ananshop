@@ -4080,6 +4080,15 @@ return [
             ],
         ],
 
+        'stock' => [
+            'index' => [
+                'title' => 'Stock',
+                'stock-threshold-products' => 'Stock Threshold Products',
+                'quantity' => 'Quantity',
+                'sku' => 'SKU',
+            ],
+        ],
+
         'view' => [
             'all-channels' => 'All Channels',
             'back-btn' => 'Back',
@@ -5565,6 +5574,7 @@ return [
         'settings' => 'Settings',
         'shipments' => 'Shipments',
         'sitemaps' => 'Sitemaps',
+        'stock' => 'Stock',
         'subscribers' => 'Newsletter Subscribers',
         'tax-categories' => 'Tax Categories',
         'tax-rates' => 'Tax Rates',

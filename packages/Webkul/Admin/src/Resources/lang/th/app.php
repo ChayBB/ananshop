@@ -3754,6 +3754,16 @@ return [
                 'view-details' => 'ดูรายละเอียด',
             ],
         ],
+
+        'stock' => [
+            'index' => [
+                'title' => 'สต๊อกสินค้า',
+                'stock-threshold-products' => 'สินค้าใกล้หมดสต๊อก',
+                'quantity' => 'จำนวน',
+                'sku' => 'SKU',
+            ],
+        ],
+
         'view' => [
             'all-channels' => 'ช่องทางทั้งหมด',
             'back-btn' => 'ย้อนกลับ',
@@ -5072,6 +5082,7 @@ return [
         'settings' => 'ตั้งค่า',
         'shipments' => 'การจัดส่ง',
         'sitemaps' => 'แผนผังเว็บไซต์',
+        'stock' => 'สต๊อกสินค้า',
         'subscribers' => 'ผู้สมัครสมาชิกจดหมายข่าว',
         'tax-categories' => 'หมวดหมู่ภาษี',
         'tax-rates' => 'อัตราภาษี',

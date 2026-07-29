@@ -312,6 +312,12 @@ return [
         'route' => 'admin.reporting.products.index',
         'sort' => 3,
         'icon' => '',
+    ], [
+        'key' => 'reporting.stock',
+        'name' => 'admin::app.reporting.stock.index.title',
+        'route' => 'admin.reporting.stock.index',
+        'sort' => 4,
+        'icon' => '',
     ],
 
     /**
