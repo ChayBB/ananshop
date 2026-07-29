@@ -4083,7 +4083,7 @@ return [
         'stock' => [
             'index' => [
                 'title' => 'Stock',
-                'stock-threshold-products' => 'Stock Threshold Products',
+                'stock-threshold-products' => 'Stock Status',
                 'quantity' => 'Stock on Hand',
                 'sku' => 'SKU',
                 'pending-quantity' => 'Pending Quantity',

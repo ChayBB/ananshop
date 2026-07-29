@@ -3758,7 +3758,7 @@ return [
         'stock' => [
             'index' => [
                 'title' => 'สต๊อกสินค้า',
-                'stock-threshold-products' => 'สินค้าใกล้หมดสต๊อก',
+                'stock-threshold-products' => 'สถานะสต๊อก',
                 'quantity' => 'จำนวนคงคลัง',
                 'sku' => 'SKU',
                 'pending-quantity' => 'จำนวนค้างส่ง',
