@@ -943,10 +943,12 @@ class Reporting
         if ($type == 'table') {
             $records = $this->productReporting->getStockThresholdProducts()->map(function ($product) {
                 return [
-                    'product_id'   => $product->product_id,
-                    'product_name' => $product->product?->name,
-                    'sku'          => $product->product?->sku,
-                    'quantity'     => (int) $product->total_qty,
+                    'product_id'      => $product->product_id,
+                    'product_name'    => $product->product?->name,
+                    'sku'             => $product->product?->sku,
+                    'quantity'        => (int) $product->total_qty,
+                    'pending_qty'     => (int) ($product->product?->ordered_inventories->sum('qty') ?? 0),
+                    'max_stock_level' => $product->product?->max_stock_level,
                 ];
             })->values()->toArray();
 
@@ -964,6 +966,12 @@ class Reporting
                     ], [
                         'key' => 'quantity',
                         'label' => trans('admin::app.reporting.stock.index.quantity'),
+                    ], [
+                        'key' => 'pending_qty',
+                        'label' => trans('admin::app.reporting.stock.index.pending-quantity'),
+                    ], [
+                        'key' => 'max_stock_level',
+                        'label' => trans('admin::app.reporting.stock.index.max-stock-level'),
                     ],
                 ],
 

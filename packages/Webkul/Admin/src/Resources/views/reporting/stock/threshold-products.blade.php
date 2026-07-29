@@ -94,19 +94,14 @@
                                 </a>
                             </div>
 
-                            <!-- Stock Level Gauge: red 0-20%, yellow 20-50%, green 50-100% of the product's Max Stock Level -->
+                            <!-- Stock Level Bar: filled to qty/max, red below 20%, yellow 20-50%, green from 50% -->
                             <div class="col-span-2 max-sm:col-span-1">
                                 <div class="relative h-1.5 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
-                                    <div class="absolute inset-y-0 left-0 bg-red-400" style="width: 20%"></div>
-
-                                    <div class="absolute inset-y-0 bg-amber-400" style="left: 20%; width: 30%"></div>
-
-                                    <div class="absolute inset-y-0 bg-emerald-400" style="left: 50%; width: 50%"></div>
-
                                     <div
-                                        class="absolute top-1/2 h-3 w-3 -translate-y-1/2 rounded-full border-2 border-white bg-gray-800 shadow dark:border-gray-900"
+                                        class="absolute inset-y-0 left-0 rounded-full transition-all"
                                         v-if="product.max_stock_level > 0"
-                                        :style="{ left: 'calc(' + Math.min(product.total_qty / product.max_stock_level, 1) * 100 + '% - 6px)' }"
+                                        :class="stockLevelClass(product)"
+                                        :style="{ width: Math.max(Math.min(product.total_qty / product.max_stock_level, 1) * 100, 3) + '%' }"
                                     ></div>
                                 </div>
 
@@ -146,6 +141,16 @@
             },
 
             methods: {
+                stockLevelClass(product) {
+                    const ratio = product.total_qty / product.max_stock_level;
+
+                    if (ratio < 0.2) {
+                        return 'bg-red-400';
+                    }
+
+                    return ratio < 0.5 ? 'bg-amber-400' : 'bg-emerald-400';
+                },
+
                 getStats(filters) {
                     this.isLoading = true;
 

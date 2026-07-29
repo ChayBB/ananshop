@@ -3759,8 +3759,10 @@ return [
             'index' => [
                 'title' => 'สต๊อกสินค้า',
                 'stock-threshold-products' => 'สินค้าใกล้หมดสต๊อก',
-                'quantity' => 'จำนวน',
+                'quantity' => 'จำนวนคงคลัง',
                 'sku' => 'SKU',
+                'pending-quantity' => 'จำนวนค้างส่ง',
+                'max-stock-level' => 'ระดับสต๊อกสูงสุด',
                 'max-stock-level-not-set' => 'ยังไม่ได้ตั้งค่าระดับสต๊อกสูงสุด',
             ],
         ],

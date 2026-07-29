@@ -4084,8 +4084,10 @@ return [
             'index' => [
                 'title' => 'Stock',
                 'stock-threshold-products' => 'Stock Threshold Products',
-                'quantity' => 'Quantity',
+                'quantity' => 'Stock on Hand',
                 'sku' => 'SKU',
+                'pending-quantity' => 'Pending Quantity',
+                'max-stock-level' => 'Max Stock Level',
                 'max-stock-level-not-set' => 'Max Stock Level not set',
             ],
         ],
