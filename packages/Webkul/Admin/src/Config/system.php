@@ -1213,16 +1213,6 @@ return [
                 'title' => 'admin::app.configuration.index.catalog.inventory.product-stock-options.out-of-stock-threshold',
                 'type' => 'number',
                 'default' => '0',
-            ], [
-                'name' => 'low_stock_threshold',
-                'title' => 'admin::app.configuration.index.catalog.inventory.product-stock-options.low-stock-threshold',
-                'type' => 'number',
-                'default' => '20',
-            ], [
-                'name' => 'medium_stock_threshold',
-                'title' => 'admin::app.configuration.index.catalog.inventory.product-stock-options.medium-stock-threshold',
-                'type' => 'number',
-                'default' => '30',
             ],
         ],
     ],

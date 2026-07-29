@@ -94,29 +94,28 @@
                                 </a>
                             </div>
 
-                            @php
-                                $lowStockThreshold = (float) (core()->getConfigData('catalog.inventory.stock_options.low_stock_threshold') ?: 20);
-                                $mediumStockThreshold = (float) (core()->getConfigData('catalog.inventory.stock_options.medium_stock_threshold') ?: 30);
-                                $gaugeMax = max($mediumStockThreshold * 2, $lowStockThreshold + 1);
-                                $redWidth = min($lowStockThreshold / $gaugeMax * 100, 100);
-                                $yellowWidth = max(min(($mediumStockThreshold - $lowStockThreshold) / $gaugeMax * 100, 100), 0);
-                                $greenWidth = max(100 - $redWidth - $yellowWidth, 0);
-                            @endphp
-
-                            <!-- Stock Level Gauge: red 0-{{ $lowStockThreshold }}, yellow {{ $lowStockThreshold }}-{{ $mediumStockThreshold }}, green {{ $mediumStockThreshold }}+ (thresholds configurable in Catalog > Inventory) -->
+                            <!-- Stock Level Gauge: red 0-20%, yellow 20-50%, green 50-100% of the product's Max Stock Level -->
                             <div class="col-span-2 max-sm:col-span-1">
                                 <div class="relative h-1.5 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
-                                    <div class="absolute inset-y-0 left-0 bg-red-400" style="width: {{ $redWidth }}%"></div>
+                                    <div class="absolute inset-y-0 left-0 bg-red-400" style="width: 20%"></div>
 
-                                    <div class="absolute inset-y-0 bg-amber-400" style="left: {{ $redWidth }}%; width: {{ $yellowWidth }}%"></div>
+                                    <div class="absolute inset-y-0 bg-amber-400" style="left: 20%; width: 30%"></div>
 
-                                    <div class="absolute inset-y-0 bg-emerald-400" style="left: {{ $redWidth + $yellowWidth }}%; width: {{ $greenWidth }}%"></div>
+                                    <div class="absolute inset-y-0 bg-emerald-400" style="left: 50%; width: 50%"></div>
 
                                     <div
                                         class="absolute top-1/2 h-3 w-3 -translate-y-1/2 rounded-full border-2 border-white bg-gray-800 shadow dark:border-gray-900"
-                                        :style="{ left: 'calc(' + Math.min(product.total_qty, {{ $gaugeMax }}) / {{ $gaugeMax }} * 100 + '% - 6px)' }"
+                                        v-if="product.max_stock_level > 0"
+                                        :style="{ left: 'calc(' + Math.min(product.total_qty / product.max_stock_level, 1) * 100 + '% - 6px)' }"
                                     ></div>
                                 </div>
+
+                                <p
+                                    class="mt-1 text-xs text-gray-400"
+                                    v-if="! (product.max_stock_level > 0)"
+                                >
+                                    @lang('admin::app.reporting.stock.index.max-stock-level-not-set')
+                                </p>
                             </div>
                         </div>
                     </div>

@@ -4086,6 +4086,7 @@ return [
                 'stock-threshold-products' => 'Stock Threshold Products',
                 'quantity' => 'Quantity',
                 'sku' => 'SKU',
+                'max-stock-level-not-set' => 'Max Stock Level not set',
             ],
         ],
 
@@ -4591,8 +4592,6 @@ return [
                         'allow-back-orders' => 'Allow Back Orders',
                         'max-qty-allowed-in-cart' => 'Maximum Qty Allowed in Shopping Cart',
                         'min-qty-allowed-in-cart' => 'Minimum Qty Allowed in Shopping Cart',
-                        'low-stock-threshold' => 'Low Stock Threshold',
-                        'medium-stock-threshold' => 'Medium Stock Threshold',
                         'out-of-stock-threshold' => 'Out-of-Stock Threshold',
                         'title' => 'Product Stock Option',
                         'info' => 'Configure product stock options to allow back orders, set minimum and maximum cart quantities, and define out-of-stock thresholds.',

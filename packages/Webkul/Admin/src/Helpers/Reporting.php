@@ -979,6 +979,7 @@ class Reporting
                 'price'           => $product->product?->price,
                 'formatted_price' => core()->formatBasePrice($product->product?->price),
                 'total_qty'       => $product->total_qty,
+                'max_stock_level' => $product->product?->max_stock_level,
                 'image'           => $product->product?->base_image_url,
             ];
         })->values()->toArray();
