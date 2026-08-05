@@ -40,6 +40,35 @@
         id="v-product-carousel-template"
     >
         <div class="m-auto flex w-full flex-col gap-3">
+            <!-- Thumbnails -->
+            <div
+                class="scrollbar-hide flex flex-nowrap gap-2.5 overflow-x-auto"
+                v-if="options?.length > 1"
+            >
+                <template v-for="(media, index) in options">
+                    <video
+                        v-if="media.type == 'videos'"
+                        class="h-16 w-16 shrink-0 cursor-pointer rounded-lg border-2 object-cover"
+                        :class="index === Math.abs(currentIndex) ? 'border-emerald-500' : 'border-zinc-200'"
+                        @click="goTo(index)"
+                    >
+                        <source
+                            :src="media.video_url"
+                            type="video/mp4"
+                        />
+                    </video>
+
+                    <img
+                        v-else
+                        class="h-16 w-16 shrink-0 cursor-pointer rounded-lg border-2 object-cover"
+                        :class="index === Math.abs(currentIndex) ? 'border-emerald-500' : 'border-zinc-200'"
+                        :src="media.small_image_url"
+                        :alt="media.small_image_url"
+                        @click="goTo(index)"
+                    />
+                </template>
+            </div>
+
             <div class="relative flex w-full overflow-hidden">
                 <!-- Slider -->
                 <div
@@ -88,35 +117,6 @@
                     >
                     </div>
                 </div>
-            </div>
-
-            <!-- Thumbnails -->
-            <div
-                class="scrollbar-hide flex flex-nowrap gap-2.5 overflow-x-auto"
-                v-if="options?.length > 1"
-            >
-                <template v-for="(media, index) in options">
-                    <video
-                        v-if="media.type == 'videos'"
-                        class="h-16 w-16 shrink-0 cursor-pointer rounded-lg border-2 object-cover"
-                        :class="index === Math.abs(currentIndex) ? 'border-emerald-500' : 'border-zinc-200'"
-                        @click="goTo(index)"
-                    >
-                        <source
-                            :src="media.video_url"
-                            type="video/mp4"
-                        />
-                    </video>
-
-                    <img
-                        v-else
-                        class="h-16 w-16 shrink-0 cursor-pointer rounded-lg border-2 object-cover"
-                        :class="index === Math.abs(currentIndex) ? 'border-emerald-500' : 'border-zinc-200'"
-                        :src="media.small_image_url"
-                        :alt="media.small_image_url"
-                        @click="goTo(index)"
-                    />
-                </template>
             </div>
         </div>
     </script>
