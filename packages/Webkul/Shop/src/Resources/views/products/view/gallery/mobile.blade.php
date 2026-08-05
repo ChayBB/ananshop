@@ -1,13 +1,13 @@
-<div class="relative 1180:hidden">
+<div class="relative sm:hidden">
     <div
         class="overflow-hidden"
         v-if="isMediaLoading"
     >
-        <div class="shimmer aspect-square max-h-screen w-screen bg-zinc-200"></div>
+        <div class="shimmer aspect-square max-h-[300px] w-full max-w-[300px] m-auto rounded-xl bg-zinc-200"></div>
     </div>
 
     <div
-        class="scrollbar-hide flex w-screen gap-8 overflow-auto max-sm:gap-5"
+        class="scrollbar-hide flex w-full gap-8 overflow-auto max-sm:gap-5"
         v-else
     >
         <v-product-carousel
@@ -39,53 +39,84 @@
         type="text/x-template"
         id="v-product-carousel-template"
     >
-        <div class="relative m-auto flex w-full overflow-hidden">
-            <!-- Slider -->
-            <div
-                class="inline-flex translate-x-0 cursor-pointer transition-transform duration-700 ease-out will-change-transform"
-                ref="sliderContainer"
-            >
+        <div class="m-auto flex w-full flex-col gap-3">
+            <div class="relative flex w-full overflow-hidden">
+                <!-- Slider -->
                 <div
-                    class="grid max-h-screen w-screen content-center bg-cover bg-no-repeat"
-                    v-for="(media, index) in options"
-                    ref="slide"
+                    class="inline-flex translate-x-0 cursor-pointer transition-transform duration-700 ease-out will-change-transform"
+                    ref="sliderContainer"
                 >
-                    <template v-if="media.type == 'videos'">
-                        <video
-                            controls
-                            width="100%"
-                            :alt="media.video_url"
-                            :key="media.video_url"
-                        >
-                            <source
-                                :src="media.video_url"
-                                type="video/mp4"
-                            />
-                        </video>
-                    </template>
+                    <div
+                        class="grid max-h-[400px] w-full content-center bg-cover bg-no-repeat"
+                        v-for="(media, index) in options"
+                        ref="slide"
+                    >
+                        <template v-if="media.type == 'videos'">
+                            <video
+                                controls
+                                width="100%"
+                                :alt="media.video_url"
+                                :key="media.video_url"
+                            >
+                                <source
+                                    :src="media.video_url"
+                                    type="video/mp4"
+                                />
+                            </video>
+                        </template>
 
-                    <template v-else>
-                        <img
-                            class="aspect-square max-h-full w-full max-w-full select-none transition-transform duration-300 ease-in-out"
-                            :src="media.large_image_url"
-                            :alt="media.large_image_url"
-                        />
-                    </template>
+                        <template v-else>
+                            <img
+                                class="aspect-square max-h-[400px] w-full max-w-[300px] m-auto rounded-xl select-none transition-transform duration-300 ease-in-out"
+                                :src="media.large_image_url"
+                                :alt="media.large_image_url"
+                            />
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div
+                    class="absolute bottom-3 left-0 flex w-full justify-center max-sm:bottom-2.5"
+                    v-if="options?.length > 1"
+                >
+                    <div
+                        v-for="(media, index) in options"
+                        class="mx-1 h-1.5 w-1.5 cursor-pointer rounded-full"
+                        :class="{ 'bg-navyBlue': index === Math.abs(currentIndex), 'opacity-30 bg-gray-500': index !== Math.abs(currentIndex) }"
+                        role="button"
+                    >
+                    </div>
                 </div>
             </div>
 
-            <!-- Pagination -->
+            <!-- Thumbnails -->
             <div
-                class="absolute bottom-3 left-0 flex w-full justify-center max-sm:bottom-2.5"
+                class="scrollbar-hide flex flex-nowrap gap-2.5 overflow-x-auto"
                 v-if="options?.length > 1"
             >
-                <div
-                    v-for="(media, index) in options"
-                    class="mx-1 h-1.5 w-1.5 cursor-pointer rounded-full"
-                    :class="{ 'bg-navyBlue': index === Math.abs(currentIndex), 'opacity-30 bg-gray-500': index !== Math.abs(currentIndex) }"
-                    role="button"
-                >
-                </div>
+                <template v-for="(media, index) in options">
+                    <video
+                        v-if="media.type == 'videos'"
+                        class="h-16 w-16 shrink-0 cursor-pointer rounded-lg border-2 object-cover"
+                        :class="index === Math.abs(currentIndex) ? 'border-emerald-500' : 'border-zinc-200'"
+                        @click="goTo(index)"
+                    >
+                        <source
+                            :src="media.video_url"
+                            type="video/mp4"
+                        />
+                    </video>
+
+                    <img
+                        v-else
+                        class="h-16 w-16 shrink-0 cursor-pointer rounded-lg border-2 object-cover"
+                        :class="index === Math.abs(currentIndex) ? 'border-emerald-500' : 'border-zinc-200'"
+                        :src="media.small_image_url"
+                        :alt="media.small_image_url"
+                        @click="goTo(index)"
+                    />
+                </template>
             </div>
         </div>
     </script>
@@ -243,6 +274,12 @@
                     if (this.isDragging) {
                         requestAnimationFrame(this.animation);
                     }
+                },
+
+                goTo(index) {
+                    this.currentIndex = this.direction === 'rtl' ? -index : index;
+
+                    this.setPositionByIndex();
                 },
 
                 setPositionByIndex() {
