@@ -46,6 +46,9 @@
                         </x-slot>
                     </x-shop::dropdown>
 
+                    <!-- Size Filter Slot (teleported here from the sidebar filters) -->
+                    <div id="category-size-filter-slot"></div>
+
                     <!-- Price Range Filter Slot (teleported here from the sidebar filters) -->
                     <div id="category-price-filter-slot"></div>
                 </div>

@@ -196,6 +196,76 @@
             </x-shop::dropdown>
         </Teleport>
 
+        <!-- Size Filter: teleported into the toolbar as a dropdown -->
+        <Teleport
+            defer
+            to="#category-size-filter-slot"
+            v-else-if="filter.code === 'size'"
+        >
+            <x-shop::dropdown
+                class="z-[1]"
+                position="bottom-left"
+            >
+                <x-slot:toggle>
+                    <button class="flex w-full max-w-[200px] cursor-pointer items-center justify-between gap-4 rounded-lg border border-zinc-200 bg-white p-3.5 text-base transition-all hover:border-gray-400 focus:border-gray-400 max-md:w-[110px] max-md:border-0 max-md:pl-2.5 max-md:pr-2.5">
+                        @{{ filter.name }}
+
+                        <span
+                            class="icon-arrow-down text-2xl"
+                            role="presentation"
+                        ></span>
+                    </button>
+                </x-slot>
+
+                <x-slot:menu>
+                    <ul class="min-w-[180px] p-2 text-base text-gray-700">
+                        <template v-if="options.length">
+                            <li
+                                :key="`${filter.id}_${option.id}`"
+                                v-for="(option, optionIndex) in options"
+                            >
+                                <div class="flex select-none items-center gap-x-3 rounded px-2 hover:bg-gray-100">
+                                    <input
+                                        type="checkbox"
+                                        :id="`size_filter_${filter.id}_option_${option.id}`"
+                                        class="peer hidden"
+                                        :value="option.id"
+                                        v-model="appliedValues"
+                                        @change="applyValue"
+                                    />
+
+                                    <label
+                                        class="icon-uncheck peer-checked:icon-check-box cursor-pointer text-2xl text-navyBlue peer-checked:text-navyBlue"
+                                        role="checkbox"
+                                        aria-checked="false"
+                                        :aria-label="option.name"
+                                        tabindex="0"
+                                        :for="`size_filter_${filter.id}_option_${option.id}`"
+                                    >
+                                    </label>
+
+                                    <label
+                                        class="w-full cursor-pointer py-2 text-base text-gray-900"
+                                        :for="`size_filter_${filter.id}_option_${option.id}`"
+                                        role="button"
+                                        tabindex="0"
+                                    >
+                                        @{{ option.name }}
+                                    </label>
+                                </div>
+                            </li>
+                        </template>
+
+                        <template v-else>
+                            <li class="px-2 py-2 text-sm text-gray-400">
+                                @lang('shop::app.categories.filters.search.no-options-available')
+                            </li>
+                        </template>
+                    </ul>
+                </x-slot>
+            </x-shop::dropdown>
+        </Teleport>
+
         <template v-else>
         <x-shop::accordion
             class="last:border-b-0"
