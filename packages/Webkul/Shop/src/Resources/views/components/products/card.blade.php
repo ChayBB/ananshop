@@ -121,26 +121,26 @@
                 {!! view_render_event('bagisto.shop.components.products.card.price.after') !!}
 
                 <!-- Product Actions Section -->
-                <div class="action-items flex items-center gap-1.5 mt-2 w-full max-sm:flex-wrap max-sm:gap-1">
+                <div class="action-items flex flex-col items-stretch gap-2 mt-2 w-full">
                     <!-- Quantity Selector -->
                     @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
-                        <div class="flex items-center justify-between gap-1 rounded-xl border border-navyBlue p-1 text-sm font-medium select-none shrink-0">
+                        <div class="flex w-full items-center justify-between gap-1 rounded-xl border border-navyBlue p-1 text-sm font-medium select-none">
                             <button
                                 type="button"
-                                class="flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center rounded-lg text-base font-bold text-navyBlue hover:bg-navyBlue/10 disabled:opacity-30"
+                                class="flex h-8 w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg text-base font-bold text-navyBlue hover:bg-navyBlue/10 disabled:opacity-30"
                                 :disabled="quantity <= 1"
                                 @click="decreaseQty()"
                             >
                                 -
                             </button>
 
-                            <span class="min-w-[1.25rem] text-center text-sm font-semibold text-navyBlue max-sm:text-xs">
+                            <span class="flex-1 text-center text-base font-semibold text-navyBlue">
                                 @{{ quantity }}
                             </span>
 
                             <button
                                 type="button"
-                                class="flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center rounded-lg text-base font-bold text-navyBlue hover:bg-navyBlue/10"
+                                class="flex h-8 w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg text-base font-bold text-navyBlue hover:bg-navyBlue/10"
                                 @click="increaseQty()"
                             >
                                 +
@@ -152,7 +152,7 @@
                         {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.before') !!}
 
                         <button
-                            class="secondary-button !bg-[#00897B] hover:!bg-[#00796B] !text-white !border-[#00897B] rounded-xl px-3 py-1.5 text-sm font-medium whitespace-nowrap max-sm:max-w-none max-sm:flex-1 max-sm:min-w-0 max-sm:rounded-xl max-sm:p-1.5 max-sm:text-xs max-sm:whitespace-normal max-sm:leading-tight"
+                            class="secondary-button !bg-[#00897B] hover:!bg-[#00796B] !text-white !border-[#00897B] w-full rounded-xl px-3 py-2 text-sm font-medium"
                             :disabled="! product.is_saleable || isAddingToCart"
                             @click="addToCart()"
                         >
@@ -300,7 +300,7 @@
                     {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.before') !!}
 
                     <x-shop::button
-                        class="!bg-[#00897B] hover:!bg-[#00796B] !text-white !border-[#00897B] rounded-xl whitespace-nowrap px-8 py-2.5"
+                        class="!bg-[#00897B] hover:!bg-[#00796B] !text-white !border-[#00897B] rounded-xl whitespace-nowrap px-8 py-2.5 w-max"
                         :title="trans('shop::app.components.products.card.add-to-cart')"
                         ::loading="isAddingToCart"
                         ::disabled="! product.is_saleable || isAddingToCart"
