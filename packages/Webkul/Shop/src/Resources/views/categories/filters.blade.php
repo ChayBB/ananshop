@@ -1,7 +1,7 @@
 {!! view_render_event('bagisto.shop.categories.view.filters.before') !!}
 
-<!-- Desktop Filters Navigation -->
-<div v-if="! isMobile">
+<!-- Desktop Filters Navigation: kept mounted (drives the toolbar filter dropdowns via Teleport) but visually hidden - filters now live in the toolbar -->
+<div v-if="! isMobile" class="hidden">
     <!-- Filters Vue Component -->
     <v-filters
         @filter-applied="setFilters('filter', $event)"

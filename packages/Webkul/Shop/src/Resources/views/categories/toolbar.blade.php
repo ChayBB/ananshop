@@ -51,6 +51,14 @@
 
                     <!-- Price Range Filter Slot (teleported here from the sidebar filters) -->
                     <div id="category-price-filter-slot"></div>
+
+                    <!-- Clear All Filters -->
+                    <a
+                        href="{{ url()->current() }}"
+                        class="cursor-pointer whitespace-nowrap text-sm font-medium text-gray-600 hover:text-black"
+                    >
+                        @lang('shop::app.categories.filters.clear-all')
+                    </a>
                 </div>
 
                 {!! view_render_event('bagisto.shop.categories.toolbar.filter.after') !!}
