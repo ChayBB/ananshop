@@ -369,13 +369,27 @@
 
             computed: {
                 displayedFilters() {
-                    if (! this.hidePrice) {
-                        return this.filters.available;
+                    let entries = Object.entries(this.filters.available);
+
+                    /**
+                     * Price is teleported into the toolbar, so drop it from the
+                     * sidebar list when it is being shown up there.
+                     */
+                    if (this.hidePrice) {
+                        entries = entries.filter(([key, filter]) => filter.type !== 'price');
                     }
 
-                    return Object.fromEntries(
-                        Object.entries(this.filters.available).filter(([key, filter]) => filter.type !== 'price')
-                    );
+                    /**
+                     * Surface the size filter first - it is the primary way
+                     * customers narrow this catalogue.
+                     */
+                    entries.sort(([, a], [, b]) => {
+                        if (a.code === 'size') return -1;
+                        if (b.code === 'size') return 1;
+                        return 0;
+                    });
+
+                    return Object.fromEntries(entries);
                 },
             },
 
