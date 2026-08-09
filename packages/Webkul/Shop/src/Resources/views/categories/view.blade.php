@@ -126,7 +126,7 @@
                         <div v-else class="mt-8 max-md:mt-5">
                             <!-- Product Card Shimmer Effect -->
                             <template v-if="isLoading">
-                                <div class="grid grid-cols-2 gap-6 max-md:justify-items-center max-md:gap-x-5 max-md:gap-y-6">
+                                <div class="grid grid-cols-5 gap-5 max-lg:grid-cols-3 max-md:grid-cols-2 max-md:justify-items-center max-md:gap-x-5 max-md:gap-y-6">
                                     <x-shop::shimmer.products.cards.grid count="12" />
                                 </div>
                             </template>
@@ -136,7 +136,7 @@
                             <!-- Product Card Listing -->
                             <template v-else>
                                 <template v-if="products.length">
-                                    <div class="grid grid-cols-2 gap-6 max-md:justify-items-center max-md:gap-x-5 max-md:gap-y-6">
+                                    <div class="grid grid-cols-5 gap-5 max-lg:grid-cols-3 max-md:grid-cols-2 max-md:justify-items-center max-md:gap-x-5 max-md:gap-y-6">
                                         <x-shop::products.card
                                             ::mode="'grid'"
                                             v-for="product in products"
@@ -170,26 +170,19 @@
 
                         {!! view_render_event('bagisto.shop.categories.view.load_more_button.before') !!}
 
-                        <!-- Load More Button -->
-                        <button
-                            class="secondary-button mx-auto mt-14 block w-max rounded-2xl px-11 py-3 text-center text-base max-md:rounded-lg max-sm:mt-6 max-sm:px-6 max-sm:py-1.5 max-sm:text-sm"
-                            @click="loadMoreProducts"
-                            v-if="links.next && ! loader"
+                        <!-- Infinite Scroll Sentinel -->
+                        <div
+                            ref="loadMoreSentinel"
+                            class="mt-10 flex h-10 w-full items-center justify-center"
+                            v-if="links.next"
                         >
-                            @lang('shop::app.categories.view.load-more')
-                        </button>
-
-                        <button
-                            v-else-if="links.next"
-                            class="secondary-button mx-auto mt-14 block w-max rounded-2xl px-[74.5px] py-3.5 text-center text-base max-md:rounded-lg max-md:py-3 max-sm:mt-6 max-sm:px-[50.8px] max-sm:py-1.5"
-                        >
-                            <!-- Spinner -->
                             <img
-                                class="h-5 w-5 animate-spin text-navyBlue"
+                                class="h-6 w-6 animate-spin"
                                 src="{{ bagisto_asset('images/spinner.svg') }}"
                                 alt="Loading"
+                                v-if="loader"
                             />
-                        </button>
+                        </div>
 
                         {!! view_render_event('bagisto.shop.categories.view.grid.load_more_button.after') !!}
                     </div>
@@ -228,6 +221,38 @@
                         links: {},
 
                         loader: false,
+                    }
+                },
+
+                mounted() {
+                    /**
+                     * Auto-load the next page when the sentinel scrolls into
+                     * view. rootMargin pre-fetches a bit before it is reached
+                     * so the grid fills without the user hitting a hard stop.
+                     */
+                    this.observer = new IntersectionObserver((entries) => {
+                        if (
+                            entries[0].isIntersecting
+                            && this.links.next
+                            && ! this.loader
+                            && ! this.isLoading
+                        ) {
+                            this.loadMoreProducts();
+                        }
+                    }, { rootMargin: '400px' });
+
+                    this.$watch('links.next', (next) => {
+                        this.$nextTick(() => {
+                            if (next && this.$refs.loadMoreSentinel) {
+                                this.observer.observe(this.$refs.loadMoreSentinel);
+                            }
+                        });
+                    });
+                },
+
+                beforeUnmount() {
+                    if (this.observer) {
+                        this.observer.disconnect();
                     }
                 },
 
