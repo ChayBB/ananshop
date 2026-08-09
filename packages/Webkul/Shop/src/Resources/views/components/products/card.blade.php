@@ -152,7 +152,7 @@
                         {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.before') !!}
 
                         <button
-                            class="secondary-button px-3 py-1.5 text-sm font-medium whitespace-nowrap max-sm:max-w-none max-sm:flex-1 max-sm:min-w-0 max-sm:rounded-xl max-sm:p-1.5 max-sm:text-xs max-sm:whitespace-normal max-sm:leading-tight"
+                            class="secondary-button !bg-[#00897B] hover:!bg-[#00796B] !text-white !border-[#00897B] rounded-xl px-3 py-1.5 text-sm font-medium whitespace-nowrap max-sm:max-w-none max-sm:flex-1 max-sm:min-w-0 max-sm:rounded-xl max-sm:p-1.5 max-sm:text-xs max-sm:whitespace-normal max-sm:leading-tight"
                             :disabled="! product.is_saleable || isAddingToCart"
                             @click="addToCart()"
                         >
@@ -300,7 +300,7 @@
                     {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.before') !!}
 
                     <x-shop::button
-                        class="primary-button whitespace-nowrap px-8 py-2.5"
+                        class="!bg-[#00897B] hover:!bg-[#00796B] !text-white !border-[#00897B] rounded-xl whitespace-nowrap px-8 py-2.5"
                         :title="trans('shop::app.components.products.card.add-to-cart')"
                         ::loading="isAddingToCart"
                         ::disabled="! product.is_saleable || isAddingToCart"

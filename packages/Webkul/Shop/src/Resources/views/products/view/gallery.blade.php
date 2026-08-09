@@ -128,24 +128,24 @@
                     }
 
                     if (index > this.activeIndex) {
-                        this.swipeDown();
+                        this.swipeRight();
                     } else if (index < this.activeIndex) {
-                        this.swipeTop();
+                        this.swipeLeft();
                     }
 
                     this.activeIndex = index;
                 },
 
-                swipeTop() {
+                swipeLeft() {
                     const container = this.$refs.swiperContainer;
 
-                    container.scrollTop -= this.containerOffset;
+                    container.scrollLeft -= this.containerOffset;
                 },
 
-                swipeDown() {
+                swipeRight() {
                     const container = this.$refs.swiperContainer;
 
-                    container.scrollTop += this.containerOffset;
+                    container.scrollLeft += this.containerOffset;
                 },
             },
         });
