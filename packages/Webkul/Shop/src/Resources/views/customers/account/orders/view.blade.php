@@ -43,7 +43,7 @@
                 )
                     <a
                         href="{{ route('shop.customers.account.orders.reorder', $order->id) }}"
-                        class="secondary-button border-zinc-200 px-5 py-3 font-normal max-md:hidden"
+                        class="secondary-button !border-[#00897B] !text-[#00897B] hover:!bg-[#00897B]/5 px-5 py-3 font-normal max-md:hidden"
                     >
                         @lang('shop::app.customers.account.orders.view.reorder-btn-title')
                     </a>
@@ -506,7 +506,7 @@
                                 @if ($order->canReorder())
                                     <a
                                         href="{{ route('shop.customers.account.orders.reorder', $order->id) }}"
-                                        class="mx-auto w-full py-3 text-sm font-medium text-navyBlue hover:bg-zinc-100 max-sm:py-2"
+                                        class="mx-auto w-full py-3 text-sm font-medium text-[#00897B] hover:bg-zinc-100 max-sm:py-2"
                                     >
                                         @lang('shop::app.customers.account.orders.view.reorder-btn-title')
                                     </a>
@@ -541,7 +541,7 @@
 
                                 @include('shop::customers.account.eu-withdrawals.button', [
                                     'order' => $order,
-                                    'variant' => 'mx-auto w-full py-3 text-sm font-medium text-navyBlue hover:bg-zinc-100 max-sm:py-2',
+                                    'variant' => 'mx-auto w-full py-3 text-sm font-medium text-[#00897B] hover:bg-zinc-100 max-sm:py-2',
                                 ])
                             </div>
                         </div>
