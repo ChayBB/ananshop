@@ -364,10 +364,11 @@ class ProductRepository extends Repository
                     if (! empty($params['name'])) {
                         $synonyms = $this->searchSynonymRepository->getSynonymsByQuery(urldecode($params['name']));
 
-                        $qb->where(function ($subQuery) use ($alias, $synonyms) {
+                        $qb->where(function ($subQuery) use ($alias, $synonyms, $params) {
                             foreach ($synonyms as $synonym) {
                                 $subQuery->orWhere($alias.'.text_value', 'like', '%'.$synonym.'%');
                             }
+                            $subQuery->orWhere('products.sku', 'like', '%'.urldecode($params['name']).'%');
                         });
                     }
                 } elseif ($attribute->code == 'url_key') {

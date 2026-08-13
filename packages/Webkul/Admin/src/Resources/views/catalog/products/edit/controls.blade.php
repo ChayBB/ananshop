@@ -46,6 +46,8 @@
             value="{{ old($attribute->code) ?: $product[$attribute->code] }}"
             :label="$attribute->admin_name"
             :tinymce="(bool) $attribute->enable_wysiwyg"
+            :placeholder="$attribute->code == 'short_description' ? 'คำอธิบายสั้นๆ' : ''"
+            :height="$attribute->code == 'short_description' ? 200 : 400"
         />
 
         @break

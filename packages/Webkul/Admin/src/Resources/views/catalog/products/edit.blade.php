@@ -185,7 +185,7 @@
                                 @php
                                     $groupNames = [
                                         'general'          => app()->getLocale() == 'th' ? 'ข้อมูลทั่วไป' : 'General',
-                                        'description'      => app()->getLocale() == 'th' ? 'รายละเอียดสินค้า' : 'Description',
+                                        'description'      => app()->getLocale() == 'th' ? 'คำอธิบายสั้นๆ' : 'Description',
                                         'meta_description' => app()->getLocale() == 'th' ? 'ข้อมูลเมตา (SEO)' : 'Meta Description',
                                         'price'            => app()->getLocale() == 'th' ? 'ราคา' : 'Price',
                                         'shipping'         => app()->getLocale() == 'th' ? 'การจัดส่ง' : 'Shipping',

@@ -145,7 +145,7 @@
         app.component('v-tinymce', {
             template: '#v-tinymce-template',
                 
-            props: ['selector', 'field', 'prompt'],
+            props: ['selector', 'field', 'prompt', 'placeholder', 'height'],
 
             data() {
                 return {
@@ -200,6 +200,8 @@
                                 ...extraConfiguration,
                                 skin: self.currentSkin,
                                 content_css: self.currentContentCSS,
+                                placeholder: self.placeholder,
+                                height: self.height ? parseInt(self.height) : 400,
                             };
 
                             const image_upload_handler = (blobInfo, progress) => new Promise((resolve, reject) => {

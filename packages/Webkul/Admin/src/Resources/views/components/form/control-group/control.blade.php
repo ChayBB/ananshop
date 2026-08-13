@@ -108,6 +108,8 @@
                 <x-admin::tinymce
                     :selector="'textarea#' . $attributes->get('id')"
                     :prompt="stripcslashes($attributes->get('prompt', ''))"
+                    :placeholder="$attributes->get('placeholder', '')"
+                    :height="$attributes->get('height', 400)"
                     ::field="field"
                 >
                 </x-admin::tinymce>
