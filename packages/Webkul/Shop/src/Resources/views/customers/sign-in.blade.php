@@ -182,10 +182,6 @@
                 </a>
             </p>
         </div>
-
-        <p class="mb-4 mt-8 text-center text-xs text-zinc-500">
-            @lang('shop::app.customers.login-form.footer', ['current_year'=> date('Y') ])
-        </p>
     </div>
 
     @push('scripts')
