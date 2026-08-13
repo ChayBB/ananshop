@@ -189,7 +189,7 @@
                                         @if ($product->isSaleable(1))
                                             <button
                                                 type="submit"
-                                                class="!bg-[#00897B] hover:!bg-[#00796B] !text-white !border-[#00897B] w-full max-w-full max-md:py-3 max-sm:rounded-lg max-sm:py-1.5 rounded-xl transition-all font-medium text-base flex justify-center items-center gap-2"
+                                                class="!bg-[#00897B] hover:!bg-[#00796B] !text-white !border-[#00897B] w-full max-w-[220px] max-md:py-3 max-sm:rounded-lg max-sm:py-1.5 rounded-xl transition-all font-medium text-base flex justify-center items-center gap-2"
                                                 :class="{ 'opacity-50 cursor-not-allowed': isStoring.addToCart }"
                                                 :disabled="isStoring.addToCart"
                                                 @click="is_buy_now=0;"
@@ -200,7 +200,7 @@
                                         @else
                                             <button
                                                 type="button"
-                                                class="!bg-[#00897B] hover:!bg-[#00796B] !text-white !border-[#00897B] w-full max-w-full max-md:py-3 max-sm:rounded-lg max-sm:py-1.5 rounded-xl transition-all font-medium text-base flex justify-center items-center gap-2"
+                                                class="!bg-[#00897B] hover:!bg-[#00796B] !text-white !border-[#00897B] w-full max-w-[220px] max-md:py-3 max-sm:rounded-lg max-sm:py-1.5 rounded-xl transition-all font-medium text-base flex justify-center items-center gap-2"
                                                 @click="$refs.contactUsModal.open()"
                                             >
                                                 @lang('shop::app.components.layouts.footer.contact-us')
