@@ -169,7 +169,7 @@
 					</button>
 					<button
 						type="submit"
-						class="rounded-lg bg-navyBlue px-5 py-2.5 text-sm font-medium text-white hover:opacity-90"
+						class="rounded-lg bg-[#00897B] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#00796B]"
 					>
 						อัปโหลด
 					</button>
