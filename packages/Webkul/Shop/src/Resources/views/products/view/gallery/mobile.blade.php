@@ -15,23 +15,12 @@
                 ...media.images,
                 ...media.videos
             ]"
-            @click="isImageZooming = ! isImageZooming"
+            :is-wishlist="isWishlist"
+            @toggle-wishlist="$emit('toggle-wishlist')"
         >
             <x-shop::shimmer.products.gallery />
         </v-product-carousel>
     </div>
-
-    @if (core()->getConfigData('customer.settings.wishlist.wishlist_option'))
-        <div
-            class="absolute top-3 z-10 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border bg-white text-xl transition-all hover:opacity-[0.8] ltr:right-3 rtl:left-3"
-            role="button"
-            aria-label="@lang('shop::app.products.view.add-to-wishlist')"
-            tabindex="0"
-            :class="isWishlist ? 'icon-heart-fill text-red-600' : 'icon-heart'"
-            @click="$emit('toggle-wishlist')"
-        >
-        </div>
-    @endif
 </div>
 
 @pushOnce('scripts')
@@ -70,6 +59,18 @@
             </div>
 
             <div class="relative flex w-full overflow-hidden">
+                @if (core()->getConfigData('customer.settings.wishlist.wishlist_option'))
+                    <div
+                        class="absolute top-3 z-10 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border bg-white text-xl transition-all hover:opacity-[0.8] ltr:right-3 rtl:left-3"
+                        role="button"
+                        aria-label="@lang('shop::app.products.view.add-to-wishlist')"
+                        tabindex="0"
+                        :class="isWishlist ? 'icon-heart-fill text-red-600' : 'icon-heart'"
+                        @click="$emit('toggle-wishlist')"
+                    >
+                    </div>
+                @endif
+
                 <!-- Slider -->
                 <div
                     class="inline-flex translate-x-0 cursor-pointer transition-transform duration-700 ease-out will-change-transform"
@@ -125,7 +126,9 @@
         app.component("v-product-carousel", {
             template: '#v-product-carousel-template',
 
-            props: ['options'],
+            props: ['options', 'isWishlist'],
+
+            emits: ['toggle-wishlist'],
 
             data() {
                 return {

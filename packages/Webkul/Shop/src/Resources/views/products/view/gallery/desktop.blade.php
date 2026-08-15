@@ -12,20 +12,19 @@
             v-show="! isMediaLoading"
         >
             <img
-                class="w-full cursor-pointer rounded-xl"
+                class="w-full rounded-xl"
                 :src="baseFile.path"
                 v-if="baseFile.type == 'image'"
                 alt="{{ $product->name }}"
                 width="400"
                 height="440"
                 tabindex="0"
-                @click="isImageZooming = !isImageZooming"
                 @load="onMediaLoad()"
                 fetchpriority="high"
             />
 
             <div
-                class="w-full cursor-pointer rounded-xl"
+                class="w-full rounded-xl"
                 tabindex="0"
                 v-if="baseFile.type == 'video'"
             >
@@ -33,7 +32,6 @@
                     controls
                     width="475"
                     alt="{{ $product->name }}"
-                    @click="isImageZooming = !isImageZooming"
                     @loadeddata="onMediaLoad()"
                     :key="baseFile.path"
                 >

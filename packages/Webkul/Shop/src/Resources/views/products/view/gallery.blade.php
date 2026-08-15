@@ -17,13 +17,6 @@
 
             <!-- Mobile Gallery -->
             @include('shop::products.view.gallery.mobile')
-            
-            <!-- Gallery Images Zoomer -->
-            <x-shop::image-zoomer
-                ::attachments="attachments"
-                ::is-image-zooming="isImageZooming"
-                ::initial-index="`media_${activeIndex}`"
-            />
         </div>
     </script>
 
