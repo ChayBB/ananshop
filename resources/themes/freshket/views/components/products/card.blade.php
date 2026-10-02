@@ -99,11 +99,11 @@
             </div>
 
             <!-- Product Information Section -->
-            <div class="grid w-full content-start gap-1.5 bg-white p-2 max-md:relative max-md:mt-0">
+            <div class="grid w-full content-start gap-1 bg-white p-1.5 max-md:relative max-md:mt-0">
 
                 {!! view_render_event('bagisto.shop.components.products.card.name.before') !!}
 
-                <p class="line-clamp-2 break-words text-sm font-medium leading-snug max-sm:text-xs">
+                <p class="line-clamp-1 break-words text-xs font-medium leading-snug">
                     @{{ product.name }}
                 </p>
 
@@ -113,7 +113,7 @@
                 {!! view_render_event('bagisto.shop.components.products.card.price.before') !!}
 
                 <div
-                    class="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-base font-bold text-freshket max-sm:text-sm"
+                    class="flex flex-wrap items-center gap-x-1.5 text-sm font-bold text-freshket"
                     v-html="product.price_html"
                 >
                 </div>
@@ -121,45 +121,22 @@
                 {!! view_render_event('bagisto.shop.components.products.card.price.after') !!}
 
                 <!-- Product Actions Section -->
-                <div class="action-items mt-1.5 flex w-full items-stretch gap-1">
-                    <!-- Quantity Selector -->
-                    @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
-                        <div class="flex flex-1 items-center justify-between rounded-md border border-freshket px-0.5 text-sm font-medium select-none">
-                            <button
-                                type="button"
-                                class="flex h-7 w-5 shrink-0 cursor-pointer items-center justify-center rounded text-sm font-bold text-freshket hover:bg-freshket/10 disabled:opacity-30"
-                                :disabled="quantity <= 1"
-                                @click="decreaseQty()"
-                            >
-                                -
-                            </button>
-
-                            <span class="flex-1 text-center text-xs font-semibold text-freshket">
-                                @{{ quantity }}
-                            </span>
-
-                            <button
-                                type="button"
-                                class="flex h-7 w-5 shrink-0 cursor-pointer items-center justify-center rounded text-sm font-bold text-freshket hover:bg-freshket/10"
-                                @click="increaseQty()"
-                            >
-                                +
-                            </button>
-                        </div>
-                    @endif
-
+                <div class="action-items mt-1 flex w-full items-stretch">
                     @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
                         {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.before') !!}
 
-                        <!-- Icon-only so the row stays on one line in a dense grid. -->
+                        <!-- Single full width action; quantity is chosen in the cart. -->
                         <button
-                            class="flex h-7 w-9 shrink-0 cursor-pointer items-center justify-center rounded-md bg-freshket text-base text-white transition hover:bg-freshket-dark disabled:opacity-40"
+                            class="flex h-7 w-full cursor-pointer items-center justify-center gap-1 rounded-md bg-freshket px-2 text-xs font-medium text-white transition hover:bg-freshket-dark disabled:opacity-40"
                             :disabled="! product.is_saleable || isAddingToCart"
                             @click="addToCart()"
-                            aria-label="@lang('shop::app.components.products.card.add-to-cart')"
                             :title="'@lang('shop::app.components.products.card.add-to-cart')'"
                         >
-                            <span class="icon-cart"></span>
+                            <span class="icon-cart shrink-0 text-base"></span>
+
+                            <span class="truncate">
+                                @lang('shop::app.components.products.card.add-to-cart')
+                            </span>
                         </button>
 
                         {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.after') !!}
