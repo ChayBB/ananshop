@@ -11,7 +11,7 @@
     >
         <!-- Grid Card -->
         <div
-            class="1180:transtion-all group w-full rounded-md 1180:relative 1180:grid 1180:content-start 1180:overflow-hidden 1180:duration-300 1180:hover:shadow-[0_5px_10px_rgba(0,0,0,0.1)]"
+            class="1180:transtion-all group w-full rounded-lg border border-gray-100 bg-white 1180:relative 1180:grid 1180:content-start 1180:overflow-hidden 1180:duration-300 1180:hover:shadow-[0_5px_10px_rgba(0,0,0,0.1)]"
             v-if="mode != 'list'"
         >
             <div class="relative max-h-[300px] max-w-[291px] overflow-hidden max-md:max-h-60 max-md:max-w-full max-md:rounded-lg max-sm:max-h-[200px] max-sm:max-w-full">
@@ -66,7 +66,7 @@
                 <div class="action-items bg-black">
                     <!-- Product Sale Badge -->
                     <p
-                        class="absolute top-1.5 inline-block rounded-[44px] bg-red-600 px-2.5 text-sm text-white max-sm:rounded-l-none max-sm:rounded-r-xl max-sm:px-2 max-sm:py-0.5 max-sm:text-xs ltr:left-1.5 max-sm:ltr:left-0 rtl:right-5 max-sm:rtl:right-0"
+                        class="absolute top-1.5 inline-block rounded-md bg-freshket-sale px-2.5 text-sm text-white max-sm:rounded-l-none max-sm:rounded-r-xl max-sm:px-2 max-sm:py-0.5 max-sm:text-xs ltr:left-1.5 max-sm:ltr:left-0 rtl:right-5 max-sm:rtl:right-0"
                         v-if="product.on_sale"
                     >
                         @lang('shop::app.components.products.card.sale')
@@ -74,7 +74,7 @@
 
                     <!-- Product New Badge -->
                     <p
-                        class="absolute top-1.5 inline-block rounded-[44px] bg-navyBlue px-2.5 text-sm text-white max-sm:rounded-l-none max-sm:rounded-r-xl max-sm:px-2 max-sm:py-0.5 max-sm:text-xs ltr:left-1.5 max-sm:ltr:left-0 rtl:right-1.5 max-sm:rtl:right-0"
+                        class="absolute top-1.5 inline-block rounded-md bg-freshket-dark px-2.5 text-sm text-white max-sm:rounded-l-none max-sm:rounded-r-xl max-sm:px-2 max-sm:py-0.5 max-sm:text-xs ltr:left-1.5 max-sm:ltr:left-0 rtl:right-1.5 max-sm:rtl:right-0"
                         v-else-if="product.is_new"
                     >
                         @lang('shop::app.components.products.card.new')
@@ -124,23 +124,23 @@
                 <div class="action-items flex items-stretch gap-1.5 mt-2 w-full max-sm:flex-col">
                     <!-- Quantity Selector -->
                     @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
-                        <div class="flex items-center justify-between gap-0.5 rounded-xl border border-navyBlue p-0.5 text-sm font-medium select-none shrink-0 max-sm:w-full max-sm:gap-1 max-sm:p-1">
+                        <div class="flex items-center justify-between gap-0.5 rounded-lg border border-freshket p-0.5 text-sm font-medium select-none shrink-0 max-sm:w-full max-sm:gap-1 max-sm:p-1">
                             <button
                                 type="button"
-                                class="flex h-7 w-6 max-sm:h-9 max-sm:w-10 shrink-0 cursor-pointer items-center justify-center rounded-lg text-base font-bold text-navyBlue hover:bg-navyBlue/10 disabled:opacity-30"
+                                class="flex h-7 w-6 max-sm:h-9 max-sm:w-10 shrink-0 cursor-pointer items-center justify-center rounded-lg text-base font-bold text-freshket hover:bg-freshket/10 disabled:opacity-30"
                                 :disabled="quantity <= 1"
                                 @click="decreaseQty()"
                             >
                                 -
                             </button>
 
-                            <span class="w-5 text-center text-sm font-semibold text-navyBlue max-sm:flex-1 max-sm:text-base">
+                            <span class="w-5 text-center text-sm font-semibold text-freshket max-sm:flex-1 max-sm:text-base">
                                 @{{ quantity }}
                             </span>
 
                             <button
                                 type="button"
-                                class="flex h-7 w-6 max-sm:h-9 max-sm:w-10 shrink-0 cursor-pointer items-center justify-center rounded-lg text-base font-bold text-navyBlue hover:bg-navyBlue/10"
+                                class="flex h-7 w-6 max-sm:h-9 max-sm:w-10 shrink-0 cursor-pointer items-center justify-center rounded-lg text-base font-bold text-freshket hover:bg-freshket/10"
                                 @click="increaseQty()"
                             >
                                 +
@@ -152,7 +152,7 @@
                         {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.before') !!}
 
                         <button
-                            class="secondary-button !bg-[#00897B] hover:!bg-[#00796B] !text-white !border-[#00897B] flex-1 min-w-0 items-center justify-center rounded-xl px-2 py-1.5 text-xs font-medium leading-tight max-sm:w-full max-sm:py-2.5 max-sm:text-sm"
+                            class="secondary-button !bg-freshket hover:!bg-freshket-dark !text-white !border-freshket flex-1 min-w-0 items-center justify-center rounded-lg px-2 py-1.5 text-xs font-medium leading-tight max-sm:w-full max-sm:py-2.5 max-sm:text-sm"
                             :disabled="! product.is_saleable || isAddingToCart"
                             @click="addToCart()"
                         >
@@ -189,14 +189,14 @@
 
                 <div class="action-items bg-black">
                     <p
-                        class="absolute top-5 inline-block rounded-[44px] bg-red-500 px-2.5 text-sm text-white ltr:left-5 max-sm:ltr:left-2 rtl:right-5"
+                        class="absolute top-5 inline-block rounded-md bg-freshket-sale px-2.5 text-sm text-white ltr:left-5 max-sm:ltr:left-2 rtl:right-5"
                         v-if="product.on_sale"
                     >
                         @lang('shop::app.components.products.card.sale')
                     </p>
 
                     <p
-                        class="absolute top-5 inline-block rounded-[44px] bg-navyBlue px-2.5 text-sm text-white ltr:left-5 max-sm:ltr:left-2 rtl:right-5"
+                        class="absolute top-5 inline-block rounded-md bg-freshket-dark px-2.5 text-sm text-white ltr:left-5 max-sm:ltr:left-2 rtl:right-5"
                         v-else-if="product.is_new"
                     >
                         @lang('shop::app.components.products.card.new')
@@ -300,7 +300,7 @@
                     {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.before') !!}
 
                     <x-shop::button
-                        class="!bg-[#00897B] hover:!bg-[#00796B] !text-white !border-[#00897B] rounded-xl whitespace-nowrap px-8 py-2.5 w-max"
+                        class="!bg-freshket hover:!bg-freshket-dark !text-white !border-freshket rounded-xl whitespace-nowrap px-8 py-2.5 w-max"
                         :title="trans('shop::app.components.products.card.add-to-cart')"
                         ::loading="isAddingToCart"
                         ::disabled="! product.is_saleable || isAddingToCart"

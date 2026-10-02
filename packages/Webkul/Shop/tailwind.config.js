@@ -1,6 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ["./src/Resources/**/*.blade.php", "./src/Resources/**/*.js"],
+    content: [
+        "./src/Resources/**/*.blade.php",
+        "./src/Resources/**/*.js",
+
+        // Theme overlays in resources/themes are scanned too, so classes used
+        // only by an overlay still make it into the compiled stylesheet.
+        "../../../resources/themes/**/*.blade.php",
+    ],
 
     theme: {
         container: {
@@ -34,6 +41,15 @@ module.exports = {
                 darkGreen: '#40994A',
                 darkBlue: '#0044F2',
                 darkPink: '#F85156',
+
+                // Freshket theme palette.
+                freshket: {
+                    DEFAULT: '#008065',
+                    dark: '#006650',
+                    light: '#E7FFF6',
+                    sale: '#DB2C2C',
+                    canvas: '#F3F5FA',
+                },
             },
 
             fontFamily: {
