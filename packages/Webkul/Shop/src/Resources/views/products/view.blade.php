@@ -60,6 +60,18 @@
         <x-shop::shimmer.products.view />
     </v-product>
 
+    <!-- Reviews Section -->
+    <div
+        class="mt-16 max-1180:mt-8"
+        id="reviews-section"
+    >
+        <h2 class="container mb-6 text-2xl font-bold text-gray-800 max-1180:mb-4 max-1180:px-5 max-md:px-4 max-md:text-xl max-sm:px-3.5">
+            @lang('shop::app.products.view.review')
+        </h2>
+
+        @include('shop::products.view.reviews')
+    </div>
+
     <v-product-associations></v-product-associations>
 
     {!! view_render_event('bagisto.shop.products.view.after', ['product' => $product]) !!}
@@ -161,6 +173,14 @@
                                 {!! view_render_event('bagisto.shop.products.short_description.after', ['product' => $product]) !!}
 
                                 @include('shop::products.view.types.simple')
+
+                                @include('shop::products.view.types.configurable')
+
+                                @include('shop::products.view.types.grouped')
+
+                                @include('shop::products.view.types.bundle')
+
+                                @include('shop::products.view.types.downloadable')
 
                                 @include('shop::products.view.types.booking')
 
@@ -548,6 +568,12 @@
                             tabElement.click();
 
                             tabElement.scrollIntoView({
+                                behavior: 'smooth'
+                            });
+                        }
+
+                        if (! accordianElement && ! tabElement) {
+                            document.querySelector('#reviews-section')?.scrollIntoView({
                                 behavior: 'smooth'
                             });
                         }
