@@ -121,22 +121,45 @@
                 {!! view_render_event('bagisto.shop.components.products.card.price.after') !!}
 
                 <!-- Product Actions Section -->
-                <div class="action-items mt-1 flex w-full items-stretch">
+                <div class="action-items mt-1 flex w-full items-stretch gap-1">
+                    <!-- Quantity Selector -->
+                    @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
+                        <div class="flex flex-1 items-center justify-between rounded-md border border-freshket px-0.5 text-sm font-medium select-none">
+                            <button
+                                type="button"
+                                class="flex h-7 w-5 shrink-0 cursor-pointer items-center justify-center rounded text-sm font-bold text-freshket hover:bg-freshket/10 disabled:opacity-30"
+                                :disabled="quantity <= 1"
+                                @click="decreaseQty()"
+                            >
+                                -
+                            </button>
+
+                            <span class="flex-1 text-center text-xs font-semibold text-freshket">
+                                @{{ quantity }}
+                            </span>
+
+                            <button
+                                type="button"
+                                class="flex h-7 w-5 shrink-0 cursor-pointer items-center justify-center rounded text-sm font-bold text-freshket hover:bg-freshket/10"
+                                @click="increaseQty()"
+                            >
+                                +
+                            </button>
+                        </div>
+                    @endif
+
                     @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
                         {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.before') !!}
 
-                        <!-- Single full width action; quantity is chosen in the cart. -->
+                        <!-- Icon-only so the stepper and this button share one row. -->
                         <button
-                            class="flex h-7 w-full cursor-pointer items-center justify-center gap-1 rounded-md bg-freshket px-2 text-xs font-medium text-white transition hover:bg-freshket-dark disabled:opacity-40"
+                            class="flex h-7 w-9 shrink-0 cursor-pointer items-center justify-center rounded-md bg-freshket text-base text-white transition hover:bg-freshket-dark disabled:opacity-40"
                             :disabled="! product.is_saleable || isAddingToCart"
                             @click="addToCart()"
+                            aria-label="@lang('shop::app.components.products.card.add-to-cart')"
                             :title="'@lang('shop::app.components.products.card.add-to-cart')'"
                         >
-                            <span class="icon-cart shrink-0 text-base"></span>
-
-                            <span class="truncate">
-                                @lang('shop::app.components.products.card.add-to-cart')
-                            </span>
+                            <span class="icon-cart"></span>
                         </button>
 
                         {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.after') !!}
