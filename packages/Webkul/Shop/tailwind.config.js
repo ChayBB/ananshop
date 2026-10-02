@@ -50,6 +50,16 @@ module.exports = {
                     sale: '#DB2C2C',
                     canvas: '#F3F5FA',
                 },
+
+                // Aztech theme palette.
+                aztech: {
+                    DEFAULT: '#FF6226',
+                    dark: '#F45F18',
+                    offer: '#26A37C',
+                    sale: '#FF6060',
+                    canvas: '#F4F4F4',
+                    ink: '#020203',
+                },
             },
 
             fontFamily: {

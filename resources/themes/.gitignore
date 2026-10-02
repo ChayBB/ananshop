@@ -2,3 +2,5 @@
 !.gitignore
 !freshket/
 !freshket/**
+!aztech/
+!aztech/**
