@@ -151,15 +151,17 @@
                     @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
                         {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.before') !!}
 
-                        <!-- Icon-only so the stepper and this button share one row. -->
                         <button
-                            class="flex h-7 w-9 shrink-0 cursor-pointer items-center justify-center rounded-md bg-freshket text-base text-white transition hover:bg-freshket-dark disabled:opacity-40"
+                            class="flex h-7 shrink-0 cursor-pointer items-center justify-center gap-1 rounded-md bg-freshket px-2 text-xs font-medium text-white transition hover:bg-freshket-dark disabled:opacity-40"
                             :disabled="! product.is_saleable || isAddingToCart"
                             @click="addToCart()"
-                            aria-label="@lang('shop::app.components.products.card.add-to-cart')"
                             :title="'@lang('shop::app.components.products.card.add-to-cart')'"
                         >
-                            <span class="icon-cart"></span>
+                            <span class="icon-cart shrink-0 text-base"></span>
+
+                            <span class="truncate">
+                                @lang('shop::app.components.products.card.add-to-cart')
+                            </span>
                         </button>
 
                         {!! view_render_event('bagisto.shop.components.products.card.add_to_cart.after') !!}
