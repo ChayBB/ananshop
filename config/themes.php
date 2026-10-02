@@ -24,6 +24,18 @@ return [
                 'package_assets_directory' => 'src/Resources/assets',
             ],
         ],
+
+        'freshket' => [
+            'name' => 'Freshket',
+            'assets_path' => 'public/themes/shop/default',
+            'views_path' => 'resources/themes/freshket/views',
+
+            'vite' => [
+                'hot_file' => 'shop-default-vite.hot',
+                'build_directory' => 'themes/shop/default/build',
+                'package_assets_directory' => 'src/Resources/assets',
+            ],
+        ],
     ],
 
     /*
