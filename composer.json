@@ -159,7 +159,7 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "support": {
         "issues": "https://github.com/bagisto/bagisto/issues",
