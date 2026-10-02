@@ -126,7 +126,7 @@
                         <div v-else class="mt-8 max-md:mt-5">
                             <!-- Product Card Shimmer Effect -->
                             <template v-if="isLoading">
-                                <div class="grid grid-cols-6 gap-3 xl:grid-cols-7 max-lg:grid-cols-4 max-md:grid-cols-3 max-md:gap-2.5 max-sm:grid-cols-2">
+                                <div class="grid grid-cols-6 gap-3 xl:grid-cols-8 1180:grid-cols-7 max-lg:grid-cols-4 max-md:grid-cols-3 max-md:gap-2 max-sm:grid-cols-2">
                                     <x-shop::shimmer.products.cards.grid count="12" />
                                 </div>
                             </template>
@@ -136,7 +136,7 @@
                             <!-- Product Card Listing -->
                             <template v-else>
                                 <template v-if="products.length">
-                                    <div class="grid grid-cols-6 gap-3 xl:grid-cols-7 max-lg:grid-cols-4 max-md:grid-cols-3 max-md:gap-2.5 max-sm:grid-cols-2">
+                                    <div class="grid grid-cols-6 gap-3 xl:grid-cols-8 1180:grid-cols-7 max-lg:grid-cols-4 max-md:grid-cols-3 max-md:gap-2 max-sm:grid-cols-2">
                                         <x-shop::products.card
                                             ::mode="'grid'"
                                             v-for="product in products"
