@@ -3,7 +3,7 @@
 namespace Webkul\User\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Webkul\User\Contracts\SalesTerritory as SalesTerritoryContract;
 
 class SalesTerritory extends Model implements SalesTerritoryContract
@@ -31,10 +31,18 @@ class SalesTerritory extends Model implements SalesTerritoryContract
     /**
      * Get the admins assigned to this territory.
      *
-     * @return HasMany
+     * A territory belongs to one salesperson in practice, but the pivot keeps
+     * the relation symmetrical with Admin::salesTerritories().
+     *
+     * @return BelongsToMany
      */
-    public function admins(): HasMany
+    public function admins(): BelongsToMany
     {
-        return $this->hasMany(AdminProxy::modelClass());
+        return $this->belongsToMany(
+            AdminProxy::modelClass(),
+            'admin_sales_territories',
+            'sales_territory_id',
+            'admin_id'
+        );
     }
 }

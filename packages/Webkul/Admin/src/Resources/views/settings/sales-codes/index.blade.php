@@ -44,9 +44,14 @@
                     $hasPermission = bouncer()->hasPermission('settings.sales_codes.edit') || bouncer()->hasPermission('settings.sales_codes.delete');
                 @endphp
 
-                <template #body="{ columns, records, performAction }">
+                <template #body="{ isLoading, available, performAction }">
+                    <template v-if="isLoading">
+                        <x-admin::shimmer.datagrid.table.body />
+                    </template>
+
                     <div
-                        v-for="record in records"
+                        v-else
+                        v-for="record in available.records"
                         class="row grid items-center gap-2.5 border-b px-4 py-4 text-gray-600 transition-all hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-950"
                         style="grid-template-columns: repeat({{ $hasPermission ? '5' : '4' }}, minmax(150px, 1fr));"
                     >
@@ -60,17 +65,17 @@
 
                         @if ($hasPermission)
                             <div class="flex justify-end">
-                                <a @click="editModal(record.actions.find(action => action.index === 'edit')?.url)">
+                                <a @click="editModal(record.actions.find(action => action.icon === 'icon-edit')?.url)">
                                     <span
-                                        :class="record.actions.find(action => action.index === 'edit')?.icon"
+                                        :class="record.actions.find(action => action.icon === 'icon-edit')?.icon"
                                         class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800 max-sm:place-self-center"
                                     >
                                     </span>
                                 </a>
 
-                                <a @click="performAction(record.actions.find(action => action.index === 'delete'))">
+                                <a @click="performAction(record.actions.find(action => action.icon === 'icon-delete'))">
                                     <span
-                                        :class="record.actions.find(action => action.index === 'delete')?.icon"
+                                        :class="record.actions.find(action => action.icon === 'icon-delete')?.icon"
                                         class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800 max-sm:place-self-center"
                                     >
                                     </span>

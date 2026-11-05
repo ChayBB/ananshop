@@ -418,7 +418,7 @@
                                             <option
                                                 v-for="territory in availableTerritories(index)"
                                                 :value="territory.id"
-                                                :text="territory.name"
+                                                :text="`${territory.code} - ${territory.name}`"
                                             >
                                             </option>
                                         </select>
@@ -565,6 +565,14 @@
 
                                 this.selectedTerritories = assigned.length ? [...assigned] : [''];
 
+                                /**
+                                 * Refresh the list so territories claimed since the page
+                                 * loaded are no longer offered.
+                                 */
+                                if (response.data.sales_territories) {
+                                    this.salesTerritories = response.data.sales_territories;
+                                }
+
                                 this.$refs.modalForm.setValues(response.data.user);
 
                                 this.$refs.userUpdateOrCreateModal.toggle();
@@ -581,7 +589,23 @@
                     availableTerritories(index) {
                         const taken = this.selectedTerritories.filter((id, i) => i !== index && id);
 
-                        return this.salesTerritories.filter(territory => ! taken.includes(territory.id));
+                        const currentUserId = this.data.user?.id;
+
+                        return this.salesTerritories.filter(territory => {
+                            if (taken.includes(territory.id)) {
+                                return false;
+                            }
+
+                            /**
+                             * A territory covered by a different salesperson is not
+                             * offered; the one being edited keeps their own.
+                             */
+                            if (territory.assigned_to && territory.assigned_to != currentUserId) {
+                                return false;
+                            }
+
+                            return true;
+                        });
                     },
 
                     addTerritory() {

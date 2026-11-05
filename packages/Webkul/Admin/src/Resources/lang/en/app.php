@@ -3861,6 +3861,7 @@ return [
                     'sales-territory' => 'Sales Territory',
                     'sales-territory-none' => 'None',
                     'role' => 'Role',
+                    'sales-territory-taken' => 'This sales territory is already assigned to another user.',
                     'save-btn' => 'Save User',
                     'status' => 'Status',
                     'title' => 'Create User',

@@ -3556,6 +3556,7 @@ return [
                     'sales-territory' => 'เขตพื้นที่ขาย',
                     'sales-territory-none' => 'ไม่ระบุ',
                     'role' => 'บทบาท',
+                    'sales-territory-taken' => 'เขตพื้นที่ขายนี้ถูกกำหนดให้เซลคนอื่นแล้ว',
                     'save-btn' => 'บันทึกผู้ใช้งาน',
                     'status' => 'สถานะ',
                     'title' => 'สร้างผู้ใช้งาน',

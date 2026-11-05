@@ -68,7 +68,7 @@ class SalesTerritoryController extends Controller
         $salesTerritory = $this->salesTerritoryRepository->findOrFail($id);
 
         return new JsonResponse([
-            'sales_code' => $salesTerritory,
+            'sales_territory' => $salesTerritory,
         ]);
     }
 

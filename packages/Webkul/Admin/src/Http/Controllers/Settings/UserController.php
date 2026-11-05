@@ -8,7 +8,9 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Webkul\Admin\DataGrids\Settings\UserDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
@@ -47,7 +49,7 @@ class UserController extends Controller
 
         $salesCodes = $this->salesCodeRepository->findWhere(['status' => 1]);
 
-        $salesTerritories = $this->salesTerritoryRepository->findWhere(['status' => 1]);
+        $salesTerritories = $this->withTerritoryOwners($this->salesTerritoryRepository->findWhere(['status' => 1]));
 
         return view('admin::settings.users.index', compact('roles', 'salesCodes', 'salesTerritories'));
     }
@@ -79,9 +81,13 @@ class UserController extends Controller
 
         Event::dispatch('user.admin.create.before');
 
+        $territoryIds = array_filter(request()->input('sales_territory_ids', []));
+
+        $this->assertTerritoriesAreFree($territoryIds);
+
         $admin = $this->adminRepository->create($data);
 
-        $admin->salesTerritories()->sync(request()->input('sales_territory_ids', []));
+        $admin->salesTerritories()->sync($territoryIds);
 
         if (request()->hasFile('image')) {
             $admin->image = current(request()->file('image'))->store('admins/'.$admin->id);
@@ -112,6 +118,7 @@ class UserController extends Controller
         return new JsonResponse([
             'roles' => $roles,
             'user' => $user,
+            'sales_territories' => $this->withTerritoryOwners($this->salesTerritoryRepository->findWhere(['status' => 1])),
         ]);
     }
 
@@ -140,9 +147,13 @@ class UserController extends Controller
             unset($data['image']);
         }
 
+        $territoryIds = array_filter(request()->input('sales_territory_ids', []));
+
+        $this->assertTerritoriesAreFree($territoryIds, $id);
+
         $admin = $this->adminRepository->update($data, $id);
 
-        $admin->salesTerritories()->sync(request()->input('sales_territory_ids', []));
+        $admin->salesTerritories()->sync($territoryIds);
 
         if (request()->hasFile('image')) {
             $admin->image = current(request()->file('image'))->store('admins/'.$admin->id);
@@ -249,6 +260,50 @@ class UserController extends Controller
             return new JsonResponse([
                 'message' => trans('admin::app.settings.users.incorrect-password'),
             ], 404);
+        }
+    }
+
+    /**
+     * Tag each territory with the admin currently holding it.
+     *
+     * A territory belongs to one salesperson, so the form uses this to hide
+     * the ones another user already covers.
+     *
+     * @param  mixed  $territories
+     * @return mixed
+     */
+    private function withTerritoryOwners($territories)
+    {
+        $owners = DB::table('admin_sales_territories')->pluck('admin_id', 'sales_territory_id');
+
+        foreach ($territories as $territory) {
+            $territory->assigned_to = $owners[$territory->id] ?? null;
+        }
+
+        return $territories;
+    }
+
+    /**
+     * Reject territories already covered by a different salesperson.
+     *
+     * @param  array  $territoryIds
+     * @param  int|null  $excludeAdminId
+     */
+    private function assertTerritoriesAreFree(array $territoryIds, $excludeAdminId = null): void
+    {
+        if (empty($territoryIds)) {
+            return;
+        }
+
+        $taken = DB::table('admin_sales_territories')
+            ->whereIn('sales_territory_id', $territoryIds)
+            ->when($excludeAdminId, fn ($query) => $query->where('admin_id', '!=', $excludeAdminId))
+            ->exists();
+
+        if ($taken) {
+            throw ValidationException::withMessages([
+                'sales_territory_ids' => trans('admin::app.settings.users.index.create.sales-territory-taken'),
+            ]);
         }
     }
 
