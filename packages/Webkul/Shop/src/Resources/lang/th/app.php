@@ -73,6 +73,7 @@ return [
 
             'profile' => [
                 'index' => [
+                    'customer-code' => 'รหัสลูกค้า',
                     'delete' => 'ลบ',
                     'delete-failed' => 'เกิดข้อผิดพลาดขณะลบลูกค้า',
                     'delete-profile' => 'ลบโปรไฟล์',
@@ -94,6 +95,7 @@ return [
                 'edit' => [
                     'confirm-password' => 'ยืนยันรหัสผ่าน',
                     'current-password' => 'รหัสผ่านปัจจุบัน',
+                    'customer-code' => 'รหัสลูกค้า',
                     'dob' => 'วันเกิด',
                     'edit' => 'แก้ไข',
                     'edit-profile' => 'แก้ไขโปรไฟล์',

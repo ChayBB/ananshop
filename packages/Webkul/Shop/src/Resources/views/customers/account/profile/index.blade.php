@@ -45,6 +45,18 @@
 
         <!-- Profile Information -->
         <div class="grid grid-cols-1 mt-8 gap-y-6 max-md:mt-5 max-sm:gap-y-4">
+            @if ($customer->customer_code)
+                <div class="grid w-full grid-cols-[2fr_3fr] border-b border-zinc-200 px-8 py-3 max-md:px-0">
+                    <p class="text-sm font-medium">
+                        @lang('shop::app.customers.account.profile.index.customer-code')
+                    </p>
+
+                    <p class="text-sm font-medium text-zinc-500" v-pre>
+                        {{ $customer->customer_code }}
+                    </p>
+                </div>
+            @endif
+
             {!! view_render_event('bagisto.shop.customers.account.profile.first_name.before') !!}
 
             <div class="grid w-full grid-cols-[2fr_3fr] border-b border-zinc-200 px-8 py-3 max-md:px-0">

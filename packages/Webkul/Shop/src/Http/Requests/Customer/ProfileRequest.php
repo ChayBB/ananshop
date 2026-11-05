@@ -27,6 +27,7 @@ class ProfileRequest extends FormRequest
         $id = auth()->guard('customer')->user()->id;
 
         return [
+            'customer_code' => 'nullable|string|max:255|unique:customers,customer_code,'.$id,
             'first_name' => ['required'],
             'last_name' => ['required'],
             'gender' => 'required|in:Other,Male,Female',

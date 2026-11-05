@@ -56,6 +56,23 @@
 
             {!! view_render_event('bagisto.shop.customers.account.profile.edit_form_controls.image.after') !!}
 
+            <!-- Customer Code -->
+            <x-shop::form.control-group>
+                <x-shop::form.control-group.label>
+                    @lang('shop::app.customers.account.profile.edit.customer-code')
+                </x-shop::form.control-group.label>
+
+                <x-shop::form.control-group.control
+                    type="text"
+                    name="customer_code"
+                    :value="old('customer_code') ?? $customer->customer_code"
+                    :label="trans('shop::app.customers.account.profile.edit.customer-code')"
+                    :placeholder="trans('shop::app.customers.account.profile.edit.customer-code')"
+                />
+
+                <x-shop::form.control-group.error control-name="customer_code" />
+            </x-shop::form.control-group>
+
             <!-- First Name -->
             <x-shop::form.control-group>
                 <x-shop::form.control-group.label class="required">

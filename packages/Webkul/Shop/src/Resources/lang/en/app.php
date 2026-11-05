@@ -77,6 +77,7 @@ return [
 
             'profile' => [
                 'index' => [
+                    'customer-code' => 'Customer Code',
                     'delete' => 'Delete',
                     'delete-failed' => 'Error encountered while deleting customer.',
                     'delete-profile' => 'Delete Profile',
@@ -98,6 +99,7 @@ return [
                 'edit' => [
                     'confirm-password' => 'Confirm Password',
                     'current-password' => 'Current Password',
+                    'customer-code' => 'Customer Code',
                     'dob' => 'Date of Birth',
                     'edit' => 'Edit',
                     'edit-profile' => 'Edit Profile',
