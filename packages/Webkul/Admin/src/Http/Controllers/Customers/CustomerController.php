@@ -79,6 +79,7 @@ class CustomerController extends Controller
     public function store(): JsonResponse
     {
         $this->validate(request(), [
+            'customer_code' => 'nullable|string|max:255|unique:customers,customer_code',
             'first_name' => 'string|required',
             'last_name' => 'string|required',
             'gender' => 'required',
@@ -98,6 +99,7 @@ class CustomerController extends Controller
             'password' => bcrypt($password),
             'is_verified' => 1,
         ], request()->only([
+            'customer_code',
             'first_name',
             'last_name',
             'gender',
@@ -149,6 +151,7 @@ class CustomerController extends Controller
     public function update(int $id)
     {
         $this->validate(request(), [
+            'customer_code' => 'nullable|string|max:255|unique:customers,customer_code,'.$id,
             'first_name' => 'string|required',
             'last_name' => 'string|required',
             'gender' => 'required',
@@ -160,6 +163,7 @@ class CustomerController extends Controller
         ]);
 
         $data = request()->only([
+            'customer_code',
             'first_name',
             'last_name',
             'gender',

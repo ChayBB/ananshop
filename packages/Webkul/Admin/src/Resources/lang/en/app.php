@@ -2142,6 +2142,7 @@ return [
                     'address' => ':address  Address(s)',
                     'address-count' => 'Address Count',
                     'channel' => 'Channel',
+                    'customer-code' => 'Customer Code',
                     'delete' => 'Delete',
                     'delete-success' => 'Selected data successfully deleted',
                     'email' => 'Email',
@@ -2171,6 +2172,7 @@ return [
                     'contact-number' => 'Contact Number',
                     'create-btn' => 'Create Customer',
                     'create-success' => 'Customer created successfully',
+                    'customer-code' => 'Customer Code',
                     'customer-group' => 'Customer Group',
                     'date-of-birth' => 'Date of Birth',
                     'email' => 'Email',
@@ -2313,6 +2315,7 @@ return [
                 'edit' => [
                     'confirm-password' => 'Confirm Password',
                     'contact-number' => 'Contact Number',
+                    'customer-code' => 'Customer Code',
                     'customer-group' => 'Customer Group',
                     'date-of-birth' => 'Date of Birth',
                     'edit-btn' => 'Edit',

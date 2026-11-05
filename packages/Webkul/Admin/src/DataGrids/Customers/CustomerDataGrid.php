@@ -43,6 +43,7 @@ class CustomerDataGrid extends DataGrid
             ->leftJoin('customer_groups', 'customers.customer_group_id', '=', 'customer_groups.id')
             ->addSelect(
                 'customers.id as customer_id',
+                'customers.customer_code',
                 'customers.email',
                 'customers.phone',
                 'customers.gender',
@@ -58,6 +59,7 @@ class CustomerDataGrid extends DataGrid
 
         $this->addFilter('channel_id', 'customers.channel_id');
         $this->addFilter('customer_id', 'customers.id');
+        $this->addFilter('customer_code', 'customers.customer_code');
         $this->addFilter('email', 'customers.email');
         $this->addFilter('full_name', DB::raw('CONCAT('.$tablePrefix.'customers.first_name, " ", '.$tablePrefix.'customers.last_name)'));
         $this->addFilter('group', 'customer_groups.name');
@@ -99,6 +101,15 @@ class CustomerDataGrid extends DataGrid
             'label' => trans('admin::app.customers.customers.index.datagrid.id'),
             'type' => 'integer',
             'filterable' => true,
+        ]);
+
+        $this->addColumn([
+            'index' => 'customer_code',
+            'label' => trans('admin::app.customers.customers.index.datagrid.customer-code'),
+            'type' => 'string',
+            'searchable' => true,
+            'filterable' => true,
+            'sortable' => true,
         ]);
 
         $this->addColumn([

@@ -159,6 +159,13 @@
                         @endif
 
                         <div class="flex flex-col gap-1.5">
+                            <p
+                                class="text-gray-600 dark:text-gray-300"
+                                v-if="record.customer_code"
+                            >
+                                @{{ record.customer_code }}
+                            </p>
+
                             <p class="text-base font-semibold text-gray-800 dark:text-white">
                                 @{{ record.full_name }}
                             </p>

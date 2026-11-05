@@ -21,6 +21,23 @@
                     <x-slot:content>
                         {!! view_render_event('bagisto.admin.customers.create.before') !!}
 
+                        <!-- Customer Code -->
+                        <x-admin::form.control-group class="mb-2.5 w-full">
+                            <x-admin::form.control-group.label>
+                                @lang('admin::app.customers.customers.index.create.customer-code')
+                            </x-admin::form.control-group.label>
+
+                            <x-admin::form.control-group.control
+                                type="text"
+                                id="customer_code"
+                                name="customer_code"
+                                :label="trans('admin::app.customers.customers.index.create.customer-code')"
+                                :placeholder="trans('admin::app.customers.customers.index.create.customer-code')"
+                            />
+
+                            <x-admin::form.control-group.error control-name="customer_code" />
+                        </x-admin::form.control-group>
+
                         <div class="flex gap-4 max-sm:flex-wrap">
                             <!-- First Name -->
                             <x-admin::form.control-group class="mb-2.5 w-full">
