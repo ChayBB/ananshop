@@ -86,6 +86,23 @@
                             <x-admin::form.control-group.error control-name="vat_id" />
                         </x-admin::form.control-group>
 
+                        <!-- Customer Code, shown for reference and set on the customer -->
+                        <x-admin::form.control-group class="w-full">
+                            <x-admin::form.control-group.label>
+                                @lang('admin::app.customers.customers.view.address.create.customer-code')
+                            </x-admin::form.control-group.label>
+
+                            <x-admin::form.control-group.control
+                                type="text"
+                                name="customer_code_display"
+                                class="cursor-not-allowed bg-gray-100 text-gray-500 dark:bg-gray-900"
+                                readonly
+                                :value="$customer->customer_code"
+                                :label="trans('admin::app.customers.customers.view.address.create.customer-code')"
+                                :placeholder="trans('admin::app.customers.customers.view.address.create.customer-code')"
+                            />
+                        </x-admin::form.control-group>
+
                         <!-- First Name -->
                         <x-admin::form.control-group class="w-full">
                             <x-admin::form.control-group.label class="required">

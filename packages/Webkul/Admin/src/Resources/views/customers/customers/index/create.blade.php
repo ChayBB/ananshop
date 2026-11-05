@@ -94,6 +94,23 @@
                             <x-admin::form.control-group.error control-name="email" />
                         </x-admin::form.control-group>
 
+                        <!-- LINE ID -->
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label>
+                                @lang('admin::app.customers.customers.index.create.line-id')
+                            </x-admin::form.control-group.label>
+
+                            <x-admin::form.control-group.control
+                                type="text"
+                                id="line_id"
+                                name="line_id"
+                                :label="trans('admin::app.customers.customers.index.create.line-id')"
+                                :placeholder="trans('admin::app.customers.customers.index.create.line-id')"
+                            />
+
+                            <x-admin::form.control-group.error control-name="line_id" />
+                        </x-admin::form.control-group>
+
                         <div class="flex gap-4 max-sm:flex-wrap">
                             <!-- Password -->
                             <x-admin::form.control-group class="w-full">

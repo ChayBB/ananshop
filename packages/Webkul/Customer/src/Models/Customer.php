@@ -54,6 +54,7 @@ class Customer extends Authenticatable implements CustomerContract
         'gender',
         'date_of_birth',
         'email',
+        'line_id',
         'phone',
         'username',
         'password',

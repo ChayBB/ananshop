@@ -120,6 +120,24 @@
                             <x-admin::form.control-group.error control-name="email" />
                         </x-admin::form.control-group>
 
+                        <!-- LINE ID -->
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label>
+                                @lang('admin::app.customers.customers.view.edit.line-id')
+                            </x-admin::form.control-group.label>
+
+                            <x-admin::form.control-group.control
+                                type="text"
+                                name="line_id"
+                                id="line_id"
+                                ::value="customer.line_id"
+                                :label="trans('admin::app.customers.customers.view.edit.line-id')"
+                                :placeholder="trans('admin::app.customers.customers.view.edit.line-id')"
+                            />
+
+                            <x-admin::form.control-group.error control-name="line_id" />
+                        </x-admin::form.control-group>
+
                         <div class="flex gap-4 max-sm:flex-wrap">
                             <!-- Password -->
                             <x-admin::form.control-group class="mb-2.5 w-full">
@@ -277,26 +295,17 @@
                                 />
                             </x-admin::form.control-group>
 
-                            <!-- Customer Suspended Status -->
-                            <x-admin::form.control-group class="!mb-0">
-                                <x-admin::form.control-group.label>
-                                    @lang('admin::app.customers.customers.view.edit.suspended')
-                                </x-admin::form.control-group.label>
-
-                                <x-admin::form.control-group.control
-                                    type="hidden"
-                                    name="is_suspended"
-                                    value="0"
-                                />
-                                
-                                <x-admin::form.control-group.control
-                                    type="switch"
-                                    name="is_suspended"
-                                    :value="1"
-                                    :label="trans('admin::app.customers.customers.view.edit.suspended')"
-                                    ::checked="customer.is_suspended"
-                                />
-                            </x-admin::form.control-group>
+                            <!--
+                                The suspended switch was removed: status is the single
+                                control for whether a customer may use the shop. The
+                                field is still posted so an account suspended earlier
+                                is released when status is turned back on.
+                            -->
+                            <x-admin::form.control-group.control
+                                type="hidden"
+                                name="is_suspended"
+                                value="0"
+                            />
                         </div>
                         
                         {!! view_render_event('bagisto.admin.customers.customers.view.edit.after', ['customer' => $customer]) !!}
