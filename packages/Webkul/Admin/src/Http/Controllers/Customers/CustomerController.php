@@ -89,7 +89,7 @@ class CustomerController extends Controller
             'gender' => 'nullable|in:Other,Male,Female',
             'channel_id' => 'required|integer',
             'email' => 'nullable|email|unique:customers,email,NULL,id,channel_id,'.request('channel_id'),
-            'line_id' => 'nullable|string|max:255',
+            'line_id' => 'nullable|string|max:255|unique:customers,line_id',
             'date_of_birth' => 'nullable|date|before:today',
             'phone' => ['unique:customers,phone', new PhoneNumber],
             'password' => 'nullable|min:6|confirmed',
@@ -130,6 +130,14 @@ class CustomerController extends Controller
 
         if (empty($data['email'])) {
             $data['email'] = null;
+        }
+
+        /**
+         * A unique index treats repeated empty strings as duplicates, so a
+         * blank LINE id is stored as null.
+         */
+        if (empty($data['line_id'])) {
+            $data['line_id'] = null;
         }
 
         Event::dispatch('customer.create.before');
@@ -174,7 +182,7 @@ class CustomerController extends Controller
             'last_name' => 'string|required',
             'gender' => 'nullable|in:Other,Male,Female',
             'email' => 'nullable|email|unique:customers,email,'.$id,
-            'line_id' => 'nullable|string|max:255',
+            'line_id' => 'nullable|string|max:255|unique:customers,line_id,'.$id,
             'date_of_birth' => 'nullable|date|before:today',
             'phone' => ['unique:customers,phone,'.$id, new PhoneNumber],
             'password' => 'nullable|min:6|confirmed',
@@ -210,6 +218,14 @@ class CustomerController extends Controller
 
         if (empty($data['email'])) {
             $data['email'] = null;
+        }
+
+        /**
+         * A unique index treats repeated empty strings as duplicates, so a
+         * blank LINE id is stored as null.
+         */
+        if (empty($data['line_id'])) {
+            $data['line_id'] = null;
         }
 
         if (! empty($data['password'])) {
