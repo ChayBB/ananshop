@@ -3733,6 +3733,74 @@ return [
             ],
         ],
 
+        'sales-codes' => [
+            'index' => [
+                'title'          => 'Sales Codes',
+                'create-success' => 'Created successfully.',
+                'update-success' => 'Updated successfully.',
+                'delete-success' => 'Deleted successfully.',
+                'delete-failed'  => 'Could not delete.',
+                'being-used'     => 'Cannot delete, it is assigned to a user.',
+
+                'create' => [
+                    'title'    => 'Create Sales Code',
+                    'code'     => 'Code',
+                    'name'     => 'Name',
+                    'status'   => 'Status',
+                    'save-btn' => 'Save',
+                ],
+
+                'edit' => [
+                    'title' => 'Edit Sales Code',
+                ],
+
+                'datagrid' => [
+                    'id'       => 'ID',
+                    'code'     => 'Code',
+                    'name'     => 'Name',
+                    'status'   => 'Status',
+                    'active'   => 'Active',
+                    'inactive' => 'Inactive',
+                    'edit'     => 'Edit',
+                    'delete'   => 'Delete',
+                ],
+            ],
+        ],
+
+        'sales-territories' => [
+            'index' => [
+                'title'          => 'Sales Territories',
+                'create-success' => 'Created successfully.',
+                'update-success' => 'Updated successfully.',
+                'delete-success' => 'Deleted successfully.',
+                'delete-failed'  => 'Could not delete.',
+                'being-used'     => 'Cannot delete, it is assigned to a user.',
+
+                'create' => [
+                    'title'    => 'Create Sales Territory',
+                    'code'     => 'Code',
+                    'name'     => 'Name',
+                    'status'   => 'Status',
+                    'save-btn' => 'Save',
+                ],
+
+                'edit' => [
+                    'title' => 'Edit Sales Territory',
+                ],
+
+                'datagrid' => [
+                    'id'       => 'ID',
+                    'code'     => 'Code',
+                    'name'     => 'Name',
+                    'status'   => 'Status',
+                    'active'   => 'Active',
+                    'inactive' => 'Inactive',
+                    'edit'     => 'Edit',
+                    'delete'   => 'Delete',
+                ],
+            ],
+        ],
+
         'users' => [
             'index' => [
                 'admin' => 'Admin',
@@ -3744,6 +3812,10 @@ return [
                     'email' => 'Email',
                     'name' => 'Nome',
                     'password' => 'Password',
+                    'sales-code' => 'Sales Code',
+                    'sales-code-none' => 'None',
+                    'sales-territory' => 'Sales Territory',
+                    'sales-territory-none' => 'None',
                     'role' => 'Ruolo',
                     'save-btn' => 'Salva Utente',
                     'status' => 'Stato',
@@ -5329,6 +5401,8 @@ return [
                 'themes' => 'Temi',
                 'transactions' => 'Transazioni',
                 'url-rewrites' => 'Riscrittura URL',
+                'sales-codes' => 'Sales Codes',
+                'sales-territories' => 'Sales Territories',
                 'users' => 'Utenti',
             ],
 
@@ -5572,6 +5646,8 @@ return [
         'themes' => 'Temi',
         'transactions' => 'Transazioni',
         'url-rewrites' => 'Riscritture URL',
+        'sales-codes' => 'Sales Codes',
+        'sales-territories' => 'Sales Territories',
         'users' => 'Utenti',
         'view' => 'Vedi',
 

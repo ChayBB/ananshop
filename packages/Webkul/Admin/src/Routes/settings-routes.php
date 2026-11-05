@@ -8,6 +8,8 @@ use Webkul\Admin\Http\Controllers\Settings\ExchangeRateController;
 use Webkul\Admin\Http\Controllers\Settings\InventorySourceController;
 use Webkul\Admin\Http\Controllers\Settings\LocaleController;
 use Webkul\Admin\Http\Controllers\Settings\RoleController;
+use Webkul\Admin\Http\Controllers\Settings\SalesCodeController;
+use Webkul\Admin\Http\Controllers\Settings\SalesTerritoryController;
 use Webkul\Admin\Http\Controllers\Settings\Tax\TaxCategoryController;
 use Webkul\Admin\Http\Controllers\Settings\Tax\TaxRateController;
 use Webkul\Admin\Http\Controllers\Settings\ThemeController;
@@ -166,6 +168,36 @@ Route::prefix('settings')->group(function () {
         Route::delete('edit/{id}', 'destroy')->name('admin.settings.users.delete');
 
         Route::put('confirm', 'destroySelf')->name('admin.settings.users.destroy');
+    });
+
+    /**
+     * Sales code routes.
+     */
+    Route::controller(SalesCodeController::class)->prefix('sales-codes')->group(function () {
+        Route::get('', 'index')->name('admin.settings.sales_codes.index');
+
+        Route::post('create', 'store')->name('admin.settings.sales_codes.store');
+
+        Route::get('edit/{id}', 'edit')->name('admin.settings.sales_codes.edit');
+
+        Route::put('edit', 'update')->name('admin.settings.sales_codes.update');
+
+        Route::delete('edit/{id}', 'destroy')->name('admin.settings.sales_codes.delete');
+    });
+
+    /**
+     * Sales territory routes.
+     */
+    Route::controller(SalesTerritoryController::class)->prefix('sales-territories')->group(function () {
+        Route::get('', 'index')->name('admin.settings.sales_territories.index');
+
+        Route::post('create', 'store')->name('admin.settings.sales_territories.store');
+
+        Route::get('edit/{id}', 'edit')->name('admin.settings.sales_territories.edit');
+
+        Route::put('edit', 'update')->name('admin.settings.sales_territories.update');
+
+        Route::delete('edit/{id}', 'destroy')->name('admin.settings.sales_territories.delete');
     });
 
     Route::controller(ThemeController::class)->prefix('themes')->group(function () {

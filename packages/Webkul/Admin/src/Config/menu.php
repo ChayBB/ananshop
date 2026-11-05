@@ -373,22 +373,34 @@ return [
         'sort' => 6,
         'icon' => '',
     ], [
+        'key' => 'settings.sales_codes',
+        'name' => 'admin::app.components.layouts.sidebar.sales-codes',
+        'route' => 'admin.settings.sales_codes.index',
+        'sort' => 7,
+        'icon' => '',
+    ], [
+        'key' => 'settings.sales_territories',
+        'name' => 'admin::app.components.layouts.sidebar.sales-territories',
+        'route' => 'admin.settings.sales_territories.index',
+        'sort' => 8,
+        'icon' => '',
+    ], [
         'key' => 'settings.roles',
         'name' => 'admin::app.components.layouts.sidebar.roles',
         'route' => 'admin.settings.roles.index',
-        'sort' => 7,
+        'sort' => 9,
         'icon' => '',
     ], [
         'key' => 'settings.themes',
         'name' => 'admin::app.components.layouts.sidebar.themes',
         'route' => 'admin.settings.themes.index',
-        'sort' => 8,
+        'sort' => 10,
         'icon' => '',
     ], [
         'key' => 'settings.taxes',
         'name' => 'admin::app.components.layouts.sidebar.taxes',
         'route' => 'admin.settings.taxes.categories.index',
-        'sort' => 9,
+        'sort' => 11,
         'icon' => '',
     ], [
         'key' => 'settings.taxes.tax_categories',
@@ -406,7 +418,7 @@ return [
         'key' => 'settings.data_transfer',
         'name' => 'admin::app.components.layouts.sidebar.data-transfer',
         'route' => 'admin.settings.data_transfer.imports.index',
-        'sort' => 10,
+        'sort' => 12,
         'icon' => '',
     ], [
         'key' => 'settings.data_transfer.imports',

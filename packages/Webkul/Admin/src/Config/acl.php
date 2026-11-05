@@ -1069,6 +1069,52 @@ return [
         'route' => 'admin.settings.users.delete',
         'sort' => 3,
     ], [
+        'key' => 'settings.sales_codes',
+        'name' => 'admin::app.acl.sales-codes',
+        'route' => 'admin.settings.sales_codes.index',
+        'sort' => 9,
+    ], [
+        'key' => 'settings.sales_codes.create',
+        'name' => 'admin::app.acl.create',
+        'route' => 'admin.settings.sales_codes.store',
+        'sort' => 1,
+    ], [
+        'key' => 'settings.sales_codes.edit',
+        'name' => 'admin::app.acl.edit',
+        'route' => [
+            'admin.settings.sales_codes.edit',
+            'admin.settings.sales_codes.update',
+        ],
+        'sort' => 2,
+    ], [
+        'key' => 'settings.sales_codes.delete',
+        'name' => 'admin::app.acl.delete',
+        'route' => 'admin.settings.sales_codes.delete',
+        'sort' => 3,
+    ], [
+        'key' => 'settings.sales_territories',
+        'name' => 'admin::app.acl.sales-territories',
+        'route' => 'admin.settings.sales_territories.index',
+        'sort' => 10,
+    ], [
+        'key' => 'settings.sales_territories.create',
+        'name' => 'admin::app.acl.create',
+        'route' => 'admin.settings.sales_territories.store',
+        'sort' => 1,
+    ], [
+        'key' => 'settings.sales_territories.edit',
+        'name' => 'admin::app.acl.edit',
+        'route' => [
+            'admin.settings.sales_territories.edit',
+            'admin.settings.sales_territories.update',
+        ],
+        'sort' => 2,
+    ], [
+        'key' => 'settings.sales_territories.delete',
+        'name' => 'admin::app.acl.delete',
+        'route' => 'admin.settings.sales_territories.delete',
+        'sort' => 3,
+    ], [
         'key' => 'settings.roles',
         'name' => 'admin::app.acl.roles',
         'route' => 'admin.settings.roles.index',

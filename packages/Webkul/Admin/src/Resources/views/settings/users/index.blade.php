@@ -368,6 +368,56 @@
                                 </template>
                             </div>
 
+                            <div class="flex gap-4">
+                                <!-- Sales Code -->
+                                <x-admin::form.control-group class="w-full flex-1">
+                                    <x-admin::form.control-group.label>
+                                        @lang('admin::app.settings.users.index.create.sales-code')
+                                    </x-admin::form.control-group.label>
+
+                                    <select
+                                        name="sales_code_id"
+                                        class="flex min-h-[39px] w-full rounded-md border bg-white px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                        v-model="data.user.sales_code_id"
+                                    >
+                                        <option value="">@lang('admin::app.settings.users.index.create.sales-code-none')</option>
+
+                                        <option
+                                            v-for="salesCode in salesCodes"
+                                            :value="salesCode.id"
+                                            :text="salesCode.name ? `${salesCode.code} - ${salesCode.name}` : salesCode.code"
+                                        >
+                                        </option>
+                                    </select>
+
+                                    <x-admin::form.control-group.error control-name="sales_code_id" />
+                                </x-admin::form.control-group>
+
+                                <!-- Sales Territory -->
+                                <x-admin::form.control-group class="w-full flex-1">
+                                    <x-admin::form.control-group.label>
+                                        @lang('admin::app.settings.users.index.create.sales-territory')
+                                    </x-admin::form.control-group.label>
+
+                                    <select
+                                        name="sales_territory_id"
+                                        class="flex min-h-[39px] w-full rounded-md border bg-white px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                        v-model="data.user.sales_territory_id"
+                                    >
+                                        <option value="">@lang('admin::app.settings.users.index.create.sales-territory-none')</option>
+
+                                        <option
+                                            v-for="territory in salesTerritories"
+                                            :value="territory.id"
+                                            :text="territory.name"
+                                        >
+                                        </option>
+                                    </select>
+
+                                    <x-admin::form.control-group.error control-name="sales_territory_id" />
+                                </x-admin::form.control-group>
+                            </div>
+
                             <x-admin::form.control-group>
                                 <div class="hidden">
                                     <x-admin::media.images
@@ -413,6 +463,10 @@
                         isUpdating: false,
 
                         roles: @json($roles),
+
+                        salesCodes: @json($salesCodes),
+
+                        salesTerritories: @json($salesTerritories),
 
                         data: {
                             user: {},

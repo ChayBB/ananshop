@@ -30,6 +30,8 @@ class Admin extends Authenticatable implements AdminContract
         'image',
         'api_token',
         'role_id',
+        'sales_code_id',
+        'sales_territory_id',
         'status',
         'two_factor_secret',
         'two_factor_enabled',
@@ -99,6 +101,26 @@ class Admin extends Authenticatable implements AdminContract
     public function role()
     {
         return $this->belongsTo(RoleProxy::modelClass());
+    }
+
+    /**
+     * Get the sales code assigned to the admin.
+     *
+     * @return BelongsTo
+     */
+    public function salesCode()
+    {
+        return $this->belongsTo(SalesCodeProxy::modelClass());
+    }
+
+    /**
+     * Get the sales territory assigned to the admin.
+     *
+     * @return BelongsTo
+     */
+    public function salesTerritory()
+    {
+        return $this->belongsTo(SalesTerritoryProxy::modelClass());
     }
 
     /**

@@ -3467,6 +3467,74 @@ return [
                 'update-success' => 'อัปเดตช่องทางสำเร็จแล้ว',
             ],
         ],
+        'sales-codes' => [
+            'index' => [
+                'title'          => 'รหัสเซล',
+                'create-success' => 'สร้างเรียบร้อยแล้ว',
+                'update-success' => 'อัปเดตเรียบร้อยแล้ว',
+                'delete-success' => 'ลบเรียบร้อยแล้ว',
+                'delete-failed'  => 'ลบไม่สำเร็จ',
+                'being-used'     => 'ลบไม่ได้ เพราะถูกกำหนดให้ผู้ใช้งานอยู่',
+
+                'create' => [
+                    'title'    => 'เพิ่มรหัสเซล',
+                    'code'     => 'รหัส',
+                    'name'     => 'ชื่อ',
+                    'status'   => 'สถานะ',
+                    'save-btn' => 'บันทึก',
+                ],
+
+                'edit' => [
+                    'title' => 'แก้ไขรหัสเซล',
+                ],
+
+                'datagrid' => [
+                    'id'       => 'รหัสอ้างอิง',
+                    'code'     => 'รหัส',
+                    'name'     => 'ชื่อ',
+                    'status'   => 'สถานะ',
+                    'active'   => 'ใช้งาน',
+                    'inactive' => 'ไม่ใช้งาน',
+                    'edit'     => 'แก้ไข',
+                    'delete'   => 'ลบ',
+                ],
+            ],
+        ],
+
+        'sales-territories' => [
+            'index' => [
+                'title'          => 'เขตพื้นที่ขาย',
+                'create-success' => 'สร้างเรียบร้อยแล้ว',
+                'update-success' => 'อัปเดตเรียบร้อยแล้ว',
+                'delete-success' => 'ลบเรียบร้อยแล้ว',
+                'delete-failed'  => 'ลบไม่สำเร็จ',
+                'being-used'     => 'ลบไม่ได้ เพราะถูกกำหนดให้ผู้ใช้งานอยู่',
+
+                'create' => [
+                    'title'    => 'เพิ่มเขตพื้นที่ขาย',
+                    'code'     => 'รหัส',
+                    'name'     => 'ชื่อ',
+                    'status'   => 'สถานะ',
+                    'save-btn' => 'บันทึก',
+                ],
+
+                'edit' => [
+                    'title' => 'แก้ไขเขตพื้นที่ขาย',
+                ],
+
+                'datagrid' => [
+                    'id'       => 'รหัสอ้างอิง',
+                    'code'     => 'รหัส',
+                    'name'     => 'ชื่อ',
+                    'status'   => 'สถานะ',
+                    'active'   => 'ใช้งาน',
+                    'inactive' => 'ไม่ใช้งาน',
+                    'edit'     => 'แก้ไข',
+                    'delete'   => 'ลบ',
+                ],
+            ],
+        ],
+
         'users' => [
             'index' => [
                 'admin' => 'ผู้ดูแลระบบ',
@@ -3478,6 +3546,10 @@ return [
                     'groups' => 'กลุ่มลูกค้าและสิทธิ์',
                     'name' => 'ชื่อ',
                     'password' => 'รหัสผ่าน',
+                    'sales-code' => 'รหัสเซล',
+                    'sales-code-none' => 'ไม่ระบุ',
+                    'sales-territory' => 'เขตพื้นที่ขาย',
+                    'sales-territory-none' => 'ไม่ระบุ',
                     'role' => 'บทบาท',
                     'save-btn' => 'บันทึกผู้ใช้งาน',
                     'status' => 'สถานะ',
@@ -4923,6 +4995,8 @@ return [
                 'themes' => 'ธีม',
                 'transactions' => 'ดำเนินการเสร็จแล้ว',
                 'url-rewrites' => 'การเปลี่ยนแปลง URL',
+                'sales-codes' => 'รหัสเซล',
+                'sales-territories' => 'เขตพื้นที่ขาย',
                 'users' => 'ผู้ใช้งาน',
             ],
             'powered-by' => [
@@ -5146,6 +5220,8 @@ return [
         'themes' => 'ธีม',
         'transactions' => 'การทำธุรกรรม',
         'url-rewrites' => 'การเปลี่ยนแปลง URL',
+        'sales-codes' => 'รหัสเซล',
+        'sales-territories' => 'เขตพื้นที่ขาย',
         'users' => 'ผู้ใช้',
         'view' => 'ดู',
         'rma' => [

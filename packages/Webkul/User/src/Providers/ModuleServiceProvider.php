@@ -5,6 +5,8 @@ namespace Webkul\User\Providers;
 use Webkul\Core\Providers\CoreModuleServiceProvider;
 use Webkul\User\Models\Admin;
 use Webkul\User\Models\Role;
+use Webkul\User\Models\SalesCode;
+use Webkul\User\Models\SalesTerritory;
 
 class ModuleServiceProvider extends CoreModuleServiceProvider
 {
@@ -16,5 +18,7 @@ class ModuleServiceProvider extends CoreModuleServiceProvider
     protected $models = [
         Admin::class,
         Role::class,
+        SalesCode::class,
+        SalesTerritory::class,
     ];
 }

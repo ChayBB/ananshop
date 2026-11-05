@@ -15,6 +15,8 @@ use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\UserForm;
 use Webkul\User\Repositories\AdminRepository;
 use Webkul\User\Repositories\RoleRepository;
+use Webkul\User\Repositories\SalesCodeRepository;
+use Webkul\User\Repositories\SalesTerritoryRepository;
 
 class UserController extends Controller
 {
@@ -25,7 +27,9 @@ class UserController extends Controller
      */
     public function __construct(
         protected AdminRepository $adminRepository,
-        protected RoleRepository $roleRepository
+        protected RoleRepository $roleRepository,
+        protected SalesCodeRepository $salesCodeRepository,
+        protected SalesTerritoryRepository $salesTerritoryRepository
     ) {}
 
     /**
@@ -41,7 +45,11 @@ class UserController extends Controller
 
         $roles = $this->roleRepository->all();
 
-        return view('admin::settings.users.index', compact('roles'));
+        $salesCodes = $this->salesCodeRepository->findWhere(['status' => 1]);
+
+        $salesTerritories = $this->salesTerritoryRepository->findWhere(['status' => 1]);
+
+        return view('admin::settings.users.index', compact('roles', 'salesCodes', 'salesTerritories'));
     }
 
     /**
@@ -55,6 +63,8 @@ class UserController extends Controller
             'password',
             'password_confirmation',
             'role_id',
+            'sales_code_id',
+            'sales_territory_id',
             'status',
         ]);
 

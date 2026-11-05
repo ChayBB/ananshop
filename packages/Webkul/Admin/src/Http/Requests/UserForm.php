@@ -30,6 +30,8 @@ class UserForm extends FormRequest
             'password_confirmation' => 'nullable|required_with:password|same:password',
             'status' => 'sometimes',
             'role_id' => 'required',
+            'sales_code_id' => 'nullable|exists:sales_codes,id',
+            'sales_territory_id' => 'nullable|exists:sales_territories,id',
             'image' => 'array',
             'image.*' => 'mimes:jpeg,jpg,png,gif|max:10000',
         ];
