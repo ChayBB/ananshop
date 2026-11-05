@@ -56,25 +56,6 @@
                 <x-shop::form :action="route('shop.customers.register.store')">
                     {!! view_render_event('bagisto.shop.customers.signup_form_controls.before') !!}
 
-                    <!-- Customer Code -->
-                    <x-shop::form.control-group>
-                        <x-shop::form.control-group.label>
-                            @lang('shop::app.customers.signup-form.customer-code')
-                        </x-shop::form.control-group.label>
-
-                        <x-shop::form.control-group.control
-                            type="text"
-                            class="px-6 py-4 max-md:py-3 max-sm:py-2"
-                            name="customer_code"
-                            :value="old('customer_code')"
-                            :label="trans('shop::app.customers.signup-form.customer-code')"
-                            :placeholder="trans('shop::app.customers.signup-form.customer-code')"
-                            :aria-label="trans('shop::app.customers.signup-form.customer-code')"
-                        />
-
-                        <x-shop::form.control-group.error control-name="customer_code" />
-                    </x-shop::form.control-group>
-
                     <!-- First Name -->
                     <x-shop::form.control-group>
                         <x-shop::form.control-group.label class="required">
