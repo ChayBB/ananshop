@@ -169,7 +169,7 @@
 
                         <!-- Gender -->
                         <x-admin::form.control-group>
-                            <x-admin::form.control-group.label class="required">
+                            <x-admin::form.control-group.label>
                                 @lang('admin::app.customers.customers.index.create.gender')
                             </x-admin::form.control-group.label>
 
@@ -177,7 +177,6 @@
                                 type="select"
                                 id="gender"
                                 name="gender"
-                                rules="required"
                                 :label="trans('admin::app.customers.customers.index.create.gender')"
                             >
                                 <option value="">

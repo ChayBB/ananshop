@@ -205,7 +205,7 @@
                         <div class="flex gap-4 max-sm:flex-wrap">
                             <!-- Gender -->
                             <x-admin::form.control-group class="w-full">
-                                <x-admin::form.control-group.label class="required">
+                                <x-admin::form.control-group.label>
                                     @lang('admin::app.customers.customers.view.edit.gender')
                                 </x-admin::form.control-group.label>
             
@@ -214,7 +214,6 @@
                                     name="gender"
                                     ::value="customer.gender"
                                     id="gender"
-                                    rules="required"
                                     :label="trans('admin::app.customers.customers.view.edit.gender')"
                                 >
                                     <option value="Male">

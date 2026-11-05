@@ -155,7 +155,7 @@
 
             <!-- Gender -->
             <x-shop::form.control-group>
-                <x-shop::form.control-group.label class="required">
+                <x-shop::form.control-group.label>
                     @lang('shop::app.customers.account.profile.edit.gender')
                 </x-shop::form.control-group.label>
 
@@ -163,7 +163,6 @@
                     type="select"
                     class="mb-3"
                     name="gender"
-                    rules="required"
                     :value="old('gender') ?? $customer->gender"
                     :aria-label="trans('shop::app.customers.account.profile.edit.select-gender')"
                     :label="trans('shop::app.customers.account.profile.edit.gender')"

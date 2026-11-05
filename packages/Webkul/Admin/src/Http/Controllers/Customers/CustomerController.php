@@ -78,14 +78,18 @@ class CustomerController extends Controller
      */
     public function store(): JsonResponse
     {
+        if (request('date_of_birth') === '0000-00-00') {
+            request()->merge(['date_of_birth' => null]);
+        }
+
         $this->validate(request(), [
             'customer_code' => 'nullable|string|max:255|unique:customers,customer_code',
             'first_name' => 'string|required',
             'last_name' => 'string|required',
-            'gender' => 'required',
+            'gender' => 'nullable|in:Other,Male,Female',
             'channel_id' => 'required|integer',
             'email' => 'nullable|email|unique:customers,email,NULL,id,channel_id,'.request('channel_id'),
-            'date_of_birth' => 'date|before:today',
+            'date_of_birth' => 'nullable|date|before:today',
             'phone' => ['unique:customers,phone', new PhoneNumber],
             'password' => 'nullable|min:6|confirmed',
             'password_confirmation' => 'nullable|required_with:password',
@@ -112,6 +116,14 @@ class CustomerController extends Controller
 
         if (empty($data['phone'])) {
             $data['phone'] = null;
+        }
+
+        /**
+         * A blank date would otherwise be stored as a zero date, which then
+         * fails validation the next time the customer is edited.
+         */
+        if (empty($data['date_of_birth']) || $data['date_of_birth'] === '0000-00-00') {
+            $data['date_of_birth'] = null;
         }
 
         if (empty($data['email'])) {
@@ -150,13 +162,17 @@ class CustomerController extends Controller
      */
     public function update(int $id)
     {
+        if (request('date_of_birth') === '0000-00-00') {
+            request()->merge(['date_of_birth' => null]);
+        }
+
         $this->validate(request(), [
             'customer_code' => 'nullable|string|max:255|unique:customers,customer_code,'.$id,
             'first_name' => 'string|required',
             'last_name' => 'string|required',
-            'gender' => 'required',
+            'gender' => 'nullable|in:Other,Male,Female',
             'email' => 'nullable|email|unique:customers,email,'.$id,
-            'date_of_birth' => 'date|before:today',
+            'date_of_birth' => 'nullable|date|before:today',
             'phone' => ['unique:customers,phone,'.$id, new PhoneNumber],
             'password' => 'nullable|min:6|confirmed',
             'password_confirmation' => 'nullable|required_with:password',
@@ -178,6 +194,14 @@ class CustomerController extends Controller
 
         if (empty($data['phone'])) {
             $data['phone'] = null;
+        }
+
+        /**
+         * A blank date would otherwise be stored as a zero date, which then
+         * fails validation the next time the customer is edited.
+         */
+        if (empty($data['date_of_birth']) || $data['date_of_birth'] === '0000-00-00') {
+            $data['date_of_birth'] = null;
         }
 
         if (empty($data['email'])) {

@@ -29,8 +29,8 @@ class ProfileRequest extends FormRequest
         return [
             'first_name' => ['required'],
             'last_name' => ['required'],
-            'gender' => 'required|in:Other,Male,Female',
-            'date_of_birth' => 'date|before:today',
+            'gender' => 'nullable|in:Other,Male,Female',
+            'date_of_birth' => 'nullable|date|before:today',
             'email' => 'email|unique:customers,email,'.$id,
             'new_password' => 'confirmed|min:6|required_with:current_password',
             'new_password_confirmation' => 'required_with:new_password',
