@@ -56,7 +56,7 @@
 
             {!! view_render_event('bagisto.shop.customers.account.profile.edit_form_controls.image.after') !!}
 
-            <!-- Customer Code -->
+            <!-- Customer Code, assigned by sales and not editable here -->
             <x-shop::form.control-group>
                 <x-shop::form.control-group.label>
                     @lang('shop::app.customers.account.profile.edit.customer-code')
@@ -64,13 +64,13 @@
 
                 <x-shop::form.control-group.control
                     type="text"
-                    name="customer_code"
-                    :value="old('customer_code') ?? $customer->customer_code"
+                    name="customer_code_display"
+                    class="cursor-not-allowed bg-zinc-100 text-zinc-500"
+                    readonly
+                    :value="$customer->customer_code"
                     :label="trans('shop::app.customers.account.profile.edit.customer-code')"
                     :placeholder="trans('shop::app.customers.account.profile.edit.customer-code')"
                 />
-
-                <x-shop::form.control-group.error control-name="customer_code" />
             </x-shop::form.control-group>
 
             <!-- First Name -->
