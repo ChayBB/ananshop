@@ -5,6 +5,7 @@ namespace Webkul\User\Models;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
@@ -31,7 +32,6 @@ class Admin extends Authenticatable implements AdminContract
         'api_token',
         'role_id',
         'sales_code_id',
-        'sales_territory_id',
         'status',
         'two_factor_secret',
         'two_factor_enabled',
@@ -114,13 +114,18 @@ class Admin extends Authenticatable implements AdminContract
     }
 
     /**
-     * Get the sales territory assigned to the admin.
+     * Get the sales territories the admin covers.
      *
-     * @return BelongsTo
+     * @return BelongsToMany
      */
-    public function salesTerritory()
+    public function salesTerritories()
     {
-        return $this->belongsTo(SalesTerritoryProxy::modelClass());
+        return $this->belongsToMany(
+            SalesTerritoryProxy::modelClass(),
+            'admin_sales_territories',
+            'admin_id',
+            'sales_territory_id'
+        );
     }
 
     /**

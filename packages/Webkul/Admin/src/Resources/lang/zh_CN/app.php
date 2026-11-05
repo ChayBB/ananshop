@@ -3814,6 +3814,8 @@ return [
                     'password' => '密码',
                     'sales-code' => 'Sales Code',
                     'sales-code-none' => 'None',
+                    'add-sales-territory' => 'Add Sales Territory',
+                    'remove-sales-territory' => 'Remove',
                     'sales-territory' => 'Sales Territory',
                     'sales-territory-none' => 'None',
                     'role' => '角色',

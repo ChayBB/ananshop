@@ -3548,6 +3548,8 @@ return [
                     'password' => 'รหัสผ่าน',
                     'sales-code' => 'รหัสเซล',
                     'sales-code-none' => 'ไม่ระบุ',
+                    'add-sales-territory' => 'เพิ่มเขตพื้นที่ขาย',
+                    'remove-sales-territory' => 'ลบ',
                     'sales-territory' => 'เขตพื้นที่ขาย',
                     'sales-territory-none' => 'ไม่ระบุ',
                     'role' => 'บทบาท',

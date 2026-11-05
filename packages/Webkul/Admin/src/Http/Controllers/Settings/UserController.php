@@ -64,7 +64,6 @@ class UserController extends Controller
             'password_confirmation',
             'role_id',
             'sales_code_id',
-            'sales_territory_id',
             'status',
         ]);
 
@@ -81,6 +80,8 @@ class UserController extends Controller
         Event::dispatch('user.admin.create.before');
 
         $admin = $this->adminRepository->create($data);
+
+        $admin->salesTerritories()->sync(request()->input('sales_territory_ids', []));
 
         if (request()->hasFile('image')) {
             $admin->image = current(request()->file('image'))->store('admins/'.$admin->id);
@@ -105,6 +106,8 @@ class UserController extends Controller
         $user = $this->adminRepository->findOrFail($id);
 
         $roles = $this->roleRepository->all();
+
+        $user->sales_territory_ids = $user->salesTerritories()->pluck('sales_territories.id')->all();
 
         return new JsonResponse([
             'roles' => $roles,
@@ -138,6 +141,8 @@ class UserController extends Controller
         }
 
         $admin = $this->adminRepository->update($data, $id);
+
+        $admin->salesTerritories()->sync(request()->input('sales_territory_ids', []));
 
         if (request()->hasFile('image')) {
             $admin->image = current(request()->file('image'))->store('admins/'.$admin->id);

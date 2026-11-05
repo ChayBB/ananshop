@@ -393,30 +393,58 @@
                                     <x-admin::form.control-group.error control-name="sales_code_id" />
                                 </x-admin::form.control-group>
 
-                                <!-- Sales Territory -->
-                                <x-admin::form.control-group class="w-full flex-1">
-                                    <x-admin::form.control-group.label>
-                                        @lang('admin::app.settings.users.index.create.sales-territory')
-                                    </x-admin::form.control-group.label>
-
-                                    <select
-                                        name="sales_territory_id"
-                                        class="flex min-h-[39px] w-full rounded-md border bg-white px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
-                                        v-model="data.user.sales_territory_id"
-                                    >
-                                        <option value="">@lang('admin::app.settings.users.index.create.sales-territory-none')</option>
-
-                                        <option
-                                            v-for="territory in salesTerritories"
-                                            :value="territory.id"
-                                            :text="territory.name"
-                                        >
-                                        </option>
-                                    </select>
-
-                                    <x-admin::form.control-group.error control-name="sales_territory_id" />
-                                </x-admin::form.control-group>
+                                <div class="w-full flex-1"></div>
                             </div>
+
+                            <!-- Sales Territories, one salesperson covers several -->
+                            <x-admin::form.control-group>
+                                <x-admin::form.control-group.label>
+                                    @lang('admin::app.settings.users.index.create.sales-territory')
+                                </x-admin::form.control-group.label>
+
+                                <div class="mt-2 grid gap-2">
+                                    <div
+                                        class="flex items-center gap-2"
+                                        v-for="(territoryId, index) in selectedTerritories"
+                                        :key="index"
+                                    >
+                                        <select
+                                            name="sales_territory_ids[]"
+                                            class="flex min-h-[39px] w-full rounded-md border bg-white px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                            v-model="selectedTerritories[index]"
+                                        >
+                                            <option value="">@lang('admin::app.settings.users.index.create.sales-territory-none')</option>
+
+                                            <option
+                                                v-for="territory in availableTerritories(index)"
+                                                :value="territory.id"
+                                                :text="territory.name"
+                                            >
+                                            </option>
+                                        </select>
+
+                                        <span
+                                            class="icon-delete cursor-pointer rounded-md p-1.5 text-2xl text-gray-600 transition-all hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
+                                            :title="'@lang('admin::app.settings.users.index.create.remove-sales-territory')'"
+                                            @click="removeTerritory(index)"
+                                            v-if="selectedTerritories.length > 1"
+                                        >
+                                        </span>
+                                    </div>
+
+                                    <div>
+                                        <button
+                                            type="button"
+                                            class="secondary-button"
+                                            @click="addTerritory()"
+                                        >
+                                            @lang('admin::app.settings.users.index.create.add-sales-territory')
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <x-admin::form.control-group.error control-name="sales_territory_ids" />
+                            </x-admin::form.control-group>
 
                             <x-admin::form.control-group>
                                 <div class="hidden">
@@ -467,6 +495,8 @@
                         salesCodes: @json($salesCodes),
 
                         salesTerritories: @json($salesTerritories),
+
+                        selectedTerritories: [''],
 
                         data: {
                             user: {},
@@ -531,6 +561,10 @@
                                         },
                                 };
 
+                                const assigned = response.data.user.sales_territory_ids ?? [];
+
+                                this.selectedTerritories = assigned.length ? [...assigned] : [''];
+
                                 this.$refs.modalForm.setValues(response.data.user);
 
                                 this.$refs.userUpdateOrCreateModal.toggle();
@@ -540,8 +574,32 @@
                             }));
                     },
 
+                    /**
+                     * Territories already picked in another row are hidden, so the
+                     * same one cannot be assigned twice.
+                     */
+                    availableTerritories(index) {
+                        const taken = this.selectedTerritories.filter((id, i) => i !== index && id);
+
+                        return this.salesTerritories.filter(territory => ! taken.includes(territory.id));
+                    },
+
+                    addTerritory() {
+                        this.selectedTerritories.push('');
+                    },
+
+                    removeTerritory(index) {
+                        this.selectedTerritories.splice(index, 1);
+
+                        if (! this.selectedTerritories.length) {
+                            this.selectedTerritories = [''];
+                        }
+                    },
+
                     resetForm() {
                         this.isUpdating = false;
+
+                        this.selectedTerritories = [''];
 
                         this.data = {
                             user: {},

@@ -3814,6 +3814,8 @@ return [
                     'password' => 'पासवर्ड',
                     'sales-code' => 'Sales Code',
                     'sales-code-none' => 'None',
+                    'add-sales-territory' => 'Add Sales Territory',
+                    'remove-sales-territory' => 'Remove',
                     'sales-territory' => 'Sales Territory',
                     'sales-territory-none' => 'None',
                     'role' => 'भूमिका',
