@@ -55,6 +55,7 @@ class RegistrationController extends Controller
             : null;
 
         $data = array_merge($registrationRequest->only([
+            'customer_code',
             'first_name',
             'last_name',
             'email',

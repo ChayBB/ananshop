@@ -48,6 +48,7 @@ class Customer extends Authenticatable implements CustomerContract
      * @var array
      */
     protected $fillable = [
+        'customer_code',
         'first_name',
         'last_name',
         'gender',

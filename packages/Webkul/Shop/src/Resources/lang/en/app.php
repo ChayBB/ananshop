@@ -48,6 +48,7 @@ return [
         ],
 
         'signup-form' => [
+            'customer-code' => 'Customer Code',
             'account-exists' => 'Already have an account ?',
             'bagisto' => 'Bagisto',
             'button-title' => 'Register',
