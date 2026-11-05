@@ -9,8 +9,8 @@ return new class extends Migration
     /**
      * Run the migrations.
      *
-     * LINE is a common contact channel for Thai customers. It is optional and
-     * not unique: several customers may share a shop account.
+     * LINE is a common contact channel for Thai customers. The column is
+     * optional; a later migration adds the unique index on it.
      */
     public function up(): void
     {
