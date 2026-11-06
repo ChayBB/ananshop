@@ -76,8 +76,10 @@
                                 <option value="">@lang('admin::app.settings.users.index.create.sales-code-none')</option>
 
                                 @foreach ($salesCodes as $salesCode)
+                                    @php($salesName = $salesCode->admins->pluck('name')->filter()->unique()->implode(', ') ?: $salesCode->name)
+
                                     <option value="{{ $salesCode->id }}">
-                                        {{ $salesCode->name ? $salesCode->code.' - '.$salesCode->name : $salesCode->code }}
+                                        {{ $salesName ? $salesCode->code.' - '.$salesName : $salesCode->code }}
                                     </option>
                                 @endforeach
                             </x-admin::form.control-group.control>

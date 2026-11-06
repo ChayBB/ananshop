@@ -344,7 +344,10 @@ class CustomerController extends Controller
             }
         }
 
-        $salesCodes = $this->salesCodeRepository->orderBy('code')->all(['id', 'code', 'name']);
+        $salesCodes = $this->salesCodeRepository
+            ->with(['admins' => fn ($query) => $query->select('id', 'sales_code_id', 'name')->orderBy('name')])
+            ->orderBy('code')
+            ->all(['id', 'code', 'name']);
 
         return view('admin::customers.customers.view', compact('customer', 'groups', 'salesCodes'));
     }
