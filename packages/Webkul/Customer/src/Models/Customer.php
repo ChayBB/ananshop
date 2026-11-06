@@ -49,6 +49,7 @@ class Customer extends Authenticatable implements CustomerContract
      */
     protected $fillable = [
         'customer_code',
+        'sales_code_id',
         'first_name',
         'last_name',
         'gender',

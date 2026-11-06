@@ -61,6 +61,30 @@
                             <x-admin::form.control-group.error control-name="customer_code" />
                         </x-admin::form.control-group>
 
+                        <x-admin::form.control-group class="mb-2.5 w-full">
+                            <x-admin::form.control-group.label for="sales_code_id">
+                                @lang('admin::app.settings.users.index.create.sales-code')
+                            </x-admin::form.control-group.label>
+
+                            <x-admin::form.control-group.control
+                                type="select"
+                                name="sales_code_id"
+                                id="sales_code_id"
+                                ::value="customer.sales_code_id ?? ''"
+                                :label="trans('admin::app.settings.users.index.create.sales-code')"
+                            >
+                                <option value="">@lang('admin::app.settings.users.index.create.sales-code-none')</option>
+
+                                @foreach ($salesCodes as $salesCode)
+                                    <option value="{{ $salesCode->id }}">
+                                        {{ $salesCode->name ? $salesCode->code.' - '.$salesCode->name : $salesCode->code }}
+                                    </option>
+                                @endforeach
+                            </x-admin::form.control-group.control>
+
+                            <x-admin::form.control-group.error control-name="sales_code_id" />
+                        </x-admin::form.control-group>
+
                         <div class="flex gap-4 max-sm:flex-wrap">
                             <!--First Name -->
                             <x-admin::form.control-group class="mb-2.5 w-full">

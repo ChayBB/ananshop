@@ -21,6 +21,7 @@ use Webkul\Core\Rules\PhoneNumber;
 use Webkul\Customer\Repositories\CustomerGroupRepository;
 use Webkul\Customer\Repositories\CustomerNoteRepository;
 use Webkul\Customer\Repositories\CustomerRepository;
+use Webkul\User\Repositories\SalesCodeRepository;
 
 class CustomerController extends Controller
 {
@@ -52,7 +53,8 @@ class CustomerController extends Controller
     public function __construct(
         protected CustomerRepository $customerRepository,
         protected CustomerGroupRepository $customerGroupRepository,
-        protected CustomerNoteRepository $customerNoteRepository
+        protected CustomerNoteRepository $customerNoteRepository,
+        protected SalesCodeRepository $salesCodeRepository
     ) {}
 
     /**
@@ -178,6 +180,7 @@ class CustomerController extends Controller
 
         $this->validate(request(), [
             'customer_code' => 'nullable|string|max:255|unique:customers,customer_code,'.$id,
+            'sales_code_id' => 'nullable|integer|exists:sales_codes,id',
             'first_name' => 'string|required',
             'last_name' => 'string|required',
             'gender' => 'nullable|in:Other,Male,Female',
@@ -191,6 +194,7 @@ class CustomerController extends Controller
 
         $data = request()->only([
             'customer_code',
+            'sales_code_id',
             'first_name',
             'last_name',
             'gender',
@@ -340,7 +344,9 @@ class CustomerController extends Controller
             }
         }
 
-        return view('admin::customers.customers.view', compact('customer', 'groups'));
+        $salesCodes = $this->salesCodeRepository->orderBy('code')->all(['id', 'code', 'name']);
+
+        return view('admin::customers.customers.view', compact('customer', 'groups', 'salesCodes'));
     }
 
     /**

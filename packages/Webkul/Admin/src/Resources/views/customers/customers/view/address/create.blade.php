@@ -28,6 +28,7 @@
         <x-admin::form
             v-slot="{ meta, errors, handleSubmit }"
             as="div"
+            ::initial-values="initialValues"
         >
             <form @submit="handleSubmit($event, create)">
                 {!! view_render_event('bagisto.admin.customers.addresses.create.create_form_controls.before') !!}
@@ -139,14 +140,14 @@
 
                         <!-- E-mail -->
                         <x-admin::form.control-group class="w-full">
-                            <x-admin::form.control-group.label class="required">
+                            <x-admin::form.control-group.label>
                                 @lang('admin::app.customers.customers.view.address.create.email')
                             </x-admin::form.control-group.label>
 
                             <x-admin::form.control-group.control
                                 type="text"
                                 name="email"
-                                rules="required|email"
+                                rules="email"
                                 :label="trans('admin::app.customers.customers.view.address.create.email')"
                                 :placeholder="trans('admin::app.customers.customers.view.address.create.email')"
                             />
@@ -354,6 +355,12 @@
 
             data() {
                 return {
+                    initialValues: {{ Illuminate\Support\Js::from([
+                        'first_name' => $customer->first_name,
+                        'last_name' => $customer->last_name,
+                        'phone' => $customer->phone ?? '',
+                    ]) }},
+
                     country: "",
 
                     state: "",
