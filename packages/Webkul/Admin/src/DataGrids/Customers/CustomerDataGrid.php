@@ -41,21 +41,82 @@ class CustomerDataGrid extends DataGrid
             })
             ->leftJoin('orders', 'customers.id', '=', 'orders.customer_id')
             ->leftJoin('customer_groups', 'customers.customer_group_id', '=', 'customer_groups.id')
+            ->leftJoin('sales_codes', 'customers.sales_code_id', '=', 'sales_codes.id')
             ->addSelect(
                 'customers.id as customer_id',
                 'customers.customer_code',
                 'customers.email',
+                'customers.line_id',
                 'customers.phone',
                 'customers.gender',
+                'customers.date_of_birth',
                 'customers.status',
                 'customers.is_suspended',
                 'customer_groups.name as group',
+                'sales_codes.code as sales_code',
                 'customers.channel_id',
             )
             ->addSelect(DB::raw('COUNT(DISTINCT '.$tablePrefix.'addresses.id) as address_count'))
             ->addSelect(DB::raw('COUNT(DISTINCT '.$tablePrefix.'orders.id) as order_count'))
-            ->addSelect(DB::raw('CONCAT('.$tablePrefix.'customers.first_name, " ", '.$tablePrefix.'customers.last_name) as full_name'))
-            ->groupBy('customers.id');
+            ->addSelect(DB::raw('CONCAT('.$tablePrefix.'customers.first_name, " ", '.$tablePrefix.'customers.last_name) as full_name'));
+
+        /**
+         * The address is joined above only to be counted, so a customer with
+         * several addresses would otherwise contribute an arbitrary one. Each
+         * field is read from the default address instead, falling back to the
+         * oldest one when no address has been marked as default.
+         */
+        $addressFields = [
+            'company_name' => 'address_company_name',
+            'vat_id' => 'address_vat_id',
+            'address' => 'address_street',
+            'city' => 'address_city',
+            'state' => 'address_state',
+            'postcode' => 'address_postcode',
+        ];
+
+        foreach ($addressFields as $field => $alias) {
+            $queryBuilder->addSelect(DB::raw(
+                '(SELECT '.($field === 'address' ? "REPLACE($field, '\\n', ', ')" : $field)
+                .' FROM '.$tablePrefix.'addresses'
+                .' WHERE customer_id = '.$tablePrefix.'customers.id'
+                ." AND address_type = 'customer'"
+                .' ORDER BY default_address DESC, id ASC LIMIT 1'
+                .') as '.$alias
+            ));
+        }
+
+        /**
+         * The export writes the stored value of every column, so the channel
+         * and the country are resolved here rather than in a column closure,
+         * which only runs for the listing.
+         */
+        $locale = app()->getLocale();
+
+        $queryBuilder->selectRaw(
+            '(SELECT COALESCE(channel_translations.name, channels.code)'
+            .' FROM '.$tablePrefix.'channels as channels'
+            .' LEFT JOIN '.$tablePrefix.'channel_translations as channel_translations'
+            .' ON channel_translations.channel_id = channels.id AND channel_translations.locale = ?'
+            .' WHERE channels.id = '.$tablePrefix.'customers.channel_id'
+            .' LIMIT 1) as channel_name',
+            [$locale]
+        );
+
+        $queryBuilder->selectRaw(
+            '(SELECT COALESCE(country_translations.name, countries.name)'
+            .' FROM '.$tablePrefix.'countries as countries'
+            .' LEFT JOIN '.$tablePrefix.'country_translations as country_translations'
+            .' ON country_translations.country_id = countries.id AND country_translations.locale = ?'
+            .' WHERE countries.code = (SELECT country FROM '.$tablePrefix.'addresses'
+            .' WHERE customer_id = '.$tablePrefix.'customers.id'
+            ." AND address_type = 'customer'"
+            .' ORDER BY default_address DESC, id ASC LIMIT 1)'
+            .' LIMIT 1) as address_country_name',
+            [$locale]
+        );
+
+        $queryBuilder->groupBy('customers.id');
 
         $this->addFilter('channel_id', 'customers.channel_id');
         $this->addFilter('customer_id', 'customers.id');
@@ -89,11 +150,19 @@ class CustomerDataGrid extends DataGrid
                 ->values()
                 ->toArray(),
             'sortable' => true,
+            'exportable' => false,
             'closure' => function ($row) use ($allChannels) {
                 $channel = $allChannels->firstWhere('id', $row->channel_id);
 
                 return $channel ? $channel->name : '-';
             },
+        ]);
+
+        $this->addColumn([
+            'index' => 'channel_name',
+            'label' => trans('admin::app.customers.customers.index.datagrid.channel'),
+            'type' => 'string',
+            'visibility' => false,
         ]);
 
         $this->addColumn([
@@ -113,6 +182,13 @@ class CustomerDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
+            'index' => 'sales_code',
+            'label' => trans('admin::app.settings.users.index.create.sales-code'),
+            'type' => 'string',
+            'visibility' => false,
+        ]);
+
+        $this->addColumn([
             'index' => 'full_name',
             'label' => trans('admin::app.customers.customers.index.datagrid.name'),
             'type' => 'string',
@@ -128,6 +204,13 @@ class CustomerDataGrid extends DataGrid
             'searchable' => true,
             'filterable' => true,
             'sortable' => true,
+        ]);
+
+        $this->addColumn([
+            'index' => 'line_id',
+            'label' => trans('admin::app.customers.customers.index.create.line-id'),
+            'type' => 'string',
+            'visibility' => false,
         ]);
 
         $this->addColumn([
@@ -160,6 +243,13 @@ class CustomerDataGrid extends DataGrid
             'label' => trans('admin::app.customers.customers.index.datagrid.gender'),
             'type' => 'string',
             'sortable' => true,
+        ]);
+
+        $this->addColumn([
+            'index' => 'date_of_birth',
+            'label' => trans('admin::app.customers.customers.index.create.date-of-birth'),
+            'type' => 'string',
+            'visibility' => false,
         ]);
 
         $this->addColumn([
@@ -204,6 +294,60 @@ class CustomerDataGrid extends DataGrid
             'label' => trans('admin::app.customers.customers.index.datagrid.address-count'),
             'type' => 'integer',
             'sortable' => true,
+        ]);
+
+        /**
+         * Everything the create form asks for also belongs in the export. The
+         * listing already has its own fixed set of columns, so these are
+         * hidden in the grid and only written to the exported file.
+         */
+        $this->addColumn([
+            'index' => 'address_company_name',
+            'label' => trans('admin::app.customers.customers.view.address.create.company-name'),
+            'type' => 'string',
+            'visibility' => false,
+        ]);
+
+        $this->addColumn([
+            'index' => 'address_vat_id',
+            'label' => trans('admin::app.customers.customers.view.address.create.vat-id'),
+            'type' => 'string',
+            'visibility' => false,
+        ]);
+
+        $this->addColumn([
+            'index' => 'address_street',
+            'label' => trans('admin::app.customers.customers.view.address.create.street-address'),
+            'type' => 'string',
+            'visibility' => false,
+        ]);
+
+        $this->addColumn([
+            'index' => 'address_city',
+            'label' => trans('admin::app.customers.customers.view.address.create.city'),
+            'type' => 'string',
+            'visibility' => false,
+        ]);
+
+        $this->addColumn([
+            'index' => 'address_state',
+            'label' => trans('admin::app.customers.customers.view.address.create.state'),
+            'type' => 'string',
+            'visibility' => false,
+        ]);
+
+        $this->addColumn([
+            'index' => 'address_country_name',
+            'label' => trans('admin::app.customers.customers.view.address.create.country'),
+            'type' => 'string',
+            'visibility' => false,
+        ]);
+
+        $this->addColumn([
+            'index' => 'address_postcode',
+            'label' => trans('admin::app.customers.customers.view.address.create.post-code'),
+            'type' => 'string',
+            'visibility' => false,
         ]);
     }
 
