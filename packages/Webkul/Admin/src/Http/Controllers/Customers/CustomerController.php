@@ -18,9 +18,12 @@ use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Requests\MassUpdateRequest;
 use Webkul\Admin\Mail\Customer\NewCustomerNotification;
 use Webkul\Core\Rules\PhoneNumber;
+use Webkul\Core\Rules\PostCode;
+use Webkul\Customer\Repositories\CustomerAddressRepository;
 use Webkul\Customer\Repositories\CustomerGroupRepository;
 use Webkul\Customer\Repositories\CustomerNoteRepository;
 use Webkul\Customer\Repositories\CustomerRepository;
+use Webkul\Customer\Rules\VatIdRule;
 use Webkul\User\Repositories\SalesCodeRepository;
 
 class CustomerController extends Controller
@@ -54,7 +57,8 @@ class CustomerController extends Controller
         protected CustomerRepository $customerRepository,
         protected CustomerGroupRepository $customerGroupRepository,
         protected CustomerNoteRepository $customerNoteRepository,
-        protected SalesCodeRepository $salesCodeRepository
+        protected SalesCodeRepository $salesCodeRepository,
+        protected CustomerAddressRepository $customerAddressRepository
     ) {}
 
     /**
@@ -72,7 +76,20 @@ class CustomerController extends Controller
 
         $groups = $this->customerGroupRepository->findWhere([['code', '<>', 'guest']]);
 
-        return view('admin::customers.customers.index', compact('channels', 'groups'));
+        $salesCodes = $this->salesCodes();
+
+        return view('admin::customers.customers.index', compact('channels', 'groups', 'salesCodes'));
+    }
+
+    /**
+     * Sales codes with the names of the salespeople assigned to them.
+     */
+    private function salesCodes()
+    {
+        return $this->salesCodeRepository
+            ->with(['admins' => fn ($query) => $query->select('id', 'sales_code_id', 'name')->orderBy('name')])
+            ->orderBy('code')
+            ->all(['id', 'code', 'name']);
     }
 
     /**
@@ -86,6 +103,7 @@ class CustomerController extends Controller
 
         $this->validate(request(), [
             'customer_code' => 'nullable|string|max:255|unique:customers,customer_code',
+            'sales_code_id' => 'nullable|integer|exists:sales_codes,id',
             'first_name' => 'string|required',
             'last_name' => 'string|required',
             'gender' => 'nullable|in:Other,Male,Female',
@@ -96,6 +114,19 @@ class CustomerController extends Controller
             'phone' => ['unique:customers,phone', new PhoneNumber],
             'password' => 'nullable|min:6|confirmed',
             'password_confirmation' => 'nullable|required_with:password',
+
+            /**
+             * The address is created in the same request. It is optional as a
+             * whole: filling in the street makes the rest of it required.
+             */
+            'address' => 'nullable|array',
+            'address.*' => 'nullable|string|max:255',
+            'company_name' => 'nullable|string|max:255',
+            'vat_id' => ['nullable', (new VatIdRule)->setCountry(request('country'))],
+            'city' => 'nullable|required_with:address.0|string|max:255',
+            'state' => 'nullable|required_with:address.0|string|max:255',
+            'country' => 'nullable|required_with:address.0|string|max:255',
+            'postcode' => ['nullable', 'required_with:address.0', new PostCode],
         ]);
 
         $password = request('password') ?: rand(100000, 10000000);
@@ -107,6 +138,7 @@ class CustomerController extends Controller
             'is_verified' => 1,
         ], request()->only([
             'customer_code',
+            'sales_code_id',
             'first_name',
             'last_name',
             'gender',
@@ -146,6 +178,8 @@ class CustomerController extends Controller
 
         $customer = $this->customerRepository->create($data);
 
+        $this->createAddressFor($customer);
+
         if (
             $customer->email
             && core()->getConfigData('emails.general.notifications.emails.general.notifications.customer_account_credentials')
@@ -165,6 +199,42 @@ class CustomerController extends Controller
             'data' => $customer,
             'message' => trans('admin::app.customers.customers.index.create.create-success'),
         ]);
+    }
+
+    /**
+     * Create the address that was filled in alongside the customer.
+     *
+     * The address carries the customer's own name, phone and email, so the
+     * admin only fills in the location once. Nothing is created when the
+     * street was left blank.
+     */
+    private function createAddressFor($customer): void
+    {
+        $lines = array_filter(array_map('trim', (array) request('address', [])));
+
+        if (empty($lines)) {
+            return;
+        }
+
+        Event::dispatch('customer.addresses.create.before');
+
+        $address = $this->customerAddressRepository->create([
+            'customer_id' => $customer->id,
+            'first_name' => $customer->first_name,
+            'last_name' => $customer->last_name,
+            'email' => $customer->email,
+            'phone' => $customer->phone,
+            'company_name' => request('company_name'),
+            'vat_id' => request('vat_id'),
+            'address' => implode(PHP_EOL, $lines),
+            'city' => request('city'),
+            'state' => request('state'),
+            'country' => request('country'),
+            'postcode' => request('postcode'),
+            'default_address' => 1,
+        ]);
+
+        Event::dispatch('customer.addresses.create.after', $address);
     }
 
     /**
@@ -344,10 +414,7 @@ class CustomerController extends Controller
             }
         }
 
-        $salesCodes = $this->salesCodeRepository
-            ->with(['admins' => fn ($query) => $query->select('id', 'sales_code_id', 'name')->orderBy('name')])
-            ->orderBy('code')
-            ->all(['id', 'code', 'name']);
+        $salesCodes = $this->salesCodes();
 
         return view('admin::customers.customers.view', compact('customer', 'groups', 'salesCodes'));
     }

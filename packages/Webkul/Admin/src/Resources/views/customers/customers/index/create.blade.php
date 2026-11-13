@@ -38,6 +38,32 @@
                             <x-admin::form.control-group.error control-name="customer_code" />
                         </x-admin::form.control-group>
 
+                        <!-- Sales Code -->
+                        <x-admin::form.control-group class="mb-2.5 w-full">
+                            <x-admin::form.control-group.label for="create_sales_code_id">
+                                @lang('admin::app.settings.users.index.create.sales-code')
+                            </x-admin::form.control-group.label>
+
+                            <x-admin::form.control-group.control
+                                type="select"
+                                id="create_sales_code_id"
+                                name="sales_code_id"
+                                :label="trans('admin::app.settings.users.index.create.sales-code')"
+                            >
+                                <option value="">@lang('admin::app.settings.users.index.create.sales-code-none')</option>
+
+                                @foreach ($salesCodes as $salesCode)
+                                    @php($salesName = $salesCode->admins->pluck('name')->filter()->unique()->implode(', ') ?: $salesCode->name)
+
+                                    <option value="{{ $salesCode->id }}">
+                                        {{ $salesName ? $salesCode->code.' - '.$salesName : $salesCode->code }}
+                                    </option>
+                                @endforeach
+                            </x-admin::form.control-group.control>
+
+                            <x-admin::form.control-group.error control-name="sales_code_id" />
+                        </x-admin::form.control-group>
+
                         <div class="flex gap-4 max-sm:flex-wrap">
                             <!-- First Name -->
                             <x-admin::form.control-group class="mb-2.5 w-full">
@@ -269,6 +295,193 @@
                             </x-admin::form.control-group>
                         </div>
 
+                        <!-- Address, saved together with the customer -->
+                        <div class="mb-2.5 mt-6 border-t border-gray-200 pt-4 dark:border-gray-800">
+                            <p class="text-base font-semibold text-gray-800 dark:text-white">
+                                @lang('admin::app.customers.customers.index.create.address-title')
+                            </p>
+
+                            <p class="mt-1 text-xs text-gray-500 dark:text-gray-300">
+                                @lang('admin::app.customers.customers.index.create.address-info')
+                            </p>
+                        </div>
+
+                        <div class="flex gap-4 max-sm:flex-wrap">
+                            <!-- Company Name -->
+                            <x-admin::form.control-group class="mb-2.5 w-full">
+                                <x-admin::form.control-group.label>
+                                    @lang('admin::app.customers.customers.view.address.create.company-name')
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::form.control-group.control
+                                    type="text"
+                                    id="company_name"
+                                    name="company_name"
+                                    :label="trans('admin::app.customers.customers.view.address.create.company-name')"
+                                    :placeholder="trans('admin::app.customers.customers.view.address.create.company-name')"
+                                />
+
+                                <x-admin::form.control-group.error control-name="company_name" />
+                            </x-admin::form.control-group>
+
+                            <!-- Vat Id -->
+                            <x-admin::form.control-group class="mb-2.5 w-full">
+                                <x-admin::form.control-group.label>
+                                    @lang('admin::app.customers.customers.view.address.create.vat-id')
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::form.control-group.control
+                                    type="text"
+                                    id="vat_id"
+                                    name="vat_id"
+                                    :label="trans('admin::app.customers.customers.view.address.create.vat-id')"
+                                    :placeholder="trans('admin::app.customers.customers.view.address.create.vat-id')"
+                                />
+
+                                <x-admin::form.control-group.error control-name="vat_id" />
+                            </x-admin::form.control-group>
+                        </div>
+
+                        <!-- Street Address -->
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label>
+                                @lang('admin::app.customers.customers.view.address.create.street-address')
+                            </x-admin::form.control-group.label>
+
+                            <x-admin::form.control-group.control
+                                type="text"
+                                id="address[0]"
+                                name="address[0]"
+                                class="mb-2"
+                                v-model="street"
+                                :label="trans('admin::app.customers.customers.view.address.create.street-address')"
+                                :placeholder="trans('admin::app.customers.customers.view.address.create.street-address')"
+                            />
+
+                            <x-admin::form.control-group.error
+                                class="mb-2"
+                                control-name="address[0]"
+                            />
+
+                            @if (core()->getConfigData('customer.address.information.street_lines') > 1)
+                                @for ($i = 1; $i < core()->getConfigData('customer.address.information.street_lines'); $i++)
+                                    <x-admin::form.control-group.control
+                                        type="text"
+                                        id="address[{{ $i }}]"
+                                        name="address[{{ $i }}]"
+                                        class="mb-2"
+                                        :label="trans('admin::app.customers.customers.view.address.create.street-address')"
+                                        :placeholder="trans('admin::app.customers.customers.view.address.create.street-address')"
+                                    />
+
+                                    <x-admin::form.control-group.error control-name="address[{{ $i }}]" />
+                                @endfor
+                            @endif
+                        </x-admin::form.control-group>
+
+                        <div class="flex gap-4 max-sm:flex-wrap">
+                            <!-- City -->
+                            <x-admin::form.control-group class="mb-2.5 w-full">
+                                <x-admin::form.control-group.label ::class="hasStreet ? 'required' : ''">
+                                    @lang('admin::app.customers.customers.view.address.create.city')
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::form.control-group.control
+                                    type="text"
+                                    id="city"
+                                    name="city"
+                                    ::rules="hasStreet ? 'required' : ''"
+                                    :label="trans('admin::app.customers.customers.view.address.create.city')"
+                                    :placeholder="trans('admin::app.customers.customers.view.address.create.city')"
+                                />
+
+                                <x-admin::form.control-group.error control-name="city" />
+                            </x-admin::form.control-group>
+
+                            <!-- PostCode -->
+                            <x-admin::form.control-group class="mb-2.5 w-full">
+                                <x-admin::form.control-group.label ::class="hasStreet ? 'required' : ''">
+                                    @lang('admin::app.customers.customers.view.address.create.post-code')
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::form.control-group.control
+                                    type="text"
+                                    id="postcode"
+                                    name="postcode"
+                                    ::rules="hasStreet ? 'required|postcode' : ''"
+                                    :label="trans('admin::app.customers.customers.view.address.create.post-code')"
+                                    :placeholder="trans('admin::app.customers.customers.view.address.create.post-code')"
+                                />
+
+                                <x-admin::form.control-group.error control-name="postcode" />
+                            </x-admin::form.control-group>
+                        </div>
+
+                        <div class="flex gap-4 max-sm:flex-wrap">
+                            <!-- Country -->
+                            <x-admin::form.control-group class="mb-2.5 w-full">
+                                <x-admin::form.control-group.label ::class="hasStreet ? 'required' : ''">
+                                    @lang('admin::app.customers.customers.view.address.create.country')
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::form.control-group.control
+                                    type="select"
+                                    id="country"
+                                    name="country"
+                                    v-model="country"
+                                    ::rules="hasStreet ? 'required' : ''"
+                                    :label="trans('admin::app.customers.customers.view.address.create.country')"
+                                >
+                                    <option value="">@lang('admin::app.customers.customers.view.address.create.select-country')</option>
+
+                                    @foreach (core()->countries() as $country)
+                                        <option value="{{ $country->code }}">{{ $country->name }}</option>
+                                    @endforeach
+                                </x-admin::form.control-group.control>
+
+                                <x-admin::form.control-group.error control-name="country" />
+                            </x-admin::form.control-group>
+
+                            <!-- State -->
+                            <x-admin::form.control-group class="mb-2.5 w-full">
+                                <x-admin::form.control-group.label ::class="hasStreet ? 'required' : ''">
+                                    @lang('admin::app.customers.customers.view.address.create.state')
+                                </x-admin::form.control-group.label>
+
+                                <template v-if="haveStates()">
+                                    <x-admin::form.control-group.control
+                                        type="select"
+                                        id="state"
+                                        name="state"
+                                        ::rules="hasStreet ? 'required' : ''"
+                                        :label="trans('admin::app.customers.customers.view.address.create.state')"
+                                    >
+                                        <option value="">@lang('admin::app.customers.customers.view.address.create.state')</option>
+
+                                        <option
+                                            v-for="state in countryStates[country]"
+                                            :value="state.code"
+                                        >
+                                            @{{ state.default_name }}
+                                        </option>
+                                    </x-admin::form.control-group.control>
+                                </template>
+
+                                <template v-else>
+                                    <x-admin::form.control-group.control
+                                        type="text"
+                                        id="state"
+                                        name="state"
+                                        ::rules="hasStreet ? 'required' : ''"
+                                        :label="trans('admin::app.customers.customers.view.address.create.state')"
+                                        :placeholder="trans('admin::app.customers.customers.view.address.create.state')"
+                                    />
+                                </template>
+
+                                <x-admin::form.control-group.error control-name="state" />
+                            </x-admin::form.control-group>
+                        </div>
+
                         {!! view_render_event('bagisto.admin.customers.create.after') !!}
                     </x-slot>
 
@@ -298,13 +511,33 @@
 
                     channels: @json($channels),
 
+                    countryStates: @json(core()->groupedStatesByCountries()),
+
+                    street: '',
+
+                    country: '',
+
                     isLoading: false,
                 };
+            },
+
+            computed: {
+                /**
+                 * The address is optional, so the rest of its fields only
+                 * become required once a street has been entered.
+                 */
+                hasStreet() {
+                    return !! this.street?.trim();
+                },
             },
 
             methods: {
                 openModal() {
                     this.$refs.customerCreateModal.open();
+                },
+
+                haveStates() {
+                    return !! this.countryStates[this.country]?.length;
                 },
 
                 create(params, { resetForm, setErrors }) {
@@ -319,6 +552,10 @@
                             this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
 
                             resetForm();
+
+                            this.street = '';
+
+                            this.country = '';
 
                             this.isLoading = false;
                         })

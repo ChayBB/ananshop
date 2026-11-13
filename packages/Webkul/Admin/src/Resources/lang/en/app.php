@@ -2167,6 +2167,8 @@ return [
                 ],
 
                 'create' => [
+                    'address-info' => 'Optional. Filling in the street saves an address along with the customer.',
+                    'address-title' => 'Address',
                     'channel' => 'Channel',
                     'confirm-password' => 'Confirm Password',
                     'contact-number' => 'Contact Number',
