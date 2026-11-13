@@ -2166,6 +2166,32 @@ return [
                     'update-success' => 'Selected Customers successfully updated',
                 ],
 
+                'import' => [
+                    'errors-title' => 'Rows that were skipped',
+                    'file' => 'File',
+                    'file-required' => 'Choose a file to import.',
+                    'import-btn' => 'Import',
+                    'import-success' => 'Import finished: :created created, :updated updated, :skipped skipped.',
+                    'info' => 'Upload a file laid out like the export: the first row holds the column headings. Rows are matched on the customer code, then on the email, so an exported file updates the same customers instead of adding them again.',
+                    'missing-name-column' => 'The file has no name column, so no row could be read.',
+                    'row' => 'Row :row:',
+                    'submit-btn' => 'Import',
+                    'title' => 'Import Customers',
+                    'unknown-group' => 'Unknown customer group ":group".',
+                    'unknown-sales-code' => 'Unknown sales code ":code".',
+
+                    'validation' => [
+                        'before' => 'The :attribute must be a date before today.',
+                        'date' => 'The :attribute is not a valid date.',
+                        'email' => 'The :attribute is not a valid email address.',
+                        'invalid' => 'The :attribute is not valid.',
+                        'max' => 'The :attribute is too long.',
+                        'required' => 'The :attribute is required.',
+                        'required-with' => 'The :attribute is required when a street address is given.',
+                        'unique' => 'The :attribute is already used by another customer.',
+                    ],
+                ],
+
                 'create' => [
                     'address-info' => 'Optional. Filling in the street saves an address along with the customer.',
                     'address-title' => 'Address',

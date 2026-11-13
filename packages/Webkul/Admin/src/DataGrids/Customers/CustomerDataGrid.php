@@ -45,6 +45,8 @@ class CustomerDataGrid extends DataGrid
             ->addSelect(
                 'customers.id as customer_id',
                 'customers.customer_code',
+                'customers.first_name',
+                'customers.last_name',
                 'customers.email',
                 'customers.line_id',
                 'customers.phone',
@@ -195,6 +197,20 @@ class CustomerDataGrid extends DataGrid
             'searchable' => true,
             'filterable' => true,
             'sortable' => true,
+        ]);
+
+        $this->addColumn([
+            'index' => 'first_name',
+            'label' => trans('admin::app.customers.customers.index.create.first-name'),
+            'type' => 'string',
+            'visibility' => false,
+        ]);
+
+        $this->addColumn([
+            'index' => 'last_name',
+            'label' => trans('admin::app.customers.customers.index.create.last-name'),
+            'type' => 'string',
+            'visibility' => false,
         ]);
 
         $this->addColumn([

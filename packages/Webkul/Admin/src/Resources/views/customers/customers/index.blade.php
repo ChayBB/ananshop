@@ -9,6 +9,13 @@
         </p>
 
         <div class="flex items-center gap-x-2.5">
+            <!-- Import Modal -->
+            @if (bouncer()->hasPermission('customers.customers.create'))
+                @include('admin::customers.customers.index.import')
+
+                <v-import-customers @customers-imported="$refs.customerDatagrid.get()"></v-import-customers>
+            @endif
+
             <!-- Export Modal -->
             <x-admin::datagrid.export src="{{ route('admin.customers.customers.index') }}" />
 

@@ -13,6 +13,7 @@ use Webkul\Admin\DataGrids\Customers\CustomerDataGrid;
 use Webkul\Admin\DataGrids\Customers\View\InvoiceDataGrid;
 use Webkul\Admin\DataGrids\Customers\View\OrderDataGrid;
 use Webkul\Admin\DataGrids\Customers\View\ReviewDataGrid;
+use Webkul\Admin\Helpers\CustomerImporter;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Requests\MassUpdateRequest;
@@ -198,6 +199,27 @@ class CustomerController extends Controller
         return new JsonResponse([
             'data' => $customer,
             'message' => trans('admin::app.customers.customers.index.create.create-success'),
+        ]);
+    }
+
+    /**
+     * Import customers from a spreadsheet laid out like the export.
+     */
+    public function import(CustomerImporter $importer): JsonResponse
+    {
+        $this->validate(request(), [
+            'file' => 'required|file|mimes:xlsx,xls,csv,txt|max:10240',
+        ]);
+
+        $result = $importer->import(request()->file('file'));
+
+        return new JsonResponse([
+            'data' => $result,
+            'message' => trans('admin::app.customers.customers.index.import.import-success', [
+                'created' => $result['created'],
+                'updated' => $result['updated'],
+                'skipped' => count($result['errors']),
+            ]),
         ]);
     }
 
